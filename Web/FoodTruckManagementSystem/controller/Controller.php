@@ -35,7 +35,6 @@ class Controller{
 			//3. Add the new equipment
 			$equipment = new Equipment($name, $quantity);
 			$m->addEquipment($equipment);
-			
 			//4. Write all of the data
 			$pm->writeDataToStore($m);
 		}
