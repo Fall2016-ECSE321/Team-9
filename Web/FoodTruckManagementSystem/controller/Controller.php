@@ -35,7 +35,7 @@ class Controller{
 			
 			for($i = 0; $i < $m->numberOfEquipments(); $i++){
 				if($name == $m->getEquipment_index($i)->getName()){
-					$m->getEquipment_index($i)->setQuantity($quantity + $m->getEquipment_index($i)->getQuantity());
+					$m->getEquipment_index($i)->setQuantity((string)($quantity + $m->getEquipment_index($i)->getQuantity()));
 					$flag = true;
 					break;
 				}
