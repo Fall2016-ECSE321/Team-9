@@ -33,18 +33,18 @@ class Controller{
 			$m  = $pm->loadDataFromStore();
 			$flag = false;
 			
-// 			for($i = 0; $i < $m->numberOfEquipments(); $i++){
-// 				if($name == $m->getEquipment_index($i)->getName()){
-// 					$m->getEquipment_index($i)->setQuantity($quantity + $m->getEquipment_index($i)->getQuantity());
-// 					$flag = true;
-// 					break;
-// 				}
-// 			}
-// 			if (! $flag){ 
+			for($i = 0; $i < $m->numberOfEquipments(); $i++){
+				if($name == $m->getEquipment_index($i)->getName()){
+					$m->getEquipment_index($i)->setQuantity($quantity + $m->getEquipment_index($i)->getQuantity());
+					$flag = true;
+					break;
+				}
+			}
+			if (! $flag){ 
 				//3. Add the new equipment
 				$equipment = new Equipment($name, $quantity);
 				$m->addEquipment($equipment);
-	//		}
+			}
 			//4. Write all of the data
 			$pm->writeDataToStore($m);
 		}
