@@ -1,0 +1,11 @@
+<manager id="1">
+  <equipments id="2">
+    <equipment id="3">
+      <name>grill</name>
+      <quantity>3</quantity>
+    </equipment>
+  </equipments>
+  <supplies id="4"/>
+  <orders id="5"/>
+  <staffmembers id="6"/>
+</manager>
