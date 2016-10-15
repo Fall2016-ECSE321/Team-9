@@ -1,0 +1,11 @@
+<ca.mcgill.ecse321.foodtruckmanagementsystem.model.Manager id="1">
+  <equipments id="2">
+    <ca.mcgill.ecse321.foodtruckmanagementsystem.model.Equipment id="3">
+      <name>Fridge</name>
+      <quantity>2</quantity>
+    </ca.mcgill.ecse321.foodtruckmanagementsystem.model.Equipment>
+  </equipments>
+  <supplies id="4"/>
+  <orders id="5"/>
+  <staffmembers id="6"/>
+</ca.mcgill.ecse321.foodtruckmanagementsystem.model.Manager>

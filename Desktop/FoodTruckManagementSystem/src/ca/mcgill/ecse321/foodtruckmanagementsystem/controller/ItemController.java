@@ -10,6 +10,7 @@ import javax.xml.stream.XMLStreamReader;
 
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Equipment;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Manager;
+import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceFoodTruckManagementSystem;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceXStream;
 
 public class ItemController {
@@ -21,28 +22,41 @@ public class ItemController {
 	    return s.matches("[-+]?\\d*\\.?\\d+");  
 	}
 	
-	public void createEquipment(String name, int quantity) throws InvalidInputException, XMLStreamException{
-		if (name == null || name.trim().length() == 0)
+	public void createEquipment(String name, int quantity) throws InvalidInputException{
+		if ((name == null || name.trim().length() == 0)&& (quantity == 0))
+			throw new InvalidInputException("Equipment name and quantity cannot be empty!");
+		else if ((name == null || name.trim().length() == 0))
 			throw new InvalidInputException("Equipment name cannot be empty!");
-		if (isNumeric(name))
-			throw new InvalidInputException("Equipment name cannot be numeric!");
-		if (quantity < 0)
-			throw new InvalidInputException("Equipment quantity cannot be negative!");
-		if(quantity == 0)
+		else if (quantity < 0)
+			throw new InvalidInputException("Equipment quantity cannot be a negative value!");
+		else if(quantity == 0)
 			throw new InvalidInputException("Equipment quantity cannot be empty or zero!");
-		if (quantity != (int)quantity)
-			throw new InvalidInputException("Equipment quantity cannot be a non-integer value!");
-		
-		if(hasEquipment("foodtruckmanagementsystem.xml", name) == true){
-			name = name.toLowerCase();
-		}
 		else{
-		
-			name = name.toLowerCase();
+			//name = name.toLowerCase();
+			
 			Equipment e = new Equipment(name, quantity);
-			Manager m = Manager.getInstance();
-			m.addEquipment(e);
-			PersistenceXStream.saveToXMLwithXStream(m);
+			Manager m2 = Manager.getInstance();
+			//PersistenceFoodTruckManagementSystem.initializeXStream();
+			//Manager m2 = (Manager) PersistenceXStream.loadFromXMLwithXStream();
+			
+			boolean flag = false;
+			System.out.println(m2.numberOfEquipments());
+			System.out.println(name);
+			/*for(int i = 0; i<m2.numberOfEquipments(); i++){
+				System.out.println(m2.getEquipment(i).getName());
+				if(name == m2.getEquipment(i).getName()){
+					System.out.println(m2.getEquipment(i).getQuantity());
+					m2.getEquipment(i).setQuantity(quantity + m2.getEquipment(i).getQuantity());
+					System.out.println(m2.getEquipment(i).getQuantity());
+					flag = true;
+					break;
+				}
+			}*/
+			
+			m2.addEquipment(e);
+			PersistenceXStream.saveToXMLwithXStream(m2);
+		
+		
 		}
 	}
 	

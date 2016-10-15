@@ -11,7 +11,7 @@ import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Supply;
 public class PersistenceFoodTruckManagementSystem {
 	
 	private static void initializeXStream() {
-		PersistenceXStream.setFilename("foodtruckmanagementsystem.xml");
+		PersistenceXStream.setFilename("data.xml");
 		PersistenceXStream.setAlias("equipment", Equipment.class);
 		PersistenceXStream.setAlias("supply", Supply.class);
 		PersistenceXStream.setAlias("order", Order.class);
@@ -32,13 +32,13 @@ public class PersistenceFoodTruckManagementSystem {
 				m.addSupply(pIt.next());
 			Iterator<Equipment> eIt = m2.getEquipments().iterator();
 			while (eIt.hasNext())
-				m2.addEquipment(eIt.next());
+				m.addEquipment(eIt.next());
 			Iterator<Order> oIt = m2.getOrders().iterator();
 			while (oIt.hasNext())
-				m2.addOrder(oIt.next());
+				m.addOrder(oIt.next());
 			Iterator<StaffMember> sIt = m2.getStaffmembers().iterator();
 			while(sIt.hasNext())
-				m2.addStaffmember(sIt.next());
+				m.addStaffmember(sIt.next());
 		}
 		
 	}
