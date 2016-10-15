@@ -32,53 +32,28 @@ public class ItemController {
 		else if(quantity == 0)
 			throw new InvalidInputException("Equipment quantity cannot be empty or zero!");
 		else{
-			//name = name.toLowerCase();
+			name = name.toLowerCase();			
 			
-			Equipment e = new Equipment(name, quantity);
-			Manager m2 = Manager.getInstance();
-			//PersistenceFoodTruckManagementSystem.initializeXStream();
-			//Manager m2 = (Manager) PersistenceXStream.loadFromXMLwithXStream();
+			int temp = 0;	
 			
-			boolean flag = false;
-			System.out.println(m2.numberOfEquipments());
-			System.out.println(name);
-			/*for(int i = 0; i<m2.numberOfEquipments(); i++){
-				System.out.println(m2.getEquipment(i).getName());
-				if(name == m2.getEquipment(i).getName()){
-					System.out.println(m2.getEquipment(i).getQuantity());
-					m2.getEquipment(i).setQuantity(quantity + m2.getEquipment(i).getQuantity());
-					System.out.println(m2.getEquipment(i).getQuantity());
-					flag = true;
+			Manager m = Manager.getInstance();
+	
+			for(Equipment equipment : m.getEquipments())
+			{
+				if(name.equals(equipment.getName()))
+				{
+					temp = equipment.getQuantity();
+					m.removeEquipment(equipment);
 					break;
 				}
-			}*/
+			}			
 			
-			m2.addEquipment(e);
-			PersistenceXStream.saveToXMLwithXStream(m2);
-		
-		
+			m.addEquipment(new Equipment(name, quantity + temp));
+			PersistenceXStream.saveToXMLwithXStream(m);
 		}
-	}
-	
-	public static boolean hasEquipment(String documentName, String equipmentName) throws XMLStreamException{
-		    Reader reader = new StringReader(documentName);
-		    XMLStreamReader xml = XMLInputFactory.newFactory().createXMLStreamReader(reader);
-		    try {
-		      while (xml.hasNext()) {
-		        if (xml.next() == XMLStreamConstants.START_ELEMENT
-		            && equipmentName.equals(xml.getLocalName())) {
-		          return true;
-		        }
-		      }
-		    } finally {
-		      xml.close();
-		    }
-		    return false;
-	}
-	
+	}	
 	
 	public void editEquipment(String name, int quantity){
 		
-	}
-	
+	}	
 }
