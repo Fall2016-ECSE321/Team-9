@@ -14,15 +14,19 @@ public class ItemController {
 	}
 	
 	public void createEquipment(String name, int quantity) throws InvalidInputException{
-		if ((name == null || name.trim().length() == 0)&& (quantity == 0))
-			throw new InvalidInputException("Equipment name and quantity cannot be empty!");
-		else if ((name == null || name.trim().length() == 0))
-			throw new InvalidInputException("Equipment name cannot be empty!");
-		else if (quantity < 0)
-			throw new InvalidInputException("Equipment quantity cannot be a negative value!");
-		else if(quantity == 0)
-			throw new InvalidInputException("Equipment quantity cannot be empty or zero!");
-		else{
+		String error = "";	
+		if ((name == null || name.trim().length() == 0))
+			error = error + "Equipment name cannot be empty! ";
+		if(quantity == 0)
+			error = error + "Equipment quantity cannot be zero! ";
+		if (quantity < 0)
+			error = error + "Equipment quantity cannot be a negative value!";
+		
+		error = error.trim();
+		if(error.length() > 0)
+			throw new InvalidInputException(error);
+		
+		
 			name = name.toLowerCase();			
 			
 			boolean isUpdated = false;
@@ -45,7 +49,6 @@ public class ItemController {
 			
 			PersistenceXStream.saveToXMLwithXStream(m);
 		}
-	}	
 	
 	public void editEquipment(String name, int quantity){
 		
