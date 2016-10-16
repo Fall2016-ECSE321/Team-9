@@ -3,9 +3,6 @@
 require_once __DIR__.'../../model/Equipment.php';
 require_once __DIR__.'../../model/Manager.php';
 require_once __DIR__.'../../persistence/PersistenceFoodTruckManagementSystem.php';
-// require_once 'C:\Users\MalkolmPC\Desktop\EclipseWorkspace\FoodTruckManagementSystem\model\Order.php';
-// require_once 'C:\Users\MalkolmPC\Desktop\EclipseWorkspace\FoodTruckManagementSystem\model\StaffMember.php';
-// require_once 'C:\Users\MalkolmPC\Desktop\EclipseWorkspace\FoodTruckManagementSystem\model\Supply.php';
 
 
 class PersistenceFoodTruckManagementSystemTest extends PHPUnit_Framework_TestCase{
