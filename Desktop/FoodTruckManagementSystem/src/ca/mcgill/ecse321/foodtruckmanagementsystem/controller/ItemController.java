@@ -1,16 +1,7 @@
 package ca.mcgill.ecse321.foodtruckmanagementsystem.controller;
 
-import java.io.Reader;
-import java.io.StringReader;
-
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamConstants;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.XMLStreamReader;
-
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Equipment;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Manager;
-import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceFoodTruckManagementSystem;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceXStream;
 
 public class ItemController {
@@ -34,7 +25,7 @@ public class ItemController {
 		else{
 			name = name.toLowerCase();			
 			
-			int temp = 0;	
+			boolean isUpdated = false;
 			
 			Manager m = Manager.getInstance();
 	
@@ -42,13 +33,16 @@ public class ItemController {
 			{
 				if(name.equals(equipment.getName()))
 				{
-					temp = equipment.getQuantity();
-					m.removeEquipment(equipment);
+					isUpdated = true;
+					equipment.setQuantity(equipment.getQuantity() + quantity);
 					break;
 				}
 			}			
+			if(!isUpdated)
+			{
+				m.addEquipment(new Equipment(name, quantity));
+			}			
 			
-			m.addEquipment(new Equipment(name, quantity + temp));
 			PersistenceXStream.saveToXMLwithXStream(m);
 		}
 	}	
