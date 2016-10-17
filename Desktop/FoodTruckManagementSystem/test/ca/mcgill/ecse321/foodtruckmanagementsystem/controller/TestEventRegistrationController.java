@@ -193,19 +193,93 @@ public class TestEventRegistrationController {
 		Manager m = Manager.getInstance();
 		assertEquals(0, m.getEquipments().size());
 		
-		String name = "spoon";
+		String name1 = "";
 		int quantity = -1;
+		String name2 = " ";
+		String name3 = null;
+		String name4 = "spoon";
+
 		
 		ItemController ic = new ItemController();
-		String error = null;
+		String error0 = null;
+		String error1 = null;
+		String error2 = null;
+		String error3 = null;
 		try {
-			ic.createEquipment(name, quantity);
+			ic.createEquipment(name1, quantity);
 		} catch (InvalidInputException e){
-			error = e.getMessage();
+			error0 = e.getMessage();
+		}
+		try {
+			ic.createEquipment(name2, quantity);
+		} catch (InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		try {
+			ic.createEquipment(name3, quantity);
+		} catch (InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		try {
+			ic.createEquipment(name4, quantity);
+		} catch (InvalidInputException e){
+			error3 = e.getMessage();
 		}
 		
 		//check error
-		assertEquals("Equipment quantity cannot be a negative value!", error);
+		assertEquals("Equipment name cannot be empty! Equipment quantity cannot be negative!", error0);
+		assertEquals("Equipment name cannot be empty! Equipment quantity cannot be negative!", error1);
+		assertEquals("Equipment name cannot be empty! Equipment quantity cannot be negative!", error2);
+		assertEquals("Equipment quantity cannot be negative!", error3);
+		
+		//check no change in memory
+		assertEquals(0, m.getEquipments().size());
+		
+		
+	}
+	
+	public void testCreateEquipmentZeroQuantity() {
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getEquipments().size());
+		
+		String name1 = "";
+		int quantity = 0;
+		String name2 = " ";
+		String name3 = null;
+		String name4 = "spoon";
+
+		
+		ItemController ic = new ItemController();
+		String error0 = null;
+		String error1 = null;
+		String error2 = null;
+		String error3 = null;
+		try {
+			ic.createEquipment(name1, quantity);
+		} catch (InvalidInputException e){
+			error0 = e.getMessage();
+		}
+		try {
+			ic.createEquipment(name2, quantity);
+		} catch (InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		try {
+			ic.createEquipment(name3, quantity);
+		} catch (InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		try {
+			ic.createEquipment(name4, quantity);
+		} catch (InvalidInputException e){
+			error3 = e.getMessage();
+		}
+		
+		//check error
+		assertEquals("Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", error0);
+		assertEquals("Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", error1);
+		assertEquals("Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", error2);
+		assertEquals("Equipment quantity cannot be zero!", error3);
 		
 		//check no change in memory
 		assertEquals(0, m.getEquipments().size());
