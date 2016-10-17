@@ -8,7 +8,7 @@ public class FoodTruckManagementSystem {
 
 	public static void main(String [] args) {
 		//load model 
-		PersistenceFoodTruckManagementSystem.loadFoodTruckManagementSystemModel();
+		//PersistenceFoodTruckManagementSystem.loadFoodTruckManagementSystemModel();
 	
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {

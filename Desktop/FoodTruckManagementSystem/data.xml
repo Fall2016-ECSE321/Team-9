@@ -1,19 +1,11 @@
-<manager id="1">
+<ca.mcgill.ecse321.foodtruckmanagementsystem.model.Manager id="1">
   <equipments id="2">
-    <equipment id="3">
-      <name>forks</name>
-      <quantity>9</quantity>
-    </equipment>
-    <equipment id="4">
-      <name>spoons</name>
-      <quantity>10</quantity>
-    </equipment>
-    <equipment id="5">
-      <name>56</name>
-      <quantity>6</quantity>
-    </equipment>
+    <ca.mcgill.ecse321.foodtruckmanagementsystem.model.Equipment id="3">
+      <name>Fridge</name>
+      <quantity>2</quantity>
+    </ca.mcgill.ecse321.foodtruckmanagementsystem.model.Equipment>
   </equipments>
-  <supplies id="6"/>
-  <orders id="7"/>
-  <staffmembers id="8"/>
-</manager>
+  <supplies id="4"/>
+  <orders id="5"/>
+  <staffmembers id="6"/>
+</ca.mcgill.ecse321.foodtruckmanagementsystem.model.Manager>
