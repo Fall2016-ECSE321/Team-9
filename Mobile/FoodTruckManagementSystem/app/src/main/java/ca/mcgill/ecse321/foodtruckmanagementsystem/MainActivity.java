@@ -72,16 +72,28 @@ public class MainActivity extends AppCompatActivity {
     }
 
     //Creates an object of type 'Equipment' to the XML file
-    public void addEquipment(View v) throws IOException {
+    public void addEquipment(View v) throws IOException{
         androidLocationSet();
         TextView ev = (TextView) findViewById(R.id.addequipment_name);
         TextView en = (TextView) findViewById(R.id.addequipment_quantity);
         ItemController ic = new ItemController();
-        try{
-            ic.createEquipment(ev.getText().toString(), Integer.parseInt(en.getText().toString()));
-        } catch(InvalidInputException e) {
-            e.printStackTrace();
-            showToast(e);
+        if(en.getText().toString().equals("")) {
+            if(ev.getText().toString().equals("")){
+                Toast display = Toast.makeText(this, "Equipment name and quantity cannot be empty!", Toast.LENGTH_LONG);
+                display.show();
+            }
+            Toast display = Toast.makeText(this, "Equipment quantity cannot be empty!", Toast.LENGTH_LONG);
+            display.show();
+
+        }
+
+        else{
+            try {
+                ic.createEquipment(ev.getText().toString(), Integer.valueOf(en.getText().toString()));
+            } catch (InvalidInputException e) {
+                e.printStackTrace();
+                showToast(e);
+            }
         }
 
         refreshData();
