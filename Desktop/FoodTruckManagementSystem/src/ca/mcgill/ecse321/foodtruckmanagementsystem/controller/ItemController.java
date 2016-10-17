@@ -52,5 +52,6 @@ public class ItemController {
 	
 	public void editEquipment(String name, int quantity){
 		
-	}	
+	}
+	
 }
