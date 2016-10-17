@@ -96,7 +96,7 @@ public class TestEventRegistrationController {
 		}
 		
 		// check error 
-		assertEquals("Equipment name and quantity cannot be empty!", error1);
+		assertEquals("Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", error1);
 		assertEquals("Equipment quantity cannot be empty or zero!", error2);
 		assertEquals("Equipment name cannot be empty!", error3);
 		
@@ -138,7 +138,7 @@ public class TestEventRegistrationController {
 		}
 		
 		// check error 
-		assertEquals("Equipment name and quantity cannot be empty!", error1);
+		assertEquals("Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", error1);
 		assertEquals("Equipment quantity cannot be empty or zero!", error2);
 		assertEquals("Equipment name cannot be empty!", error3);
 				
@@ -180,7 +180,7 @@ public class TestEventRegistrationController {
 		}
 		
 		// check error 
-		assertEquals("Equipment name and quantity cannot be empty!", error1);
+		assertEquals("Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", error1);
 		assertEquals("Equipment quantity cannot be empty or zero!", error2);
 		assertEquals("Equipment name cannot be empty!", error3);
 				
