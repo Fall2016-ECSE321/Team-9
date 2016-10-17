@@ -67,15 +67,15 @@ public class MainActivity extends AppCompatActivity {
 
     //Visual refresh of Android Application
     private void refreshData() {
-        TextView en = (TextView) findViewById(R.id.newequipment_name);
-        TextView eq = (TextView) findViewById(R.id.newequipment_quantity);
+        TextView en = (TextView) findViewById(R.id.addequipment_name);
+        TextView eq = (TextView) findViewById(R.id.addequipment_quantity);
     }
 
     //Creates an object of type 'Equipment' to the XML file
     public void addEquipment(View v) throws IOException {
         androidLocationSet();
-        TextView ev = (TextView) findViewById(R.id.newequipment_name);
-        TextView en = (TextView) findViewById(R.id.newequipment_quantity);
+        TextView ev = (TextView) findViewById(R.id.addequipment_name);
+        TextView en = (TextView) findViewById(R.id.addequipment_quantity);
         ItemController ic = new ItemController();
         try{
             ic.createEquipment(ev.getText().toString(), Integer.parseInt(en.getText().toString()));
