@@ -14,16 +14,26 @@
         tools:context="ca.mcgill.ecse321.foodtruckmanagementsystem.MainActivity"
         tools:showIn="@layout/activity_main">
 
-        <View
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#E1338A"
+        android:id="@+id/errorhandler"
+
+        />
+
+    <View
             android:layout_height="2dp"
             android:layout_width="fill_parent"
             android:background="#f44242"/>
 
-        <LinearLayout
+    <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:orientation="horizontal">
-            <View
+
+        <View
                 android:layout_width="2dp"
                 android:layout_height="50dp"
                 android:background="#425ff4"/>
@@ -41,7 +51,7 @@
             <EditText
                 android:layout_width="103dp"
                 android:layout_height="match_parent"
-                android:inputType="number"
+                android:inputType="numberSigned"
                 android:id="@+id/addequipment_quantity"
                 android:textStyle="italic"
                 android:hint="@string/addequipmentquantity_hint"/>
