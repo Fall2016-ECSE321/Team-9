@@ -18,9 +18,9 @@ public class ItemController {
 		if ((name == null || name.trim().length() == 0))
 			error = error + "Equipment name cannot be empty! ";
 		if(quantity == 0)
-			error = error + "Equipment quantity cannot be zero! ";
+			error = error + "Equipment quantity cannot be empty or zero! ";
 		if (quantity < 0)
-			error = error + "Equipment quantity cannot be a negative value!";
+			error = error + "Equipment quantity cannot be negative!";
 		
 		error = error.trim();
 		if(error.length() > 0)
