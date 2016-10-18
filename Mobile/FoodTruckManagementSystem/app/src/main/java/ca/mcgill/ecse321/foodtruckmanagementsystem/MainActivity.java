@@ -81,7 +81,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Creates an object of type 'Equipment' to the XML file
     public void addEquipment(View v) throws IOException{
-//        androidLocationSet();
+         androidLocationSet();
 
         TextView ev = (TextView) findViewById(R.id.addequipment_name);
         EditText en = (EditText) findViewById(R.id.addequipment_quantity);
@@ -96,47 +96,18 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         else{
-        try {
-            pc.createEquipment(ev.getText().toString(),Integer.parseInt(en.getText().toString()));
-        }  catch (InvalidInputException e) {
-            error.setText(e.getMessage());
+            try {
+                pc.createEquipment(ev.getText().toString(),Integer.parseInt(en.getText().toString()));
+                }  catch (InvalidInputException e) {
+                error.setText(e.getMessage());
+                }
         }
-        }
-
-
-
-//        ItemController ic = new ItemController();
-//        if(en.getText().toString().equals("")) {
-//            if(ev.getText().toString().equals("")){
-//                Toast display = Toast.makeText(this, "Equipment name and quantity cannot be empty!", Toast.LENGTH_LONG);
-//                display.setGravity(Gravity.TOP| Gravity.LEFT,0,0);
-//                display.show();
-//            }
-//            else {
-//                Toast display = Toast.makeText(this, "Equipment quantity cannot be empty!", Toast.LENGTH_LONG);
-//                display.setGravity(Gravity.TOP| Gravity.LEFT,0,0);
-//                display.show();
-//            }
-//        }
-//
-//        else{
-//            try {
-//                ic.createEquipment(ev.getText().toString(), Integer.valueOf(en.getText().toString()));
-//            } catch (InvalidInputException e) {
-//                e.printStackTrace();
-//                showToast(e);
-//            }
-
-
         refreshData();
     }
 
-    //Displays a relevant error message at the bottom of the screen to the user
-    public void showToast(InvalidInputException error) {
-        int duration = Toast.LENGTH_LONG;
-        Toast display = Toast.makeText(this, error.getMessage(), duration);
-        display.show();
-        display.setGravity(Gravity.TOP| Gravity.LEFT,0,0);
+    public void removeEquipment(View v) throws IOException {
+
     }
+
 }
 
