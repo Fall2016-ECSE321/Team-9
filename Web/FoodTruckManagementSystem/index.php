@@ -61,7 +61,7 @@
 			</span> <br>
 		<br> &nbsp&nbsp
 		<button type="submit" name="addEquipment" class="btn btn-default">Add Equipment</button>
-		<button type="submit" name="removeEquipment" class="btn btn-default">Add Equipment</button>
+		<button type="submit" name="removeEquipment" class="btn btn-default">Remove Equipment</button>
 
 	</form>
 
