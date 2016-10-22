@@ -76,7 +76,8 @@ public class ItemController {
 						throw new InvalidInputException(error);
 					}
 					else{
-						equipment.delete();
+						m.removeEquipment(equipment);
+						break;
 					}
 				}
 			}
