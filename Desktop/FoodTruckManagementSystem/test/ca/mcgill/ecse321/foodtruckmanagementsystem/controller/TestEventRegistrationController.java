@@ -307,7 +307,7 @@ public class TestEventRegistrationController {
 		assertEquals(0, m.getSupplies().size());
 
 		String name = "tomato";
-		int quantity = 3;
+		double quantity = 3;
 		String unit = "kilogram";
 
 		ItemController ic = new ItemController();
@@ -829,7 +829,7 @@ public class TestEventRegistrationController {
 		assertEquals(errString4, error15);
 	}
 
-	public void checkResultSupply(String name, int quantity, String unit,
+	public void checkResultSupply(String name, double quantity, String unit,
 			Manager m2) {
 		// assertEquals(1, m2.getEquipments().size());
 		assertEquals(1, m2.getSupplies().size());
