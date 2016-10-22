@@ -68,27 +68,25 @@ class Controller{
 			for($i = 0; $i < $m->numberOfEquipments(); $i++){
 				if($name == $m->getEquipment_index($i)->getName()){
 					$flag = true;
-					if($m->getEquipment_index($i)->getQuantity() > $quantity){
-						$m->getEquipment_index($i)->setQuantity((string)(($m->getEquipment_index($i)->getQuantity()) - $quantity));
+					$storeQuantity = $m->getEquipment_index($i)->getQuantity();
+					if($storeQuantity > $quantity){
+						$m->getEquipment_index($i)->setQuantity((string)($storeQuantity - $quantity));
 						break;
 					}
-					elseif (($m->getEquipment_index($i)->getQuantity) < $quantity){
-						$error = "Equipment quantity is only: " + (string)($m->getEquipment_index($i)->getQuantity);
+					elseif ($storeQuantity < $quantity){
+						$error = "Equipment quantity is only: ".$storeQuantity;
 						throw new Exception($error);
 					}
 					else{
-						$m->getEquipment_index($i)->delete();
-						//$m->removeEquipment(getEquipment_index($i));
-						$pm->writeDataToStore($m);
+						// $m->getEquipment_index($i)->delete();
+						$m->removeEquipment($m->getEquipment_index($i));
 						break;
 					}
-				//break;
 				}
 			}
 			
 			if (!$flag){
 				$error = "Equipment name does not exist!";
-// 				$error = trim($error);
 				throw new Exception($error);
 			}
 			
