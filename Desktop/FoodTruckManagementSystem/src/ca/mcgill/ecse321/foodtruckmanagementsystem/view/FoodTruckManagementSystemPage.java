@@ -27,6 +27,10 @@ import javax.swing.SwingConstants;
 
 import java.awt.Toolkit;
 import java.awt.Component;
+import java.awt.Dimension;
+
+import javax.swing.border.CompoundBorder;
+import javax.swing.border.LineBorder;
 
 public class FoodTruckManagementSystemPage extends JFrame {
 
@@ -58,8 +62,8 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FoodTruckManagementSystemPage.class.getResource("/ca/mcgill/ecse321/foodtruckmanagementsystem/view/foodtruck.png")));
 		setTitle("Food Truck Management System");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		//setBounds(100, 100, 900, 900);
 		contentPane = new JPanel();
+		setPreferredSize(new Dimension(900, 900));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
@@ -69,18 +73,17 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(addremovePane, GroupLayout.PREFERRED_SIZE, 900, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(900, Short.MAX_VALUE))
+				.addComponent(addremovePane, GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addComponent(addremovePane, GroupLayout.PREFERRED_SIZE, 201, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(656, Short.MAX_VALUE))
+					.addComponent(addremovePane, GroupLayout.PREFERRED_SIZE, 156, GroupLayout.PREFERRED_SIZE)
+					.addContainerGap(646, Short.MAX_VALUE))
 		);
 		
 		JPanel panel = new JPanel();
+		panel.setPreferredSize( new Dimension(0, 200) );
 		addremovePane.setViewportView(panel);
 		
 		eError = "";
@@ -102,13 +105,6 @@ public class FoodTruckManagementSystemPage extends JFrame {
 			}
 		});
 		
-		JButton btnRemoveEquipment = new JButton("Remove Equipment");
-		btnRemoveEquipment.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				removeEquipmentActionPerformed(e);
-			}
-		});
-		
 		JLabel supply = new JLabel("Supply:");
 		
 		JButton btnAddSupply = new JButton("Add Supply");
@@ -125,7 +121,6 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		supplyName = new JTextField();
 		supplyName.setColumns(10);
 		
-		// determine what the step should be
 		model2 = new SpinnerNumberModel(0, -1000000, 1000000, 0.1);
 		JSpinner supplyQuantity = new JSpinner(model2);
 		
@@ -138,42 +133,39 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		
 		supplyUnit = new JTextField();
 		supplyUnit.setColumns(10);
+		
+		JButton button = new JButton("Remove Equipment");
 		GroupLayout gl_panel = new GroupLayout(panel);
 		gl_panel.setHorizontalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
+					.addContainerGap()
 					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 						.addComponent(equipmentError)
 						.addComponent(supplyError)
 						.addGroup(gl_panel.createSequentialGroup()
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
-								.addGroup(gl_panel.createSequentialGroup()
-									.addComponent(equipment)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(equipmentName, GroupLayout.PREFERRED_SIZE, 306, GroupLayout.PREFERRED_SIZE))
-								.addGroup(gl_panel.createSequentialGroup()
-									.addComponent(supply)
-									.addPreferredGap(ComponentPlacement.RELATED, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addComponent(supplyName, GroupLayout.PREFERRED_SIZE, 312, GroupLayout.PREFERRED_SIZE)))
+							.addComponent(supply)
+							.addGap(22)
+							.addComponent(supplyName, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING, false)
-								.addComponent(supplyQuantity)
-								.addComponent(equipmentQuantity, GroupLayout.PREFERRED_SIZE, 109, Short.MAX_VALUE))
+							.addComponent(supplyQuantity, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addGroup(gl_panel.createSequentialGroup()
-									.addComponent(supplyUnit, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnAddSupply, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnRemoveSupply, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-									.addGap(3))
-								.addGroup(gl_panel.createSequentialGroup()
-									.addComponent(btnAddEquipment)
-									.addPreferredGap(ComponentPlacement.RELATED)
-									.addComponent(btnRemoveEquipment)))
-							.addPreferredGap(ComponentPlacement.RELATED)))
-					.addContainerGap(1032, GroupLayout.PREFERRED_SIZE))
+							.addComponent(supplyUnit, GroupLayout.PREFERRED_SIZE, 120, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnAddSupply)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnRemoveSupply))
+						.addGroup(gl_panel.createSequentialGroup()
+							.addComponent(equipment)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(equipmentName, GroupLayout.PREFERRED_SIZE, 177, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(equipmentQuantity, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnAddEquipment)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(button)))
+					.addGap(396))
 		);
 		gl_panel.setVerticalGroup(
 			gl_panel.createParallelGroup(Alignment.LEADING)
@@ -185,18 +177,18 @@ public class FoodTruckManagementSystemPage extends JFrame {
 						.addComponent(equipmentName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(equipmentQuantity, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 						.addComponent(btnAddEquipment)
-						.addComponent(btnRemoveEquipment))
-					.addGap(29)
+						.addComponent(button))
+					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(supplyError)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_panel.createParallelGroup(Alignment.BASELINE)
 						.addComponent(supply)
-						.addComponent(supplyName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(supplyQuantity, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(supplyUnit, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnRemoveSupply)
 						.addComponent(btnAddSupply)
-						.addComponent(btnRemoveSupply))
-					.addContainerGap(190, Short.MAX_VALUE))
+						.addComponent(supplyUnit, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(supplyQuantity, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+						.addComponent(supplyName, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
+					.addGap(51))
 		);
 		panel.setLayout(gl_panel);
 		contentPane.setLayout(gl_contentPane);
@@ -210,27 +202,37 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		supplyError.setText(sError);
 	}
 	
+	private void resetEquipmentData()
+	{
+		equipmentName.setText("");
+		model1.setValue(0);
+	}
+	
+	private void resetSupplyData()
+	{
+		supplyName.setText("");
+		supplyUnit.setText("");
+		model2.setValue(0.0);	
+	}
+	
 	private void addEquipmentActionPerformed(java.awt.event.ActionEvent evt)
 	{
 		ItemController c = new ItemController();
 		eError = "";
-			try {
-				c.createEquipment(equipmentName.getText(),  model1.getNumber().intValue());
-			} catch (InvalidInputException e) {
-				eError = e.getMessage();
-			}
-		refreshData();
-	}
-	
-	private void removeEquipmentActionPerformed(java.awt.event.ActionEvent evt)
-	{
-		ItemController c = new ItemController();
-		eError = "";
-			try {
-				c.removeEquipment(equipmentName.getText(),  model1.getNumber().intValue());
-			} catch (InvalidInputException e) {
-				eError = e.getMessage();
-			}
+		
+		try {
+			c.createEquipment(equipmentName.getText(),  model1.getNumber().intValue());
+		} catch (InvalidInputException e) {
+			eError = e.getMessage();
+		}
+		
+		if(eError.contains("Equipment name"))
+			equipmentName.setText("");
+		if(eError.contains("Equipment quantity"))
+			model1.setValue(0);
+		if(eError.equals(""))
+			resetEquipmentData();
+		
 		refreshData();
 	}
 	
@@ -238,22 +240,44 @@ public class FoodTruckManagementSystemPage extends JFrame {
 	{
 		ItemController c = new ItemController();
 		sError = "";
+		
 		try {
 			c.createSupply(supplyName.getText(), model2.getNumber().doubleValue(), supplyUnit.getText());
 		} catch (InvalidInputException e) {
 			sError = e.getMessage();
-		}
+		}	
+		
+		if(sError.contains("Supply name"))
+			supplyName.setText("");
+		if(sError.contains("Supply quantity"))
+			model2.setValue(0.0);
+		if(sError.contains("Supply unit"))
+			supplyUnit.setText("");		
+		if(sError.equals(""))
+			resetSupplyData();
+		
 		refreshData();
 	}
 	
 	private void removeSupplyActionPerformed(java.awt.event.ActionEvent evt)
 	{
-		/*
 		ItemController c = new ItemController();
 		sError = "";
+		
 		try {
 			c.removeSupply(supplyName.getText(), model2.getNumber().doubleValue());
-		}
-		*/
+		} catch (InvalidInputException e)
+		{
+			sError = e.getMessage();
+		}	
+		
+		if(sError.contains("Supply name"))
+			supplyName.setText("");
+		if(sError.contains("Supply quantity") || sError.contains("remove more than"))
+			model2.setValue(0.0);	
+		if(sError.equals(""))
+			resetSupplyData();
+		
+		refreshData();
 	}
 }
