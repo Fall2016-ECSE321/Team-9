@@ -62,7 +62,7 @@ class Controller{
 		$m  = $pm->loadDataFromStore();
 		$flag = false;
 		
-		if (true){
+		if (($name != null || strlen($name)!=0)&&($quantity != null || $quantity !=0) &&($quantity>0)){
 			//($name != null || strlen($name)!=0)&&($quantity != null || $quantity !=0) &&($quantity>0)
 			//2. Remove the equipment
 			for($i = 0; $i < $m->numberOfEquipments(); $i++){
