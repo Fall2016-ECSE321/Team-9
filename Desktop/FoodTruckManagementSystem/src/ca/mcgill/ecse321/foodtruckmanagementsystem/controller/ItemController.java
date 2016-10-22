@@ -66,9 +66,9 @@ public class ItemController {
 			
 			for(Equipment equipment : m.getEquipments()){
 				if(name.equals(equipment.getName())){
+					findName = true;
 					//isUpdated = true;
 					if(equipment.getQuantity() - quantity > 0){
-						findName = true;
 						equipment.setQuantity(equipment.getQuantity() - quantity);
 					}
 					else if (equipment.getQuantity() - quantity < 0){
