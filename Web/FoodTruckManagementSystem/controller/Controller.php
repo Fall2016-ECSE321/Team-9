@@ -56,31 +56,40 @@ class Controller{
 		$error = "";
 		$name= InputValidator::validate_input($equipment_name);
 		$quantity = InputValidator::validate_input($equipment_quantity);
-		if (($name != null || strlen($name)!=0)&&($quantity != null || $quantity !=0) &&($quantity>0)){
-			//1. Load all of the data
-			$pm = new PersistenceFoodTruckManagementSystem();
-			$m  = $pm->loadDataFromStore();
-			$flag = false;
-
+		
+		//1. Load all of the data
+		$pm = new PersistenceFoodTruckManagementSystem();
+		$m  = $pm->loadDataFromStore();
+		$flag = false;
+		
+		if (true){
+			//($name != null || strlen($name)!=0)&&($quantity != null || $quantity !=0) &&($quantity>0)
 			//2. Remove the equipment
 			for($i = 0; $i < $m->numberOfEquipments(); $i++){
 				if($name == $m->getEquipment_index($i)->getName()){
+					$flag = true;
 					if($m->getEquipment_index($i)->getQuantity() > $quantity){
-						$m->getEquipment_index($i)->setQuantity((string)($m->getEquipment_index($i)->getQuantity() - $quantity));
+						$m->getEquipment_index($i)->setQuantity((string)(($m->getEquipment_index($i)->getQuantity()) - $quantity));
+						break;
 					}
-					if($m->getEquipment_index($i)->getQuantity == $quantity){
-						$m->getEquipment_index($i)->delete();
+					elseif (($m->getEquipment_index($i)->getQuantity) < $quantity){
+						$error = "Equipment quantity is only: " + $m->getEquipment_index($i)->getQuantity ;
+						throw new Exception($error);
 					}
 					else{
-						$error .= "Equipment quantity is only: " + $m->getEquipment_index($i)->getQuantity ;
+						$m->getEquipment_index($i)->delete();
+						//$m->removeEquipment(getEquipment_index($i));
+						$pm->writeDataToStore($m);
+						break;
 					}
-				$flag = true;
-				break;
+				//break;
 				}
 			}
 			
 			if (!$flag){
-				$error .= "Equipment name does not exist!";
+				$error = "Equipment name does not exist!";
+// 				$error = trim($error);
+				throw new Exception($error);
 			}
 			
 			//3. Write all of the data
@@ -103,3 +112,4 @@ class Controller{
 	}
 	
 }
+?>
