@@ -131,9 +131,9 @@ public class ItemController {
 		if ((name == null || name.trim().length() == 0))
 			error = error + "Supply name cannot be empty! ";
 		if(quantity == 0)
-			error = error + "Supply quantity cannot be empty or zero!";
+			error = error + "Supply quantity cannot be empty or zero! ";
 		if(quantity < 0)
-			error = error + "Supply quantity cannot be a negative!";
+			error = error + "Supply quantity cannot be negative! ";
 		
 		error = error.trim();
 		if(error.length() > 0)
@@ -151,7 +151,7 @@ public class ItemController {
 						break;
 					}
 					else if (supply.getQuantity() - quantity < 0){
-						error = error + "Cannot remove more than " + supply.getQuantity() + " " + supply.getName().toString() + "'s";
+						error = error + "Cannot remove more than " + supply.getQuantity() + " " + supply.getUnit().toString() + " of " + name;
 						throw new InvalidInputException(error);
 
 					}
