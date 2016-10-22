@@ -244,5 +244,26 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		// $this->assertEquals(0, count($this->m->getSupplies()));
 		// $this->assertEquals(0, count($this->m->getStaff()));
 	}
+	public function testRemoveEquipment() {
+// 		$equipmentName = "knife";
+// 		$equipmentQuantity = 3;
+		
+		//$c->createEquipment($equipmentName, $equipmentQuantity);
+		$this->assertEquals ( 0, count ( $this->m->getEquipments () ) );
+	
+
+		try {
+			$this->c->createEquipment ( $equipmentName, $equipmentQuantity );
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$this->fail ();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getEquipments () ) );
+		$this->assertEquals ( $equipmentName, $this->m->getEquipment_index ( 0 )->getName () );
+		$this->assertEquals ( $equipmentQuantity, $this->m->getEquipment_index ( 0 )->getQuantity () );
+	}
 }
 ?>

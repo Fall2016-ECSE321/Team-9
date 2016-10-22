@@ -60,7 +60,9 @@ class Controller{
 			//1. Load all of the data
 			$pm = new PersistenceFoodTruckManagementSystem();
 			$m  = $pm->loadDataFromStore();
-				
+			$flag = false;
+
+			//2. Remove the equipment
 			for($i = 0; $i < $m->numberOfEquipments(); $i++){
 				if($name == $m->getEquipment_index($i)->getName()){
 					if($m->getEquipment_index($i)->getQuantity() > $quantity){
@@ -72,14 +74,15 @@ class Controller{
 					else{
 						$error .= "Equipment quantity is only: " + $m->getEquipment_index($i)->getQuantity ;
 					}
+				$flag = true;
 				break;
 				}
 			}
-			if (! $flag){
-				//2. Add the new equipment
-				$equipment = new Equipment($name, $quantity);
-				$m->addEquipment($equipment);
+			
+			if (!$flag){
+				$error .= "Equipment name does not exist!";
 			}
+			
 			//3. Write all of the data
 			$pm->writeDataToStore($m);
 		}
