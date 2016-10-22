@@ -61,28 +61,29 @@ public class ItemController {
 			throw new InvalidInputException(error);
 				
 			name = name.toLowerCase();
-			
+			boolean findName = false;
 			Manager m = Manager.getInstance();
 			
 			for(Equipment equipment : m.getEquipments()){
 				if(name.equals(equipment.getName())){
 					//isUpdated = true;
 					if(equipment.getQuantity() - quantity > 0){
+						findName = true;
 						equipment.setQuantity(equipment.getQuantity() - quantity);
 					}
 					else if (equipment.getQuantity() - quantity < 0){
 						error = error + "Cannot remove more than " + equipment.getQuantity() + " " + equipment.getName().toString() + "'s";
+						throw new InvalidInputException(error);
 					}
 					else{
 						equipment.delete();
 					}
 				}
-				else{
-					//error = error + "Equipment name not found!";
-				}
 			}
-		
-		
+			if(!findName){
+				throw new InvalidInputException("Equipment name does not exist!");
+			}
+			PersistenceXStream.saveToXMLwithXStream(m);	
 	}
 	
 	public void createSupply(String name, int quantity, String unit) throws InvalidInputException{
@@ -138,27 +139,32 @@ public class ItemController {
 			throw new InvalidInputException(error);
 		
 			name = name.toLowerCase();
-			
+			boolean findName = false;
 			Manager m = Manager.getInstance();
 			
 			for(Supply supply : m.getSupplies()){
 				if(name.equals(supply.getName())){
+					findName = true;
 					if(supply.getQuantity() - quantity > 0){
 						supply.setQuantity(supply.getQuantity() - quantity);
+						break;
 					}
 					else if (supply.getQuantity() - quantity < 0){
 						error = error + "Cannot remove more than " + supply.getQuantity() + " " + supply.getName().toString() + "'s";
+						throw new InvalidInputException(error);
+
 					}
 					else{
+						// Quantity = 0
 						//Will delete the given
 						supply.delete();
 					}
-				}
-				else{
-					//error = error + "Supply name not found!";
-				}
+				}		
 			}
-		
+			if (!findName){
+				throw new InvalidInputException("Supply name does not exist!");
+			}
+			PersistenceXStream.saveToXMLwithXStream(m);	
 	}
 	
 }
