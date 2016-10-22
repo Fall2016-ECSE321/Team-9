@@ -36,7 +36,7 @@
 	$pm = new PersistenceFoodTruckManagementSystem ();
 	$m = $pm->loadDataFromStore ();
 	?>
-	<form class="form-inline" action="addEquipment.php" method="post">
+	<form class="form-inline" action="Equipment.php" method="post">
 		<br>
 		<br>
 		<div class="form-group">
@@ -60,9 +60,11 @@
 			?>
 			</span> <br>
 		<br> &nbsp&nbsp
-		<button type="submit" class="btn btn-default">Add Equipment</button>
+		<button type="submit" name="addEquipment" class="btn btn-default">Add Equipment</button>
+		<button type="submit" name="removeEquipment" class="btn btn-default">Add Equipment</button>
 
 	</form>
+
 
 </body>
 </html>

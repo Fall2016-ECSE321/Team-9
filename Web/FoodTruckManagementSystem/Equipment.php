@@ -12,8 +12,13 @@ try{
 	if (isset($_POST['equipment_quantity'])){
 		$equipmentQuantity = $_POST['equipment_quantity'];
 	}
-	
-	$c->createEquipment($equipmentName, $equipmentQuantity);
+
+	if (isset($_POST['addEquipment'])) {
+		$c->createEquipment($equipmentName, $equipmentQuantity);
+	}
+	elseif (isset($_POST['removeEquipment'])){
+		$c->removeEquipment($equipmentName, $equipmentQuantity);
+	}
 	$_SESSION["errorEquipment"] = "";
 	
 } catch (Exception $e){
