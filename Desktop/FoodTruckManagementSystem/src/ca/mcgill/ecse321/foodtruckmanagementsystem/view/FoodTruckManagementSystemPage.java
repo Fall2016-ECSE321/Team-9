@@ -239,7 +239,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		ItemController c = new ItemController();
 		sError = "";
 		try {
-			c.createSupply(supplyName.getText(), (int)model2.getNumber().doubleValue(), supplyUnit.getText());
+			c.createSupply(supplyName.getText(), model2.getNumber().doubleValue(), supplyUnit.getText());
 		} catch (InvalidInputException e) {
 			sError = e.getMessage();
 		}
