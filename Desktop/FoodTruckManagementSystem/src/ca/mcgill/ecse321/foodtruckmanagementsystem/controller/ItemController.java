@@ -156,9 +156,8 @@ public class ItemController {
 
 					}
 					else{
-						// Quantity = 0
-						//Will delete the given
-						supply.delete();
+						m.removeSupply(supply);
+						break;
 					}
 				}		
 			}
