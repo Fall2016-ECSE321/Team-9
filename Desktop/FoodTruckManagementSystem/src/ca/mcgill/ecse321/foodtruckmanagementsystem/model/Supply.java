@@ -1,10 +1,10 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.20.1.4071 modeling language!*/
+/*This code was generated using the UMPLE 1.24.0-edef018 modeling language!*/
 
 package ca.mcgill.ecse321.foodtruckmanagementsystem.model;
 
-// line 19 "../../../../../FoodTruckManagementSystem.ump"
-// line 54 "../../../../../FoodTruckManagementSystem.ump"
+// line 19 "../../../../../../../../ump/161011249430/model.ump"
+// line 55 "../../../../../../../../ump/161011249430/model.ump"
 public class Supply
 {
 
@@ -15,23 +15,17 @@ public class Supply
   //Supply Attributes
   private String name;
   private int quantity;
-
-  //Supply Associations
-  private Order order;
+  private String unit;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Supply(String aName, int aQuantity, Order aOrder)
+  public Supply(String aName, int aQuantity, String aUnit)
   {
     name = aName;
     quantity = aQuantity;
-    boolean didAddOrder = setOrder(aOrder);
-    if (!didAddOrder)
-    {
-      throw new RuntimeException("Unable to create supply due to order");
-    }
+    unit = aUnit;
   }
 
   //------------------------
@@ -54,6 +48,14 @@ public class Supply
     return wasSet;
   }
 
+  public boolean setUnit(String aUnit)
+  {
+    boolean wasSet = false;
+    unit = aUnit;
+    wasSet = true;
+    return wasSet;
+  }
+
   public String getName()
   {
     return name;
@@ -64,45 +66,22 @@ public class Supply
     return quantity;
   }
 
-  public Order getOrder()
+  public String getUnit()
   {
-    return order;
-  }
-
-  public boolean setOrder(Order aOrder)
-  {
-    boolean wasSet = false;
-    if (aOrder == null)
-    {
-      return wasSet;
-    }
-
-    Order existingOrder = order;
-    order = aOrder;
-    if (existingOrder != null && !existingOrder.equals(aOrder))
-    {
-      existingOrder.removeSupply(this);
-    }
-    order.addSupply(this);
-    wasSet = true;
-    return wasSet;
+    return unit;
   }
 
   public void delete()
-  {
-    Order placeholderOrder = order;
-    this.order = null;
-    placeholderOrder.removeSupply(this);
-  }
+  {}
 
 
   public String toString()
   {
-	  String outputString = "";
+    String outputString = "";
     return super.toString() + "["+
             "name" + ":" + getName()+ "," +
-            "quantity" + ":" + getQuantity()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "order = "+(getOrder()!=null?Integer.toHexString(System.identityHashCode(getOrder())):"null")
+            "quantity" + ":" + getQuantity()+ "," +
+            "unit" + ":" + getUnit()+ "]"
      + outputString;
   }
 }

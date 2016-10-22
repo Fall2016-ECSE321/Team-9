@@ -5,7 +5,6 @@ import static org.junit.Assert.*;
 import java.io.File;
 
 import org.junit.After;
-import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -30,14 +29,12 @@ public class TestEventRegistrationController {
 		PersistenceXStream.setAlias("supply", Supply.class);
 	}
 	
-	
 	@After
 	public void tearDown() throws Exception {
 		// clear all registrations
 		Manager m = Manager.getInstance();
 		m.delete();
 	}
-	
 	
 	@Test
 	public void testCreateEquipment(){
@@ -287,8 +284,6 @@ public class TestEventRegistrationController {
 		
 	}
 	
-	
-	
 	public void checkResultEquipment(String name, int quantity, Manager m2) {
 		assertEquals(1, m2.getEquipments().size());
 		assertEquals(name, m2.getEquipment(0).getName());
@@ -296,6 +291,563 @@ public class TestEventRegistrationController {
 		assertEquals(quantity, m2.getEquipment(0).getQuantity());
 	}
 	
+	@Test
+	public void testCreateSupply(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getSupplies().size());
+		
+		String name = "tomato";
+		int quantity = 3;
+		String unit = "kilogram";
+		
+		ItemController ic = new ItemController();
+		try{
+			ic.createSupply(name, quantity, unit);
+		} catch(InvalidInputException e){
+			fail();
+		}
+		
+		checkResultSupply(name, quantity, unit, m);
+		
+		Manager m2 = (Manager) PersistenceXStream.loadFromXMLwithXStream();
+		
+		//check file contents
+		checkResultSupply(name, quantity, unit, m2);
+	}
+
+	@Test
+	public void testCreateSupplyNull(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getSupplies().size());
+		
+		String name1 = null;
+		int quantity1 = 0;
+		String unit1 = null;
+		String name2 = "tomato";
+		int quantity2 = 3;
+		String unit2 = "kilogram";
+		
+		String error1 = null;
+		String error2 = null;
+		String error3 = null;
+		String error4 = null;
+		String error5 = null;
+		String error6 = null;
+		String error7 = null;
+		
+		ItemController ic = new ItemController();
+		try{
+			ic.createSupply(name1, quantity1, unit1);
+		} catch (InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		
+		try{
+			ic.createSupply(name1, quantity1, unit2);
+		} catch (InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name1, quantity2, unit1);
+		} catch(InvalidInputException e){
+			error3 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name1, quantity2, unit2);
+		} catch(InvalidInputException e){
+			error4 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name2, quantity1, unit1);
+		} catch(InvalidInputException e){
+			error5 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name2, quantity1, unit2);
+		} catch(InvalidInputException e){
+			error6=e.getMessage();
+		}
+		try{
+			ic.createSupply(name2, quantity2, unit1);
+		} catch(InvalidInputException e){
+			error7=e.getMessage();
+		}
+		
+		//check error
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", error1);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be empty or zero!", error2);
+		assertEquals("Supply name cannot be empty! Supply unit cannot be empty!", error3);
+		assertEquals("Supply name cannot be empty!", error4);
+		assertEquals("Supply quantity cannot be empty or zero! Supply unit cannot be empty!", error5);
+		assertEquals("Supply quantity cannot be empty or zero!", error6);
+		assertEquals("Supply unit cannot be empty!", error7);
+		
+		//check error 
+		assertEquals(0, m.getSupplies().size());
+	}
 	
+	@Test
+	public void testCreateSupplyStringEmpty(){
+		String name1 = "";
+		int quantity1 = 0;
+		String unit1 = "";
+		String name2 = "tomato";
+		int quantity2 = 3;
+		String unit2 = "kilogram";
+		
+		String error1 = null;
+		String error2 = null;
+		String error3 = null;
+		String error4 = null;
+		String error5 = null;
+		String error6 = null;
+		String error7 = null;
+		
+		
+		ItemController ic = new ItemController();
+		try{
+			ic.createSupply(name1, quantity1, unit1);
+		} catch (InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		
+		try{
+			ic.createSupply(name1, quantity1, unit2);
+		} catch (InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name1, quantity2, unit1);
+		} catch(InvalidInputException e){
+			error3 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name1, quantity2, unit2);
+		} catch(InvalidInputException e){
+			error4 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name2, quantity1, unit1);
+		} catch(InvalidInputException e){
+			error5 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name2, quantity1, unit2);
+		} catch(InvalidInputException e){
+			error6=e.getMessage();
+		}
+		try{
+			ic.createSupply(name2, quantity2, unit1);
+		} catch(InvalidInputException e){
+			error7=e.getMessage();
+		}
+		
+		//check error
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", error1);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be empty or zero!", error2);
+		assertEquals("Supply name cannot be empty! Supply unit cannot be empty!", error3);
+		assertEquals("Supply name cannot be empty!", error4);
+		assertEquals("Supply quantity cannot be empty or zero! Supply unit cannot be empty!", error5);
+		assertEquals("Supply quantity cannot be empty or zero!", error6);
+		assertEquals("Supply unit cannot be empty!", error7);
+	}
 	
+	@Test
+	public void testCreateSupplySpaces(){
+		String name1 = " ";
+		int quantity1 = 0;
+		String unit1 = " ";
+		String name2 = "tomato";
+		int quantity2 = 3;
+		String unit2 = "kilogram";
+		
+		String error1 = null;
+		String error2 = null;
+		String error3 = null;
+		String error4 = null;
+		String error5 = null;
+		String error6 = null;
+		String error7 = null;
+		
+		
+		ItemController ic = new ItemController();
+		try{
+			ic.createSupply(name1, quantity1, unit1);
+		} catch (InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		
+		try{
+			ic.createSupply(name1, quantity1, unit2);
+		} catch (InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name1, quantity2, unit1);
+		} catch(InvalidInputException e){
+			error3 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name1, quantity2, unit2);
+		} catch(InvalidInputException e){
+			error4 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name2, quantity1, unit1);
+		} catch(InvalidInputException e){
+			error5 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name2, quantity1, unit2);
+		} catch(InvalidInputException e){
+			error6=e.getMessage();
+		}
+		try{
+			ic.createSupply(name2, quantity2, unit1);
+		} catch(InvalidInputException e){
+			error7=e.getMessage();
+		}
+		
+		//check error
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", error1);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be empty or zero!", error2);
+		assertEquals("Supply name cannot be empty! Supply unit cannot be empty!", error3);
+		assertEquals("Supply name cannot be empty!", error4);
+		assertEquals("Supply quantity cannot be empty or zero! Supply unit cannot be empty!", error5);
+		assertEquals("Supply quantity cannot be empty or zero!", error6);
+		assertEquals("Supply unit cannot be empty!", error7);
+	}
+	
+	@Test
+	public void testCreateSupplyNegativeQuantity() {
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getSupplies().size());
+		
+		String name1 = "";
+		String name2 = " ";
+		String name3 = null;
+		String name4 = "tomato";
+		String unit1 = "";
+		String unit2 = "";
+		String unit3 = null;
+		String unit4 = "kilogram";
+		int quantity = -1;
+		
+		String error0 = null;
+		String error1 = null;
+		String error2 = null;
+		String error3 = null;
+		String error4 = null;
+		String error5 = null;
+		String error6 = null;
+		String error7 = null;
+		String error8 = null;
+		String error9 = null;
+		String error10 = null;
+		String error11 = null;
+		String error12 = null;
+		String error13 = null;
+		String error14 = null;
+		String error15 = null;
+		
+		ItemController ic = new ItemController();
+		try{
+			ic.createSupply(name1, quantity, unit1);
+		} catch(InvalidInputException e){
+			error0 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name1, quantity, unit2);
+		} catch(InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name1, quantity, unit3);
+		} catch(InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name1, quantity, unit4);
+		} catch(InvalidInputException e){
+			error3 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name2, quantity, unit1);
+		} catch(InvalidInputException e){
+			error4 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name2, quantity, unit2);
+		} catch(InvalidInputException e){
+			error5 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name2, quantity, unit3);
+		} catch(InvalidInputException e){
+			error6 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name2, quantity, unit4);
+		} catch(InvalidInputException e){
+			error7 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name3, quantity, unit1);
+		} catch(InvalidInputException e){
+			error8 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name3, quantity, unit2);
+		} catch(InvalidInputException e){
+			error9 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name3, quantity, unit3);
+		} catch(InvalidInputException e){
+			error10 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name3, quantity, unit4);
+		} catch(InvalidInputException e){
+			error11 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name4, quantity, unit1);
+		} catch(InvalidInputException e){
+			error12 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name4, quantity, unit2);
+		} catch(InvalidInputException e){
+			error13 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name4, quantity, unit3);
+		} catch(InvalidInputException e){
+			error14 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name4, quantity, unit4);
+		} catch(InvalidInputException e){
+			error15 = e.getMessage();
+		}
+		
+		//Check Error
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", error0);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", error1);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", error2);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be negative!", error3);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", error4);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", error5);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", error6);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be negative!", error7);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", error8);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", error9);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", error10);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be negative!", error11);
+		assertEquals("Supply quantity cannot be negative! Supply unit cannot be empty!", error12);
+		assertEquals("Supply quantity cannot be negative! Supply unit cannot be empty!", error13);
+		assertEquals("Supply quantity cannot be negative! Supply unit cannot be empty!", error14);
+		assertEquals("Supply quantity cannot be negative!", error15);
+		
+		
+	}
+
+	@Test
+	public void testCreateSupplyZeroQuantity(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getSupplies().size());
+		
+		String name1 = "";
+		String name2 = " ";
+		String name3 = null;
+		String name4 = "tomato";
+		String unit1 = "";
+		String unit2 = "";
+		String unit3 = null;
+		String unit4 = "kilogram";
+		int quantity = 0;
+		
+		String error0 = null;
+		String error1 = null;
+		String error2 = null;
+		String error3 = null;
+		String error4 = null;
+		String error5 = null;
+		String error6 = null;
+		String error7 = null;
+		String error8 = null;
+		String error9 = null;
+		String error10 = null;
+		String error11 = null;
+		String error12 = null;
+		String error13 = null;
+		String error14 = null;
+		String error15 = null;
+		
+		ItemController ic = new ItemController();
+		try{
+			ic.createSupply(name1, quantity, unit1);
+		} catch(InvalidInputException e){
+			error0 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name1, quantity, unit2);
+		} catch(InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name1, quantity, unit3);
+		} catch(InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name1, quantity, unit4);
+		} catch(InvalidInputException e){
+			error3 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name2, quantity, unit1);
+		} catch(InvalidInputException e){
+			error4 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name2, quantity, unit2);
+		} catch(InvalidInputException e){
+			error5 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name2, quantity, unit3);
+		} catch(InvalidInputException e){
+			error6 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name2, quantity, unit4);
+		} catch(InvalidInputException e){
+			error7 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name3, quantity, unit1);
+		} catch(InvalidInputException e){
+			error8 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name3, quantity, unit2);
+		} catch(InvalidInputException e){
+			error9 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name3, quantity, unit3);
+		} catch(InvalidInputException e){
+			error10 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name3, quantity, unit4);
+		} catch(InvalidInputException e){
+			error11 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name4, quantity, unit1);
+		} catch(InvalidInputException e){
+			error12 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name4, quantity, unit2);
+		} catch(InvalidInputException e){
+			error13 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name4, quantity, unit3);
+		} catch(InvalidInputException e){
+			error14 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name4, quantity, unit4);
+		} catch(InvalidInputException e){
+			error15 = e.getMessage();
+		}
+		
+		//Check Error
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", error0);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", error1);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", error2);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be empty or zero!", error3);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", error4);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", error5);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", error6);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be empty or zero!", error7);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", error8);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", error9);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", error10);
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be empty or zero!", error11);
+		assertEquals("Supply quantity cannot be empty or zero! Supply unit cannot be empty!", error12);
+		assertEquals("Supply quantity cannot be empty or zero! Supply unit cannot be empty!", error13);
+		assertEquals("Supply quantity cannot be empty or zero! Supply unit cannot be empty!", error14);
+		assertEquals("Supply quantity cannot be empty or zero!", error15);
+	}
+	
+	public void checkResultSupply(String name, int quantity, String unit, Manager m2) {
+		//assertEquals(1, m2.getEquipments().size());
+		assertEquals(1, m2.getSupplies().size());
+		assertEquals(name, m2.getSupply(0).getName());
+		assertEquals(quantity, m2.getSupply(0).getQuantity());
+		assertEquals(unit, m2.getSupply(0).getUnit());
+	}
+	
+	@Test
+	public void testRemoveEquipment(){
+		Manager m  = Manager.getInstance();
+		assertEquals(0, m.getEquipments().size());
+		
+		
+		
+		String name = "grill";
+		int removeQuantity = 1;
+		int preQuantity = 2;
+		
+		ItemController ic = new ItemController();
+		try{
+			ic.createEquipment(name, preQuantity);
+			ic.removeEquipment(name, removeQuantity);
+		} catch (InvalidInputException e){
+			fail();
+		}
+		
+		checkRemovedResultEquipment(name, preQuantity - removeQuantity, m);
+		
+		Manager m2 = (Manager) PersistenceXStream.loadFromXMLwithXStream();
+		
+		//check file contents
+		//checkResultEquipment(name, quantity, m2);
+	}
+	
+	@Test
+	public void testRemoveSupply(){
+		Manager m  = Manager.getInstance();
+		assertEquals(0, m.getSupplies().size());
+		
+		String name = "tomato";
+		int quantity = 1;
+		String unit = "test";
+		
+		ItemController ic = new ItemController();
+		try{
+			ic.removeSupply(name, quantity);
+		} catch (InvalidInputException e){
+			fail();
+		}
+		
+		//checkResultSupply(name, quantity, unit, m);
+		
+		Manager m2 = (Manager) PersistenceXStream.loadFromXMLwithXStream();
+		
+		//check file contents
+		//checkResultSupply(name, quantity, unit, m2);
+	}
+	
+	public void checkRemovedResultEquipment(String name, int quantity, Manager m2){
+		assertEquals(1, m2.getEquipments().size());
+		assertEquals(name, m2.getEquipment(0).getName());
+		assertEquals(quantity, m2.getEquipment(0).getQuantity());
+	}
 }

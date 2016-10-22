@@ -13,12 +13,12 @@ class Order{
   String name;
   String[] suppliesNeeded;
   Integer quantity;
-  1 -- * Supply;
 }
 
 class Supply{
   String name; 
   Integer quantity;
+  * -- 1 Order;
 }
 
 class Equipment{
@@ -53,7 +53,8 @@ class Order
 
 class Supply
 {
-  position 288 384 139 79;
+  position 257 385 139 79;
+  position.association Order__Supply 0,20 189,80;
 }
 
 class Equipment
