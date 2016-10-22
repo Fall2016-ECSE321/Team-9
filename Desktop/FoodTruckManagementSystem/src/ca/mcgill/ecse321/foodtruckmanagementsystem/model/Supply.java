@@ -4,7 +4,7 @@
 package ca.mcgill.ecse321.foodtruckmanagementsystem.model;
 
 // line 19 "../../../../../../../../ump/161011249430/model.ump"
-// line 55 "../../../../../../../../ump/161011249430/model.ump"
+// line 56 "../../../../../../../../ump/161011249430/model.ump"
 public class Supply
 {
 
@@ -14,14 +14,14 @@ public class Supply
 
   //Supply Attributes
   private String name;
-  private int quantity;
+  private double quantity;
   private String unit;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Supply(String aName, int aQuantity, String aUnit)
+  public Supply(String aName, double aQuantity, String aUnit)
   {
     name = aName;
     quantity = aQuantity;
@@ -40,7 +40,7 @@ public class Supply
     return wasSet;
   }
 
-  public boolean setQuantity(int aQuantity)
+  public boolean setQuantity(double aQuantity)
   {
     boolean wasSet = false;
     quantity = aQuantity;
@@ -61,7 +61,7 @@ public class Supply
     return name;
   }
 
-  public int getQuantity()
+  public double getQuantity()
   {
     return quantity;
   }

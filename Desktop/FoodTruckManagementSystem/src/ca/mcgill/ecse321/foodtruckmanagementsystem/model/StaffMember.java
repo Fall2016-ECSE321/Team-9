@@ -4,8 +4,8 @@
 package ca.mcgill.ecse321.foodtruckmanagementsystem.model;
 import java.sql.Date;
 
-// line 31 "../../../../../../../../ump/161011249430/model.ump"
-// line 66 "../../../../../../../../ump/161011249430/model.ump"
+// line 32 "../../../../../../../../ump/161011249430/model.ump"
+// line 67 "../../../../../../../../ump/161011249430/model.ump"
 public class StaffMember
 {
 

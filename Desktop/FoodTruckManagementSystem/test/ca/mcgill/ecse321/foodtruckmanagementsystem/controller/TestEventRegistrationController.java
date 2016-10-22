@@ -228,18 +228,13 @@ public class TestEventRegistrationController {
 		} catch (InvalidInputException e) {
 			error3 = e.getMessage();
 		}
-
+		String errString1 = "Equipment name cannot be empty! Equipment quantity cannot be negative!";
+		String errString2 = "Equipment quantity cannot be negative!";
 		// check error
-		assertEquals(
-				"Equipment name cannot be empty! Equipment quantity cannot be negative!",
-				error0);
-		assertEquals(
-				"Equipment name cannot be empty! Equipment quantity cannot be negative!",
-				error1);
-		assertEquals(
-				"Equipment name cannot be empty! Equipment quantity cannot be negative!",
-				error2);
-		assertEquals("Equipment quantity cannot be negative!", error3);
+		assertEquals(errString1, error0);
+		assertEquals(errString1, error1);
+		assertEquals(errString1, error2);
+		assertEquals(errString2, error3);
 
 		// check no change in memory
 		assertEquals(0, m.getEquipments().size());
