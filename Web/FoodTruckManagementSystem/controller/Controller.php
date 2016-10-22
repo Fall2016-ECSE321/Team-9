@@ -73,7 +73,7 @@ class Controller{
 						break;
 					}
 					elseif (($m->getEquipment_index($i)->getQuantity) < $quantity){
-						$error = "Equipment quantity is only: " + $m->getEquipment_index($i)->getQuantity ;
+						$error = "Equipment quantity is only: " + (string)($m->getEquipment_index($i)->getQuantity);
 						throw new Exception($error);
 					}
 					else{
