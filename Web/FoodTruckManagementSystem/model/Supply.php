@@ -1,6 +1,6 @@
 <?php
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.24.0-e0b6705 modeling language!*/
+/*This code was generated using the UMPLE 1.24.0-edef018 modeling language!*/
 
 class Supply
 {
@@ -12,23 +12,17 @@ class Supply
   //Supply Attributes
   private $name;
   private $quantity;
-
-  //Supply Associations
-  private $order;
+  private $unit;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public function __construct($aName, $aQuantity, $aOrder)
+  public function __construct($aName, $aQuantity, $aUnit)
   {
     $this->name = $aName;
     $this->quantity = $aQuantity;
-    $didAddOrder = $this->setOrder($aOrder);
-    if (!$didAddOrder)
-    {
-      throw new Exception("Unable to create supply due to order");
-    }
+    $this->unit = $aUnit;
   }
 
   //------------------------
@@ -51,6 +45,14 @@ class Supply
     return $wasSet;
   }
 
+  public function setUnit($aUnit)
+  {
+    $wasSet = false;
+    $this->unit = $aUnit;
+    $wasSet = true;
+    return $wasSet;
+  }
+
   public function getName()
   {
     return $this->name;
@@ -61,28 +63,9 @@ class Supply
     return $this->quantity;
   }
 
-  public function getOrder()
+  public function getUnit()
   {
-    return $this->order;
-  }
-
-  public function setOrder($aOrder)
-  {
-    $wasSet = false;
-    if ($aOrder == null)
-    {
-      return $wasSet;
-    }
-    
-    $existingOrder = $this->order;
-    $this->order = $aOrder;
-    if ($existingOrder != null && $existingOrder != $aOrder)
-    {
-      $existingOrder->removeSupply($this);
-    }
-    $this->order->addSupply($this);
-    $wasSet = true;
-    return $wasSet;
+    return $this->unit;
   }
 
   public function equals($compareTo)
@@ -91,11 +74,7 @@ class Supply
   }
 
   public function delete()
-  {
-    $placeholderOrder = $this->order;
-    $this->order = null;
-    $placeholderOrder->removeSupply($this);
-  }
+  {}
 
 }
 ?>
