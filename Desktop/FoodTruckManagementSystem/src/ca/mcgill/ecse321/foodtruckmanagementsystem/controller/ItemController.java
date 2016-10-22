@@ -126,7 +126,7 @@ public class ItemController {
 		PersistenceXStream.saveToXMLwithXStream(m);
 	}
 	
-	public void removeSupply(String name, int quantity) throws InvalidInputException{
+	public void removeSupply(String name, double quantity) throws InvalidInputException{
 		String error ="";
 		if ((name == null || name.trim().length() == 0))
 			error = error + "Supply name cannot be empty!";

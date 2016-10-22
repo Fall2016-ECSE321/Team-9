@@ -834,7 +834,7 @@ public class TestEventRegistrationController {
 		// assertEquals(1, m2.getEquipments().size());
 		assertEquals(1, m2.getSupplies().size());
 		assertEquals(name, m2.getSupply(0).getName());
-		assertEquals(quantity, m2.getSupply(0).getQuantity());
+		assertEquals(quantity, m2.getSupply(0).getQuantity(), 0.00);
 		assertEquals(unit, m2.getSupply(0).getUnit());
 	}
 
