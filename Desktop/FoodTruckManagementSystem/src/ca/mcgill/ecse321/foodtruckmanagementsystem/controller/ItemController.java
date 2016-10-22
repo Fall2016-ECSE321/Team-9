@@ -76,7 +76,8 @@ public class ItemController {
 						throw new InvalidInputException(error);
 					}
 					else{
-						equipment.delete();
+						m.removeEquipment(equipment);
+						break;
 					}
 				}
 			}
@@ -155,9 +156,8 @@ public class ItemController {
 
 					}
 					else{
-						// Quantity = 0
-						//Will delete the given
-						supply.delete();
+						m.removeSupply(supply);
+						break;
 					}
 				}		
 			}
