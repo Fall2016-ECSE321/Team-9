@@ -1,6 +1,6 @@
 <?php
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.24.0-e0b6705 modeling language!*/
+/*This code was generated using the UMPLE 1.24.0-edef018 modeling language!*/
 
 class StaffMember
 {
