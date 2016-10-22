@@ -1,10 +1,10 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.20.1.4071 modeling language!*/
+/*This code was generated using the UMPLE 1.24.0-edef018 modeling language!*/
 
 package ca.mcgill.ecse321.foodtruckmanagementsystem.model;
 
-// line 24 "../../../../../FoodTruckManagementSystem.ump"
-// line 59 "../../../../../FoodTruckManagementSystem.ump"
+// line 25 "../../../../../../../../ump/161011249430/model.ump"
+// line 61 "../../../../../../../../ump/161011249430/model.ump"
 public class Equipment
 {
 
@@ -62,7 +62,7 @@ public class Equipment
 
   public String toString()
   {
-	  String outputString = "";
+    String outputString = "";
     return super.toString() + "["+
             "name" + ":" + getName()+ "," +
             "quantity" + ":" + getQuantity()+ "]"

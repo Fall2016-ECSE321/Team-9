@@ -1,12 +1,12 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.20.1.4071 modeling language!*/
+/*This code was generated using the UMPLE 1.24.0-edef018 modeling language!*/
 
 package ca.mcgill.ecse321.foodtruckmanagementsystem.model;
 import java.util.*;
 import java.sql.Date;
 
-// line 3 "../../../../../FoodTruckManagementSystem.ump"
-// line 37 "../../../../../FoodTruckManagementSystem.ump"
+// line 4 "../../../../../../../../ump/161011249430/model.ump"
+// line 38 "../../../../../../../../ump/161011249430/model.ump"
 public class Manager
 {
 
