@@ -129,7 +129,7 @@ public class ItemController {
 	public void removeSupply(String name, double quantity) throws InvalidInputException{
 		String error ="";
 		if ((name == null || name.trim().length() == 0))
-			error = error + "Supply name cannot be empty!";
+			error = error + "Supply name cannot be empty! ";
 		if(quantity == 0)
 			error = error + "Supply quantity cannot be empty or zero!";
 		if(quantity < 0)
