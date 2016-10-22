@@ -294,6 +294,272 @@ public class TestEventRegistrationController {
 
 	}
 
+	@Test
+	public void testRemoveEquipment() {
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getEquipments().size());
+
+		String name = "grill";
+		int removeQuantity = 1;
+		int preQuantity = 2;
+
+		ItemController ic = new ItemController();
+		try {
+			ic.createEquipment(name, preQuantity);
+			ic.removeEquipment(name, removeQuantity);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+
+		checkResultEquipment(name, preQuantity - removeQuantity, m);
+
+		Manager m2 = (Manager) PersistenceXStream.loadFromXMLwithXStream();
+
+		// check file contents
+		 checkResultEquipment(name, preQuantity - removeQuantity, m2);
+	}
+
+	@Test
+	public void testRemoveEquipmentNull() {
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getEquipments().size());
+		
+		String name = null;
+		String name1 = "tomato";
+		
+		int preQuantity = 4;
+		int removeQuantity0 = 0;
+		int removeQuantity1 = 1;
+		
+		String error0 = null;
+		String error1 = null;
+		String error2 = null;
+		ItemController ic = new ItemController();
+		try{
+			ic.createEquipment(name1, preQuantity);
+			ic.removeEquipment(name, removeQuantity0);
+		} catch (InvalidInputException e){
+			error0 = e.getMessage();
+		}
+		try{
+			ic.createEquipment(name1, preQuantity);
+			ic.removeEquipment(name, removeQuantity1);
+		} catch (InvalidInputException e) {
+			error1 = e.getMessage();
+		}
+		try{
+			ic.createEquipment(name1, preQuantity);
+			ic.removeEquipment(name1, removeQuantity0);
+		} catch (InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		
+		assertEquals("Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", error0);
+		assertEquals("Equipment name cannot be empty!", error1);
+		assertEquals("Equipment quantity cannot be empty or zero!", error2);
+	}
+
+	@Test
+	public void testRemoveEquipmentEmpty(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getEquipments().size());
+		
+		String name = "";
+		String name1 = "tomato";
+		
+		int preQuantity = 4;
+		int removeQuantity0 = 0;
+		int removeQuantity1 = 1;
+		
+		String error0 = null;
+		String error1 = null;
+		String error2 = null;
+		ItemController ic = new ItemController();
+		try{
+			ic.createEquipment(name1, preQuantity);
+			ic.removeEquipment(name, removeQuantity0);
+		} catch (InvalidInputException e){
+			error0 = e.getMessage();
+		}
+		try{
+			ic.createEquipment(name1, preQuantity);
+			ic.removeEquipment(name, removeQuantity1);
+		} catch (InvalidInputException e) {
+			error1 = e.getMessage();
+		}
+		try{
+			ic.createEquipment(name1, preQuantity);
+			ic.removeEquipment(name1, removeQuantity0);
+		} catch (InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		
+		assertEquals("Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", error0);
+		assertEquals("Equipment name cannot be empty!", error1);
+		assertEquals("Equipment quantity cannot be empty or zero!", error2);
+	}
+	
+	@Test
+	public void testRemoveEquipmentSpaces() {
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getEquipments().size());
+		
+		String name = " ";
+		String name1 = "tomato";
+		
+		int preQuantity = 4;
+		int removeQuantity0 = 0;
+		int removeQuantity1 = 1;
+		
+		String error0 = null;
+		String error1 = null;
+		String error2 = null;
+		ItemController ic = new ItemController();
+		try{
+			ic.createEquipment(name1, preQuantity);
+			ic.removeEquipment(name, removeQuantity0);
+		} catch (InvalidInputException e){
+			error0 = e.getMessage();
+		}
+		try{
+			ic.createEquipment(name1, preQuantity);
+			ic.removeEquipment(name, removeQuantity1);
+		} catch (InvalidInputException e) {
+			error1 = e.getMessage();
+		}
+		try{
+			ic.createEquipment(name1, preQuantity);
+			ic.removeEquipment(name1, removeQuantity0);
+		} catch (InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		
+		assertEquals("Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", error0);
+		assertEquals("Equipment name cannot be empty!", error1);
+		assertEquals("Equipment quantity cannot be empty or zero!", error2);
+	}
+	
+	@Test
+	public void testRemoveEquipmentNegativeQuantity() {
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getEquipments().size());
+		
+		String name0 = null;
+		String name1 = "";
+		String name2 = " ";
+		String name3 = "tomato";
+		
+		int quantityNeg = -1;
+		int preQuantity = 4;
+		
+		String error0 = null;
+		String error1 = null;
+		String error2 = null;
+		String error3 = null;
+		
+		ItemController ic = new ItemController();
+		
+		try{
+			ic.createEquipment(name3, preQuantity);
+			ic.removeEquipment(name0, quantityNeg);
+		} catch (InvalidInputException e){
+			error0 = e.getMessage();
+		}
+		try{
+			ic.createEquipment(name3, preQuantity);
+			ic.removeEquipment(name1, quantityNeg);
+		} catch (InvalidInputException e){
+			error0 = e.getMessage();
+		}
+		try{
+			ic.createEquipment(name3, preQuantity);
+			ic.removeEquipment(name2, quantityNeg);
+		} catch (InvalidInputException e){
+			error0 = e.getMessage();
+		}
+		try{
+			ic.createEquipment(name3, preQuantity);
+			ic.removeEquipment(name3, quantityNeg);
+		} catch (InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		
+		assertEquals("Equipment name cannot be empty! Equipment quantity cannot be negative!", error0);
+		assertEquals("Equipment quantity cannot be negative!", error1);
+	}
+
+	@Test
+	public void testRemoveEquipmentZeroQuantity() {
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getEquipments().size());
+		
+		String name0 = null;
+		String name1 = "";
+		String name2 = " ";
+		String name3 = "tomato";
+		
+		int quantityNeg = 0;
+		int preQuantity = 4;
+		
+		String error0 = null;
+		String error1 = null;
+		String error2 = null;
+		String error3 = null;
+		
+		ItemController ic = new ItemController();
+		
+		try{
+			ic.createEquipment(name3, preQuantity);
+			ic.removeEquipment(name0, quantityNeg);
+		} catch (InvalidInputException e){
+			error0 = e.getMessage();
+		}
+		try{
+			ic.createEquipment(name3, preQuantity);
+			ic.removeEquipment(name1, quantityNeg);
+		} catch (InvalidInputException e){
+			error0 = e.getMessage();
+		}
+		try{
+			ic.createEquipment(name3, preQuantity);
+			ic.removeEquipment(name2, quantityNeg);
+		} catch (InvalidInputException e){
+			error0 = e.getMessage();
+		}
+		try{
+			ic.createEquipment(name3, preQuantity);
+			ic.removeEquipment(name3, quantityNeg);
+		} catch (InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		
+		assertEquals("Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", error0);
+		assertEquals("Equipment quantity cannot be empty or zero!", error1);
+	}
+
+	@Test
+	public void testRemoveEquipmentNegativeResult() {
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getEquipments().size());
+		
+		String name = "tomato";
+		int preQuantity = 3;
+		int removeQuantity = 4;
+		
+		String error0 = null;
+		
+		ItemController ic = new ItemController();
+		
+		try{
+			ic.createEquipment(name, preQuantity);
+			ic.removeEquipment(name, removeQuantity);
+		} catch(InvalidInputException e){
+			error0 = e.getMessage();
+		}
+		
+		assertEquals("Cannot remove more than " + preQuantity + " " + name + "'s", error0);
+	}
+	
 	public void checkResultEquipment(String name, int quantity, Manager m2) {
 		assertEquals(1, m2.getEquipments().size());
 		assertEquals(name, m2.getEquipment(0).getName());
@@ -829,68 +1095,291 @@ public class TestEventRegistrationController {
 		assertEquals(errString4, error15);
 	}
 
+	@Test
+	public void testRemoveSupply(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getSupplies().size());
+		
+		String name = "tomato";
+		int preQuantity = 2;
+		int removeQuantity = 1;
+		String unit = "kilogram";
+		
+		
+		ItemController ic = new ItemController();
+		
+		try{
+			ic.createSupply(name, preQuantity, unit);
+			ic.removeSupply(name, removeQuantity);
+		} catch(InvalidInputException e){
+			fail();
+		}
+		
+		checkResultSupply(name, preQuantity - removeQuantity, unit, m);
+		
+		Manager m2 = (Manager) PersistenceXStream.loadFromXMLwithXStream();
+		
+		//check file contents
+		checkResultSupply(name, preQuantity - removeQuantity, unit, m2);
+	}
+	
+	@Test 
+	public void testRemoveSupplyNull() {
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getSupplies().size());
+		
+		String name = null;
+		String name1 = "tomato";
+		String unit = "kgs";
+		
+		int preQuantity = 4;
+		int removeQuantity0 = 0;
+		int removeQuantity1 = 1;
+		
+		String error0 = null;
+		String error1 = null;
+		String error2 = null;
+		ItemController ic = new ItemController();
+		try{
+			ic.createSupply(name1, preQuantity, unit);
+			ic.removeSupply(name, removeQuantity0);
+		} catch (InvalidInputException e){
+			error0 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name1, preQuantity, unit);
+			ic.removeSupply(name, removeQuantity1);
+		} catch (InvalidInputException e) {
+			error1 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name1, preQuantity, unit);
+			ic.removeSupply(name1, removeQuantity0);
+		} catch (InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be empty or zero!", error0);
+		assertEquals("Supply name cannot be empty!", error1);
+		assertEquals("Supply quantity cannot be empty or zero!", error2);
+	}
+	
+	@Test
+	public void testRemoveSupplyEmpty() {
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getSupplies().size());
+		
+		String name = "";
+		String name1 = "tomato";
+		String unit = "kgs";
+		
+		int preQuantity = 4;
+		int removeQuantity0 = 0;
+		int removeQuantity1 = 1;
+		
+		String error0 = null;
+		String error1 = null;
+		String error2 = null;
+		ItemController ic = new ItemController();
+		try{
+			ic.createSupply(name1, preQuantity, unit);
+			ic.removeSupply(name, removeQuantity0);
+		} catch (InvalidInputException e){
+			error0 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name1, preQuantity, unit);
+			ic.removeSupply(name, removeQuantity1);
+		} catch (InvalidInputException e) {
+			error1 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name1, preQuantity, unit);
+			ic.removeSupply(name1, removeQuantity0);
+		} catch (InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be empty or zero!", error0);
+		assertEquals("Supply name cannot be empty!", error1);
+		assertEquals("Supply quantity cannot be empty or zero!", error2);
+	}
+	
+	@Test
+	public void testRemoveSupplySpaces(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getSupplies().size());
+		
+		String name = " ";
+		String name1 = "tomato";
+		String unit = "kgs";
+		
+		int preQuantity = 4;
+		int removeQuantity0 = 0;
+		int removeQuantity1 = 1;
+		
+		String error0 = null;
+		String error1 = null;
+		String error2 = null;
+		ItemController ic = new ItemController();
+		try{
+			ic.createSupply(name1, preQuantity, unit);
+			ic.removeSupply(name, removeQuantity0);
+		} catch (InvalidInputException e){
+			error0 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name1, preQuantity, unit);
+			ic.removeSupply(name, removeQuantity1);
+		} catch (InvalidInputException e) {
+			error1 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name1, preQuantity, unit);
+			ic.removeSupply(name1, removeQuantity0);
+		} catch (InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be empty or zero!", error0);
+		assertEquals("Supply name cannot be empty!", error1);
+		assertEquals("Supply quantity cannot be empty or zero!", error2);
+	}
+
+	@Test
+	public void testRemoveSupplyNegativeQuantity(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getEquipments().size());
+		
+		String name0 = null;
+		String name1 = "";
+		String name2 = " ";
+		String name3 = "tomato";
+		String unit = "kgs";
+		
+		int quantityNeg = -1;
+		int preQuantity = 4;
+		
+		String error0 = null;
+		String error1 = null;
+		String error2 = null;
+		String error3 = null;
+		
+		ItemController ic = new ItemController();
+		
+		try{
+			ic.createSupply(name3, preQuantity, unit);
+			ic.removeSupply(name0, quantityNeg);
+		} catch (InvalidInputException e){
+			error0 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name3, preQuantity, unit);
+			ic.removeSupply(name1, quantityNeg);
+		} catch (InvalidInputException e){
+			error0 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name3, preQuantity, unit);
+			ic.removeSupply(name2, quantityNeg);
+		} catch (InvalidInputException e){
+			error0 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name3, preQuantity, unit);
+			ic.removeSupply(name3, quantityNeg);
+		} catch (InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be negative!", error0);
+		assertEquals("Supply quantity cannot be negative!", error1);
+	}
+	
+	@Test
+	public void testRemoveSupplyZeroQuantity(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getEquipments().size());
+		
+		String name0 = null;
+		String name1 = "";
+		String name2 = " ";
+		String name3 = "tomato";
+		String unit = "kgs";
+		
+		int quantityNeg = 0;
+		int preQuantity = 4;
+		
+		String error0 = null;
+		String error1 = null;
+		String error2 = null;
+		String error3 = null;
+		
+		ItemController ic = new ItemController();
+		
+		try{
+			ic.createSupply(name3, preQuantity, unit);
+			ic.removeSupply(name0, quantityNeg);
+		} catch (InvalidInputException e){
+			error0 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name3, preQuantity, unit);
+			ic.removeSupply(name1, quantityNeg);
+		} catch (InvalidInputException e){
+			error0 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name3, preQuantity, unit);
+			ic.removeSupply(name2, quantityNeg);
+		} catch (InvalidInputException e){
+			error0 = e.getMessage();
+		}
+		try{
+			ic.createSupply(name3, preQuantity, unit);
+			ic.removeSupply(name3, quantityNeg);
+		} catch (InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		
+		assertEquals("Supply name cannot be empty! Supply quantity cannot be empty or zero!", error0);
+		assertEquals("Supply quantity cannot be empty or zero!", error1);
+	}
+
+	@Test
+	public void testRemoveSupplyNegativeResult(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getSupplies().size());
+		
+		String name = "tomato";
+		String unit = "kgs";
+		double preQuantity = 3.0;
+		double removeQuantity = 5.0;
+		
+		String error0 = null;
+		
+		ItemController ic = new ItemController();
+		
+		try{
+			ic.createSupply(name, preQuantity, unit);
+			ic.removeSupply(name, removeQuantity);
+		} catch(InvalidInputException e){
+			error0 = e.getMessage();
+		}
+		
+		assertEquals("Cannot remove more than " + preQuantity + " " + unit + " of " + name, error0);
+	}
+	
 	public void checkResultSupply(String name, double quantity, String unit,
 			Manager m2) {
-		// assertEquals(1, m2.getEquipments().size());
 		assertEquals(1, m2.getSupplies().size());
 		assertEquals(name, m2.getSupply(0).getName());
 		assertEquals(quantity, m2.getSupply(0).getQuantity(), 0.00);
 		assertEquals(unit, m2.getSupply(0).getUnit());
 	}
 
-	@Test
-	public void testRemoveEquipment() {
-		Manager m = Manager.getInstance();
-		assertEquals(0, m.getEquipments().size());
+	
 
-		String name = "grill";
-		int removeQuantity = 1;
-		int preQuantity = 2;
+	
 
-		ItemController ic = new ItemController();
-		try {
-			ic.createEquipment(name, preQuantity);
-			ic.removeEquipment(name, removeQuantity);
-		} catch (InvalidInputException e) {
-			fail();
-		}
-
-		checkRemovedResultEquipment(name, preQuantity - removeQuantity, m);
-
-		Manager m2 = (Manager) PersistenceXStream.loadFromXMLwithXStream();
-
-		// check file contents
-		// checkResultEquipment(name, quantity, m2);
-	}
-
-	// @Test
-	// public void testRemoveSupply(){
-	// Manager m = Manager.getInstance();
-	// assertEquals(0, m.getSupplies().size());
-	//
-	// String name = "tomato";
-	// int quantity = 1;
-	// String unit = "test";
-	//
-	// ItemController ic = new ItemController();
-	// try{
-	// ic.removeSupply(name, quantity);
-	// } catch (InvalidInputException e){
-	// fail();
-	// }
-	//
-	// //checkResultSupply(name, quantity, unit, m);
-	//
-	// Manager m2 = (Manager) PersistenceXStream.loadFromXMLwithXStream();
-	//
-	// //check file contents
-	// //checkResultSupply(name, quantity, unit, m2);
-	// }
-
-	public void checkRemovedResultEquipment(String name, int quantity,
-			Manager m2) {
-		assertEquals(1, m2.getEquipments().size());
-		assertEquals(name, m2.getEquipment(0).getName());
-		assertEquals(quantity, m2.getEquipment(0).getQuantity());
-	}
 }
