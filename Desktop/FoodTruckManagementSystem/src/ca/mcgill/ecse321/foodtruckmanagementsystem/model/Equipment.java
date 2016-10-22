@@ -3,8 +3,8 @@
 
 package ca.mcgill.ecse321.foodtruckmanagementsystem.model;
 
-// line 25 "../../../../../../../../ump/161011249430/model.ump"
-// line 61 "../../../../../../../../ump/161011249430/model.ump"
+// line 26 "../../../../../../../../ump/161011249430/model.ump"
+// line 62 "../../../../../../../../ump/161011249430/model.ump"
 public class Equipment
 {
 

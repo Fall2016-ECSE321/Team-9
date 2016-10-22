@@ -6,7 +6,7 @@ import java.util.*;
 import java.sql.Date;
 
 // line 4 "../../../../../../../../ump/161011249430/model.ump"
-// line 38 "../../../../../../../../ump/161011249430/model.ump"
+// line 39 "../../../../../../../../ump/161011249430/model.ump"
 public class Manager
 {
 
