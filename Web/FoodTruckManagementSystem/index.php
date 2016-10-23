@@ -27,7 +27,8 @@
 </head>
 <body> 
 	<?php
-	require_once 'model/Equipment.php';
+	require_once 'model/equipment.php';
+	require_once 'model/supply.php';
 	require_once 'persistence/PersistenceFoodTruckManagementSystem.php';
 	
 	session_start ();
@@ -36,7 +37,7 @@
 	$pm = new PersistenceFoodTruckManagementSystem ();
 	$m = $pm->loadDataFromStore ();
 	?>
-	<form class="form-inline" action="Equipment.php" method="post">
+	<form class="form-inline" action="equipment.php" method="post">
 		<br>
 		<br>
 		<div class="form-group">
@@ -63,6 +64,39 @@
 		<button type="submit" name="addEquipment" class="btn btn-default">Add Equipment</button>
 		<button type="submit" name="removeEquipment" class="btn btn-default">Remove Equipment</button>
 
+	</form>
+		<form class="form-inline" action="supply.php" method="post">
+		<br>
+		<br>
+		<div class="form-group">
+		&nbsp&nbsp 
+			<input class="form-control input-lg" type="text"
+				name="supply_name" placeholder="Enter Supply Name" />
+		</div>
+		&nbsp&nbsp
+		<div class="form-group">
+
+			<input class="form-control input-lg " style="width: 100px"
+				type="number" name="supply_quantity" placeholder="0" />
+		</div>
+		&nbsp&nbsp
+		<div class="form-group">
+
+			<input class="form-control input-lg " style="width: 100px"
+				type="text" name="supply_unit" placeholder="kg" />
+		</div>
+
+		&nbsp&nbsp <span class="error">
+			<?php
+			if (isset ( $_SESSION ['errorSupply'] ) && ! empty ( $_SESSION ['errorSupply'] )) {
+				echo " * " . $_SESSION ["errorSupply"];
+			}
+			
+			?>
+			</span> <br>
+		<br> &nbsp&nbsp
+		<button type="submit" name="addSupply" class="btn btn-default">Add Supply</button>
+		<button type="submit" name="removeSupply" class="btn btn-default">Remove Supply</button>
 	</form>
 
 
