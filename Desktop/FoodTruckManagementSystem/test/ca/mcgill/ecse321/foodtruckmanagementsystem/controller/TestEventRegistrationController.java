@@ -1370,6 +1370,42 @@ public class TestEventRegistrationController {
 		assertEquals("Cannot remove more than " + preQuantity + " " + unit + " of " + name, error0);
 	}
 	
+	@Test
+	public void testCreateSupplyDifferentUnit() {
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getSupplies().size());
+		
+		String name = "tomato";
+		String unit = "kgs";
+		String wrongUnit = "lbs";
+		double quantity = 3.0;
+		double addedQuantity = 1.5;
+		
+		
+		String error0 = null;
+		
+		ItemController ic = new ItemController();
+		
+		try{
+			ic.createSupply(name, quantity, unit);
+		} catch(InvalidInputException e) {
+			error0 = e.getMessage();
+		}
+		
+		assertEquals(null, error0);
+		assertEquals(1,m.getSupplies().size());
+		
+		error0 = null;
+		try{
+			ic.createSupply(name, addedQuantity, wrongUnit);
+		} catch(InvalidInputException e) {
+			error0 = e.getMessage();
+		}
+		
+		assertEquals(1, m.getSupplies().size());
+		assertEquals(error0, "Supply unit does not match: " + unit);
+	}
+	
 	public void checkResultSupply(String name, double quantity, String unit,
 			Manager m2) {
 		assertEquals(1, m2.getSupplies().size());
