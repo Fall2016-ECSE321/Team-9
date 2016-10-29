@@ -1,6 +1,9 @@
 <?php
 require_once __DIR__ . '../../model/Equipment.php';
 require_once __DIR__ . '../../model/Manager.php';
+require_once __DIR__.'../../model/Supply.php';
+//require_once __DIR__.'../../model/Order.php';
+//require_once __DIR__.'../../model/StaffMember.php';
 require_once __DIR__ . '../../persistence/PersistenceFoodTruckManagementSystem.php';
 require_once __DIR__ . '../../controller/Controller.php';
 
@@ -15,8 +18,10 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		$this->m->delete ();
 		$this->pm->writeDataToStore ( $this->m );
 	}
+	
 	protected function tearDown() {
 	}
+	
 	public function testCreateEquipment() {
 		$this->assertEquals ( 0, count ( $this->m->getEquipments () ) );
 		
@@ -39,6 +44,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		// $this->assertEquals(0, count($this->m->getSupplies()));
 		// $this->assertEquals(0, count($this->m->getStaff()));
 	}
+	
 	public function testCreateEquipmentNull() {
 		$this->assertEquals ( 0, count ( $this->m->getEquipments () ) );
 		
@@ -77,6 +83,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		// $this->assertEquals(0, count($this->m->getSupplies()));
 		// $this->assertEquals(0, count($this->m->getStaff()));
 	}
+	
 	public function testCreateEquipmentEmpty() {
 		$this->assertEquals ( 0, count ( $this->m->getEquipments () ) );
 		
@@ -108,12 +115,14 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals ( "Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", $error0 );
 		$this->assertEquals ( "Equipment name cannot be empty!", $error1 );
 		$this->assertEquals ( "Equipment quantity cannot be empty or zero!", $error2 );
+		
 		// check file contents
 		$this->m = $this->pm->loadDataFromStore ();
 		$this->assertEquals ( 0, count ( $this->m->getEquipments () ) );
 		// $this->assertEquals(0, count($this->m->getSupplies()));
 		// $this->assertEquals(0, count($this->m->getStaff()));
 	}
+	
 	public function testCreateEquipmentSpaces() {
 		$this->assertEquals ( 0, count ( $this->m->getEquipments () ) );
 		
@@ -145,12 +154,14 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals ( "Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", $error0 );
 		$this->assertEquals ( "Equipment name cannot be empty!", $error1 );
 		$this->assertEquals ( "Equipment quantity cannot be empty or zero!", $error2 );
+		
 		// check file contents
 		$this->m = $this->pm->loadDataFromStore ();
 		$this->assertEquals ( 0, count ( $this->m->getEquipments () ) );
 		// $this->assertEquals(0, count($this->m->getSupplies()));
 		// $this->assertEquals(0, count($this->m->getStaff()));
 	}
+	
 	public function testCreateEquipmentNegativeQuantity() {
 		$this->assertEquals ( 0, count ( $this->m->getEquipments () ) );
 		
@@ -198,6 +209,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		// $this->assertEquals(0, count($this->m->getSupplies()));
 		// $this->assertEquals(0, count($this->m->getStaff()));
 	}
+	
 	public function testCreateEquipmentZeroQuantity() {
 		$this->assertEquals ( 0, count ( $this->m->getEquipments () ) );
 		
@@ -244,6 +256,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		// $this->assertEquals(0, count($this->m->getSupplies()));
 		// $this->assertEquals(0, count($this->m->getStaff()));
 	}
+	
 	public function testRemoveEquipment() {
 		$equipmentName = "knife";
 		$equipmentQuantity = 3;
@@ -511,6 +524,537 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		// $this->assertEquals(0, count($this->m->getSupplies()));
 		// $this->assertEquals(0, count($this->m->getStaff()));
 
+	}
+	
+	public function testCreateSupply() {
+		$this->assertEquals ( 0, count ( $this->m->getSupplies () ) );
+	
+		$supplyName = "carrot";
+		$supplyQuantity = 3;
+		$supplyUnit = "kg";
+	
+		try {
+			$this->c->createSupply ( $supplyName, $supplyQuantity, $supplyUnit );
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$this->fail ();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getSupplies () ) );
+		$this->assertEquals ( $supplyName, $this->m->getSupply_index ( 0 )->getName () );
+		$this->assertEquals ( $supplyQuantity, $this->m->getSupply_index ( 0 )->getQuantity () );
+		$this->assertEquals ( $supplyUnit, $this->m->getSupply_index ( 0 )->getUnit () );
+	}
+	
+	public function testCreateSupplyNull() {
+		$this->assertEquals ( 0, count ( $this->m->getSupplies () ) );
+	
+		$supplyName0 = null;
+		$supplyQuantity0 = null;
+		$supplyUnit0 = null;
+		$supplyName1 = "carrot";
+		$supplyQuantity1 = 2;
+		$supplyUnit1 = "kg";
+	
+		$error0 = "";
+		$error1 = "";
+		$error2 = "";
+		$error3 = "";
+		$error4 = "";
+		$error5 = "";
+		$error6 = "";
+		try {
+			$this->c->createSupply ( $supplyName0, $supplyQuantity0, $supplyUnit0 );
+		} catch ( Exception $e ) {
+			$error0 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName0, $supplyQuantity1, $supplyUnit1 );
+		} catch ( Exception $e ) {
+			$error1 = $e->getMessage ();
+		}
+			try {
+			$this->c->createSupply ( $supplyName1, $supplyQuantity0, $supplyUnit1 );
+		} catch ( Exception $e ) {
+			$error2 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName1, $supplyQuantity1, $supplyUnit0 );
+		} catch ( Exception $e ) {
+			$error3 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName1, $supplyQuantity0, $supplyUnit0 );
+		} catch ( Exception $e ) {
+			$error4 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName0, $supplyQuantity1, $supplyUnit0 );
+		} catch ( Exception $e ) {
+			$error5 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName0, $supplyQuantity0, $supplyUnit1 );
+		} catch ( Exception $e ) {
+			$error6 = $e->getMessage ();
+		}
+		
+	
+		// check error
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error0 );
+		$this->assertEquals ( "Supply name cannot be empty!", $error1 );
+		$this->assertEquals ( "Supply quantity cannot be empty or zero!", $error2 );
+		$this->assertEquals ( "Supply unit cannot be empty!", $error3);
+		$this->assertEquals ( "Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error4);
+		$this->assertEquals ( "Supply name cannot be empty! Supply unit cannot be empty!", $error5);
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero!", $error6);
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 0, count ( $this->m->getSupplies () ) );
+	}
+	
+	public function testCreateSupplyEmpty() {
+		$this->assertEquals ( 0, count ( $this->m->getSupplies () ) );
+	
+		$supplyName0 = "";
+		$supplyQuantity0 = "";
+		$supplyUnit0 = "";
+		$supplyName1 = "carrot";
+		$supplyQuantity1 = 2;
+		$supplyUnit1 = "kg";
+	
+		$error0 = "";
+		$error1 = "";
+		$error2 = "";
+		$error3 = "";
+		$error4 = "";
+		$error5 = "";
+		$error6 = "";
+		try {
+			$this->c->createSupply ( $supplyName0, $supplyQuantity0, $supplyUnit0 );
+		} catch ( Exception $e ) {
+			$error0 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName0, $supplyQuantity1, $supplyUnit1 );
+		} catch ( Exception $e ) {
+			$error1 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName1, $supplyQuantity0, $supplyUnit1 );
+		} catch ( Exception $e ) {
+			$error2 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName1, $supplyQuantity1, $supplyUnit0 );
+		} catch ( Exception $e ) {
+			$error3 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName1, $supplyQuantity0, $supplyUnit0 );
+		} catch ( Exception $e ) {
+			$error4 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName0, $supplyQuantity1, $supplyUnit0 );
+		} catch ( Exception $e ) {
+			$error5 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName0, $supplyQuantity0, $supplyUnit1 );
+		} catch ( Exception $e ) {
+			$error6 = $e->getMessage ();
+		}
+	
+	
+		// check error
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error0 );
+		$this->assertEquals ( "Supply name cannot be empty!", $error1 );
+		$this->assertEquals ( "Supply quantity cannot be empty or zero!", $error2 );
+		$this->assertEquals ( "Supply unit cannot be empty!", $error3);
+		$this->assertEquals ( "Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error4);
+		$this->assertEquals ( "Supply name cannot be empty! Supply unit cannot be empty!", $error5);
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero!", $error6);
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 0, count ( $this->m->getSupplies () ) );
+	}
+	
+	public function testCreateSupplySpaces() {
+		$this->assertEquals ( 0, count ( $this->m->getSupplies () ) );
+	
+		$supplyName0 = " ";
+		$supplyQuantity0 = " ";
+		$supplyUnit0 = " ";
+		$supplyName1 = "carrot";
+		$supplyQuantity1 = 2;
+		$supplyUnit1 = "kg";
+	
+		$error0 = "";
+		$error1 = "";
+		$error2 = "";
+		$error3 = "";
+		$error4 = "";
+		$error5 = "";
+		$error6 = "";
+		try {
+			$this->c->createSupply ( $supplyName0, $supplyQuantity0, $supplyUnit0 );
+		} catch ( Exception $e ) {
+			$error0 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName0, $supplyQuantity1, $supplyUnit1 );
+		} catch ( Exception $e ) {
+			$error1 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName1, $supplyQuantity0, $supplyUnit1 );
+		} catch ( Exception $e ) {
+			$error2 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName1, $supplyQuantity1, $supplyUnit0 );
+		} catch ( Exception $e ) {
+			$error3 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName1, $supplyQuantity0, $supplyUnit0 );
+		} catch ( Exception $e ) {
+			$error4 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName0, $supplyQuantity1, $supplyUnit0 );
+		} catch ( Exception $e ) {
+			$error5 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName0, $supplyQuantity0, $supplyUnit1 );
+		} catch ( Exception $e ) {
+			$error6 = $e->getMessage ();
+		}
+	
+	
+		// check error
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error0 );
+		$this->assertEquals ( "Supply name cannot be empty!", $error1 );
+		$this->assertEquals ( "Supply quantity cannot be empty or zero!", $error2 );
+		$this->assertEquals ( "Supply unit cannot be empty!", $error3);
+		$this->assertEquals ( "Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error4);
+		$this->assertEquals ( "Supply name cannot be empty! Supply unit cannot be empty!", $error5);
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero!", $error6);
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 0, count ( $this->m->getSupplies () ) );
+	}
+	
+	public function testCreateSupplyNegativeQuantity() {
+		$this->assertEquals ( 0, count ( $this->m->getSupplies () ) );
+	
+		$supplyName0 = "";
+		$supplyName1 = " ";
+		$supplyName2 = null;
+		$supplyName3 = "carrot";
+		
+		$supplyQuantity = -1;
+
+		$supplyUnit0 = "";
+		$supplyUnit1 = " ";
+		$supplyUnit2 = null;
+		$supplyUnit3 = "kg";
+
+	
+		$error0 = "";
+		$error1 = "";
+		$error2 = "";
+		$error3 = "";
+		$error4 = "";
+		$error5 = "";
+		$error6 = "";
+		$error7 = "";
+		$error8 = "";
+		$error9 = "";
+		$error10 = "";
+		$error11 = "";
+		$error12 = "";
+		$error13 = "";
+		$error14 = "";
+		$error15 = "";
+		
+		try {
+			$this->c->createSupply ( $supplyName0, $supplyQuantity, $supplyUnit0 );
+		} catch ( Exception $e ) {
+			$error0 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName0, $supplyQuantity, $supplyUnit1 );
+		} catch ( Exception $e ) {
+			$error1 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName0, $supplyQuantity, $supplyUnit2 );
+		} catch ( Exception $e ) {
+			$error2 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName1, $supplyQuantity, $supplyUnit0 );
+		} catch ( Exception $e ) {
+			$error3 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName1, $supplyQuantity, $supplyUnit1 );
+		} catch ( Exception $e ) {
+			$error4 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName1, $supplyQuantity, $supplyUnit2 );
+		} catch ( Exception $e ) {
+			$error5 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName2, $supplyQuantity, $supplyUnit0 );
+		} catch ( Exception $e ) {
+			$error6 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName2, $supplyQuantity, $supplyUnit1 );
+		} catch ( Exception $e ) {
+			$error7 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName2, $supplyQuantity, $supplyUnit2 );
+		} catch ( Exception $e ) {
+			$error8 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName3, $supplyQuantity, $supplyUnit0 );
+		} catch ( Exception $e ) {
+			$error9 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName3, $supplyQuantity, $supplyUnit1 );
+		} catch ( Exception $e ) {
+			$error10 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName3, $supplyQuantity, $supplyUnit2 );
+		} catch ( Exception $e ) {
+			$error11 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName0, $supplyQuantity, $supplyUnit3 );
+		} catch ( Exception $e ) {
+			$error12 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName1, $supplyQuantity, $supplyUnit3 );
+		} catch ( Exception $e ) {
+			$error13 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName2, $supplyQuantity, $supplyUnit3 );
+		} catch ( Exception $e ) {
+			$error14 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName3, $supplyQuantity, $supplyUnit3 );
+		} catch ( Exception $e ) {
+			$error15 = $e->getMessage ();
+		}
+	
+		// check error
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", $error0 );
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", $error1 );
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", $error2 );
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", $error3 );
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", $error4 );
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", $error5 );
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", $error6 );
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", $error7 );
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", $error8 );
+		$this->assertEquals ( "Supply quantity cannot be negative! Supply unit cannot be empty!", $error9 );
+		$this->assertEquals ( "Supply quantity cannot be negative! Supply unit cannot be empty!", $error10 );
+		$this->assertEquals ( "Supply quantity cannot be negative! Supply unit cannot be empty!", $error11 );
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative!", $error12 );
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative!", $error13 );
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative!", $error14 );
+		$this->assertEquals ( "Supply quantity cannot be negative!", $error15 );
+			
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 0, count ( $this->m->getSupplies () ) );
+	}
+	
+	public function testCreateSupplyZeroQuantity() {
+		$this->assertEquals ( 0, count ( $this->m->getSupplies () ) );
+	
+		$supplyName0 = "";
+		$supplyName1 = " ";
+		$supplyName2 = null;
+		$supplyName3 = "carrot";
+	
+		$supplyQuantity = 0;
+	
+		$supplyUnit0 = "";
+		$supplyUnit1 = " ";
+		$supplyUnit2 = null;
+		$supplyUnit3 = "kg";
+	
+	
+		$error0 = "";
+		$error1 = "";
+		$error2 = "";
+		$error3 = "";
+		$error4 = "";
+		$error5 = "";
+		$error6 = "";
+		$error7 = "";
+		$error8 = "";
+		$error9 = "";
+		$error10 = "";
+		$error11 = "";
+		$error12 = "";
+		$error13 = "";
+		$error14 = "";
+		$error15 = "";
+	
+		try {
+			$this->c->createSupply ( $supplyName0, $supplyQuantity, $supplyUnit0 );
+		} catch ( Exception $e ) {
+			$error0 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName0, $supplyQuantity, $supplyUnit1 );
+		} catch ( Exception $e ) {
+			$error1 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName0, $supplyQuantity, $supplyUnit2 );
+		} catch ( Exception $e ) {
+			$error2 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName1, $supplyQuantity, $supplyUnit0 );
+		} catch ( Exception $e ) {
+			$error3 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName1, $supplyQuantity, $supplyUnit1 );
+		} catch ( Exception $e ) {
+			$error4 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName1, $supplyQuantity, $supplyUnit2 );
+		} catch ( Exception $e ) {
+			$error5 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName2, $supplyQuantity, $supplyUnit0 );
+		} catch ( Exception $e ) {
+			$error6 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName2, $supplyQuantity, $supplyUnit1 );
+		} catch ( Exception $e ) {
+			$error7 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName2, $supplyQuantity, $supplyUnit2 );
+		} catch ( Exception $e ) {
+			$error8 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName3, $supplyQuantity, $supplyUnit0 );
+		} catch ( Exception $e ) {
+			$error9 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName3, $supplyQuantity, $supplyUnit1 );
+		} catch ( Exception $e ) {
+			$error10 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName3, $supplyQuantity, $supplyUnit2 );
+		} catch ( Exception $e ) {
+			$error11 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName0, $supplyQuantity, $supplyUnit3 );
+		} catch ( Exception $e ) {
+			$error12 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName1, $supplyQuantity, $supplyUnit3 );
+		} catch ( Exception $e ) {
+			$error13 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName2, $supplyQuantity, $supplyUnit3 );
+		} catch ( Exception $e ) {
+			$error14 = $e->getMessage ();
+		}
+		try {
+			$this->c->createSupply ( $supplyName3, $supplyQuantity, $supplyUnit3 );
+		} catch ( Exception $e ) {
+			$error15 = $e->getMessage ();
+		}
+		
+		// check error
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error0 );
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error1 );
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error2 );
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error3 );
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error4 );
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error5 );
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error6 );
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error7 );
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error8 );
+		$this->assertEquals ( "Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error9 );
+		$this->assertEquals ( "Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error10 );
+		$this->assertEquals ( "Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error11 );
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero!", $error12 );
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero!", $error13 );
+		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero!", $error14 );
+		$this->assertEquals ( "Supply quantity cannot be empty or zero!", $error15 );
+		
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 0, count ( $this->m->getSupplies () ) );
+	}
+	
+	public function testCreateSupplyDifferentUnit() {	
+		$supplyName = "carrot";
+		$supplyQuantity0 = 3;
+		$supplyQuantity1 = 2;
+		$supplyUnit0 = "kg";
+		$supplyUnit1 = "mg";
+		
+		$error = "";
+		
+		$this->assertEquals ( 0, count ( $this->m->getSupplies () ) );
+		$this->c->createSupply($supplyName, $supplyQuantity0, $supplyUnit0);
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getSupplies () ) );
+	
+		try {
+			$this->c->createSupply ( $supplyName, $supplyQuantity1, $supplyUnit1 );
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$error=$e->getMessage();
+		}
+		
+		$this->assertEquals("Supply units do not match!", $error);
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getSupplies () ) );
+		$this->assertEquals ( $supplyName, $this->m->getSupply_index ( 0 )->getName () );
+		$this->assertEquals ( $supplyQuantity0, $this->m->getSupply_index ( 0 )->getQuantity () );
+		$this->assertEquals ( $supplyUnit0, $this->m->getSupply_index ( 0 )->getUnit () );
 	}
 }
 ?>
