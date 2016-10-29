@@ -1047,7 +1047,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 			$error=$e->getMessage();
 		}
 		
-		$this->assertEquals("Supply units do not match!", $error);
+		$this->assertEquals("Supply unit does not match: ".$supplyUnit0, $error);
 	
 		// check file contents
 		$this->m = $this->pm->loadDataFromStore ();

@@ -134,7 +134,7 @@ class Controller{
 						break;
 					}
 					else{
-						$error = "Supply units do not match!";
+						$error = "Supply unit does not match: ".$m->getSupply_index($i)->getUnit();
 						throw new Exception($error);
 					}				
 				}
