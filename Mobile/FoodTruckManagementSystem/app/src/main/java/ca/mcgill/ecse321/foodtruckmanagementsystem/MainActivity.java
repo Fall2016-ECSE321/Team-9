@@ -106,6 +106,85 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void removeEquipment(View v) throws IOException {
+        androidLocationSet();
+
+        TextView en = (TextView) findViewById(R.id.removeequipment_name);
+        EditText eq = (EditText) findViewById(R.id.removeequipment_quantity);
+        ItemController pc = new ItemController();
+        TextView error = (TextView) findViewById(R.id.errorhandler);
+        error.setText("");
+
+        if(eq.getText().toString().equals("")){
+            if(en.getText().toString().equals(""))
+                error.setText("Equipment name cannot be empty! Equipment quantity cannot be empty!");
+            else{
+                error.setText("Equipment quantity cannot be empty!");
+            }
+        }else{
+            try {
+                pc.removeEquipment(en.getText().toString(), Integer.parseInt(eq.getText().toString()));
+            } catch (InvalidInputException e) {
+                error.setText(e.getMessage());
+            }
+        }
+    }
+
+    public void addSupply(View v) throws IOException{
+        androidLocationSet();
+
+        TextView sn = (TextView) findViewById(R.id.addsupply_name);
+        TextView sq = (TextView) findViewById(R.id.addsupply_quantity);
+        TextView su = (TextView) findViewById(R.id.addsupply_unit);
+        ItemController pc = new ItemController();
+
+        TextView error = (TextView) findViewById(R.id.errorhandler);
+        error.setText("");
+        if(sq.getText().toString().equals("")){
+            if(sn.getText().toString().equals("") && su.getText().toString().equals(""))
+                error.setText("Supply name cannot be empty! Supply quantity cannot be empty! Supply unit cannot be empty!");
+            else if(sn.getText().toString().equals("")) {
+                error.setText("Supply name cannot be empty! Supply quantity cannot be empty!")
+            }
+            else if(su.getText().toString().equals("")){
+                error.setText("Supply quantity cannot be empty! Supply unit cannot be empty!")
+            }
+            else{
+                error.setText("Supply quantity cannot be empty!");
+            }
+        }
+        else{
+            try{
+                pc.createSupply(sn.getText().toString(), Double.parseDouble(sq.getText().toString()), su.getText().toString());
+            } catch(InvalidInputException e){
+                error.setText(e.getMessage());
+            }
+        }
+    }
+
+    public void removeSupply(View v) throws IOException{
+        androidLocationSet();
+
+        TextView sn = (TextView) findViewById(R.id.removesupply_name);
+        TextView sq = (TextView) findViewById(R.id.removesupply_quantity);
+        ItemController pc = new ItemController();
+
+        TextView error = (TextView) findViewById(R.id.errorhandler);
+        error.setText("");
+        if(sq.getText().toString().equals("")){
+            if(sn.getText().toString().equals("")) {
+                error.setText("Supply name cannot be empty! Supply quantity cannot be empty!");
+            }
+            else{
+                error.setText("Supply name cannot be empty!");
+            }
+        }
+        else{
+            try {
+                pc.removeSupply(sn.getText().toString(), Double.parseDouble(sq.getText().toString()));
+            } catch(InvalidInputException e){
+                error.setText(e.getMessage());
+            }
+        }
 
     }
 
