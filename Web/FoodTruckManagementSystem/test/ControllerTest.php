@@ -286,6 +286,231 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		$this->m = $this->pm->loadDataFromStore ();
 		$this->assertEquals ( 0, count ( $this->m->getEquipments () ) );
 	}
+	
+	public function testRemoveEquipmentNull() {
+		$this->assertEquals ( 0, count ( $this->m->getEquipments () ) );
+		$this->c->createEquipment("Cutting board", 3);
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getEquipments () ) );
+		
+		$equipmentName0 = null;
+		$equipmentQuantity0 = null;
+		$equipmentName1 = "Cutting board";
+		$equipmentQuantity1 = 2;
+	
+		$error0 = "";
+		$error1 = "";
+		$error2 = "";
+		try {
+			$this->c->removeEquipment ( $equipmentName0, $equipmentQuantity0 );
+		} catch ( Exception $e ) {
+			$error0 = $e->getMessage ();
+		}
+		try {
+			$this->c->removeEquipment ( $equipmentName0, $equipmentQuantity1 );
+		} catch ( Exception $e ) {
+			$error1 = $e->getMessage ();
+		}
+		try {
+			$this->c->removeEquipment ( $equipmentName1, $equipmentQuantity0 );
+		} catch ( Exception $e ) {
+			$error2 = $e->getMessage ();
+		}
+	
+		// check error
+		$this->assertEquals ( "Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", $error0 );
+		$this->assertEquals ( "Equipment name cannot be empty!", $error1 );
+		$this->assertEquals ( "Equipment quantity cannot be empty or zero!", $error2 );
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getEquipments () ) );
+		// $this->assertEquals(0, count($this->m->getSupplies()));
+		// $this->assertEquals(0, count($this->m->getStaff()));
+	}
+	
+	public function testRemoveEquipmentEmpty() {
+		$this->assertEquals ( 0, count ( $this->m->getEquipments () ) );
+		$this->c->createEquipment("Cutting board", 3);
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getEquipments () ) );
+	
+		$equipmentName0 = "";
+		$equipmentQuantity0 = "";
+		$equipmentName1 = "Cutting board";
+		$equipmentQuantity1 = 2;
+	
+		$error0 = "";
+		$error1 = "";
+		$error2 = "";
+		try {
+			$this->c->createEquipment ( $equipmentName0, $equipmentQuantity0 );
+		} catch ( Exception $e ) {
+			$error0 = $e->getMessage ();
+		}
+		try {
+			$this->c->createEquipment ( $equipmentName0, $equipmentQuantity1 );
+		} catch ( Exception $e ) {
+			$error1 = $e->getMessage ();
+		}
+		try {
+			$this->c->createEquipment ( $equipmentName1, $equipmentQuantity0 );
+		} catch ( Exception $e ) {
+			$error2 = $e->getMessage ();
+		}
+	
+		// check error
+		$this->assertEquals ( "Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", $error0 );
+		$this->assertEquals ( "Equipment name cannot be empty!", $error1 );
+		$this->assertEquals ( "Equipment quantity cannot be empty or zero!", $error2 );
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getEquipments () ) );
+		// $this->assertEquals(0, count($this->m->getSupplies()));
+		// $this->assertEquals(0, count($this->m->getStaff()));
+	}
+	
+	public function testRemoveEquipmentSpaces() {
+		$this->assertEquals ( 0, count ( $this->m->getEquipments () ) );
+		$this->c->createEquipment("Cutting board", 3);
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getEquipments () ) );
+	
+		$equipmentName0 = " ";
+		$equipmentQuantity0 = " ";
+		$equipmentName1 = "Cutting board";
+		$equipmentQuantity1 = 2;
+	
+		$error0 = "";
+		$error1 = "";
+		$error2 = "";
+		try {
+			$this->c->createEquipment ( $equipmentName0, $equipmentQuantity0 );
+		} catch ( Exception $e ) {
+			$error0 = $e->getMessage ();
+		}
+		try {
+			$this->c->createEquipment ( $equipmentName0, $equipmentQuantity1 );
+		} catch ( Exception $e ) {
+			$error1 = $e->getMessage ();
+		}
+		try {
+			$this->c->createEquipment ( $equipmentName1, $equipmentQuantity0 );
+		} catch ( Exception $e ) {
+			$error2 = $e->getMessage ();
+		}
+	
+		// check error
+		$this->assertEquals ( "Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", $error0 );
+		$this->assertEquals ( "Equipment name cannot be empty!", $error1 );
+		$this->assertEquals ( "Equipment quantity cannot be empty or zero!", $error2 );
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getEquipments () ) );
+		// $this->assertEquals(0, count($this->m->getSupplies()));
+		// $this->assertEquals(0, count($this->m->getStaff()));
+	}
+	
+	public function testRemoveEquipmentNegativeQuantity() {
+		$this->assertEquals ( 0, count ( $this->m->getEquipments () ) );
+		$this->c->createEquipment("spoon", 3);
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getEquipments () ) );
+	
+		$equipmentName1 = "";
+		$equipmentName2 = " ";
+		$equipmentName3 = Null;
+		$equipmentName4 = "spoon";
+		$equipmentQuantity = - 1;
+	
+		$error0 = "";
+		$error1 = "";
+		$error2 = "";
+		$error3 = "";
+	
+		try {
+			$this->c->createEquipment ( $equipmentName1, $equipmentQuantity );
+		} catch ( Exception $e ) {
+			$error0 = $e->getMessage ();
+		}
+		try {
+			$this->c->createEquipment ( $equipmentName2, $equipmentQuantity );
+		} catch ( Exception $e ) {
+			$error1 = $e->getMessage ();
+		}
+		try {
+			$this->c->createEquipment ( $equipmentName3, $equipmentQuantity );
+		} catch ( Exception $e ) {
+			$error2 = $e->getMessage ();
+		}
+		try {
+			$this->c->createEquipment ( $equipmentName4, $equipmentQuantity );
+		} catch ( Exception $e ) {
+			$error3 = $e->getMessage ();
+		}
+	
+		// check error
+		$this->assertEquals ( "Equipment name cannot be empty! Equipment quantity cannot be negative!", $error0 );
+		$this->assertEquals ( "Equipment name cannot be empty! Equipment quantity cannot be negative!", $error1 );
+		$this->assertEquals ( "Equipment name cannot be empty! Equipment quantity cannot be negative!", $error2 );
+		$this->assertEquals ( "Equipment quantity cannot be negative!", $error3 );
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getEquipments () ) );
+		// $this->assertEquals(0, count($this->m->getSupplies()));
+		// $this->assertEquals(0, count($this->m->getStaff()));
+	}
+	
+	public function testRemoveEquipmentZeroQuantity() {
+		$this->assertEquals ( 0, count ( $this->m->getEquipments () ) );
+		$this->c->createEquipment("spoon", 3);
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getEquipments () ) );
+	
+		$equipmentName1 = "";
+		$equipmentName2 = " ";
+		$equipmentName3 = Null;
+		$equipmentName4 = "spoon";
+		$equipmentQuantity = 0;
+	
+		$error0 = "";
+		$error1 = "";
+		$error2 = "";
+		$error3 = "";
+	
+		try {
+			$this->c->removeEquipment ( $equipmentName1, $equipmentQuantity );
+		} catch ( Exception $e ) {
+			$error0 = $e->getMessage ();
+		}
+		try {
+			$this->c->removeEquipment ( $equipmentName2, $equipmentQuantity );
+		} catch ( Exception $e ) {
+			$error1 = $e->getMessage ();
+		}
+		try {
+			$this->c->removeEquipment ( $equipmentName3, $equipmentQuantity );
+		} catch ( Exception $e ) {
+			$error2 = $e->getMessage ();
+		}
+		try {
+			$this->c->removeEquipment ( $equipmentName4, $equipmentQuantity );
+		} catch ( Exception $e ) {
+			$error3 = $e->getMessage ();
+		}
+		// check error
+		$this->assertEquals ( "Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", $error0 );
+		$this->assertEquals ( "Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", $error1 );
+		$this->assertEquals ( "Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", $error2 );
+		$this->assertEquals ( "Equipment quantity cannot be empty or zero!", $error3 );
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getEquipments () ) );
+		// $this->assertEquals(0, count($this->m->getSupplies()));
+		// $this->assertEquals(0, count($this->m->getStaff()));
 
+	}
 }
 ?>
