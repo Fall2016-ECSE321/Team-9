@@ -5,7 +5,7 @@ session_start();
 
 $c = new Controller();
 try{
-	
+
 	if (isset($_POST['supply_name'])){
 		$supplyName = $_POST['supply_name'];
 	}
@@ -13,14 +13,14 @@ try{
 		$supplyQuantity = $_POST['supply_quantity'];
 	}
 	if (isset($_POST['supply_unit'])){
-		$supplyQuantity = $_POST['supply_unit'];
+		$supplyUnit= $_POST['supply_unit'];
 	}
 
 	if (isset($_POST['addSupply'])) {
 		$c->createSupply($supplyName, $supplyQuantity, $supplyUnit);
 	}
 	elseif (isset($_POST['removeSupply'])){
-		$c->removeSupply($supplytName, $supplyQuantity);
+		$c->removeSupply($supplyName, $supplyQuantity);
 	}
 	$_SESSION["errorSupply"] = "";
 	
