@@ -1,5 +1,5 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.24.0-edef018 modeling language!*/
+/*This code was generated using the UMPLE 1.24.0-d348116 modeling language!*/
 
 package ca.mcgill.ecse321.foodtruckmanagementsystem.model;
 

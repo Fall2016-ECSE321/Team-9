@@ -1,6 +1,6 @@
 <?php
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.24.0-edef018 modeling language!*/
+/*This code was generated using the UMPLE 1.24.0-d348116 modeling language!*/
 
 class StaffMember
 {
@@ -18,11 +18,11 @@ class StaffMember
   // CONSTRUCTOR
   //------------------------
 
-  public function __construct($aName, $aRole, $aSchedule)
+  public function __construct($aName, $aRole)
   {
     $this->name = $aName;
     $this->role = $aRole;
-    $this->schedule = $aSchedule;
+    $this->schedule = array();
   }
 
   //------------------------
@@ -45,12 +45,21 @@ class StaffMember
     return $wasSet;
   }
 
-  public function setSchedule($aSchedule)
+  public function addSchedule($aSchedule)
   {
-    $wasSet = false;
-    $this->schedule = $aSchedule;
-    $wasSet = true;
-    return $wasSet;
+    $wasAdded = false;
+    $this->schedule[] = $aSchedule;
+    $wasAdded = true;
+    return $wasAdded;
+  }
+
+  public function removeSchedule($aSchedule)
+  {
+    $wasRemoved = false;
+    unset($this->schedule[$this->indexOfSchedule($aSchedule)]);
+    $this->schedule = array_values($this->schedule);
+    $wasRemoved = true;
+    return $wasRemoved;
   }
 
   public function getName()
@@ -63,9 +72,35 @@ class StaffMember
     return $this->role;
   }
 
+  public function getSchedule($index)
+  {
+    $aSchedule = $this->schedule[$index];
+    return $aSchedule;
+  }
+
   public function getSchedule()
   {
-    return $this->schedule;
+    $newSchedule = $this->schedule;
+    return $newSchedule;
+  }
+
+  public function numberOfSchedule()
+  {
+    $number = count($this->schedule);
+    return $number;
+  }
+
+  public function hasSchedule()
+  {
+    $has = schedule.size() > 0;
+    return $has;
+  }
+
+  public function indexOfSchedule($aSchedule)
+  {
+    $rawAnswer = array_search($aSchedule,$this->schedule);
+    $index = $rawAnswer == null && $rawAnswer !== 0 ? -1 : $rawAnswer;
+    return $index;
   }
 
   public function equals($compareTo)
