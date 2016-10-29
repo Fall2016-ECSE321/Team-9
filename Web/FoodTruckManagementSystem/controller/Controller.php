@@ -126,7 +126,7 @@ class Controller{
 	
 			for($i = 0; $i < $m->numberOfSupplies(); $i++){
 				if($name == $m->getSupply_index($i)->getName()){
-					if($unit == $m->getSupply_index($i)->getName()){
+					if($unit == $m->getSupply_index($i)->getUnit()){
 						$m->getSupply_index($i)->setQuantity((string)($quantity + $m->getSupply_index($i)->getQuantity()));
 						$flag = true;
 						break;
@@ -220,6 +220,5 @@ class Controller{
 			throw new Exception ($error);
 		}
 	}
-	
 }
 ?>
