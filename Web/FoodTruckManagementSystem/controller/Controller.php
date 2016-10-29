@@ -68,7 +68,6 @@ class Controller{
 		$flag = false;
 		
 		if (($name != null || strlen($name)!=0)&&($quantity != null || $quantity !=0) &&($quantity>0)){
-			//($name != null || strlen($name)!=0)&&($quantity != null || $quantity !=0) &&($quantity>0)
 			//2. Remove the equipment
 			for($i = 0; $i < $m->numberOfEquipments(); $i++){
 				if($name == $m->getEquipment_index($i)->getName()){
@@ -83,7 +82,6 @@ class Controller{
 						throw new Exception($error);
 					}
 					else{
-						// $m->getEquipment_index($i)->delete();
 						$m->removeEquipment($m->getEquipment_index($i));
 						break;
 					}
@@ -165,6 +163,62 @@ class Controller{
 			throw new Exception ($error);
 		}
 	
+	}
+	
+	public function removeSupply($supply_name, $supply_quantity){
+	
+		$error = "";
+		$name= InputValidator::validate_input($supply_name);
+		$quantity = InputValidator::validate_input($supply_quantity);
+	
+		//1. Load all of the data
+		$pm = new PersistenceFoodTruckManagementSystem();
+		$m  = $pm->loadDataFromStore();
+		$flag = false;
+	
+		if (($name != null || strlen($name)!=0)&&($quantity != null || $quantity !=0) &&($quantity>0)){
+			//2. Remove the equipment
+			for($i = 0; $i < $m->numberOfSupplies(); $i++){
+				if($name == $m->getSupply_index($i)->getName()){
+					$flag = true;
+					$storeQuantity = $m->getSupply_index($i)->getQuantity();
+					if($storeQuantity > $quantity){
+						$m->getSupply_index($i)->setQuantity((string)($storeQuantity - $quantity));
+						break;
+					}
+					elseif ($storeQuantity < $quantity){
+						$error = "Supply quantity is only: ".$storeQuantity;
+						throw new Exception($error);
+					}
+					else{
+						$m->removeSupply($m->getSupply_index($i));
+						break;
+					}
+				}
+			}
+				
+			if (!$flag){
+				$error = "Supply name does not exist!";
+				throw new Exception($error);
+			}
+				
+			//3. Write all of the data
+			$pm->writeDataToStore($m);
+		}
+		else{
+			// 4. Validate all the innputs
+			if ($name == null || strlen($name)==0){
+				$error .="Supply name cannot be empty!";
+			}
+			if ($quantity == null || $quantity == 0){
+				$error .= " Supply quantity cannot be empty or zero!";
+			}
+			if ($quantity < 0){
+				$error .= " Supply quantity cannot be negative!";
+			}
+			$error = trim($error);
+			throw new Exception ($error);
+		}
 	}
 	
 }
