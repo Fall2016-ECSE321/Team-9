@@ -25,7 +25,7 @@
 
     <View
             android:layout_height="2dp"
-            android:layout_width="fill_parent"
+            android:layout_width="344dp"
             android:background="#f44242"/>
 
     <LinearLayout
@@ -49,7 +49,7 @@
                 android:layout_height="50dp"
                 android:background="#425ff4"/>
             <EditText
-                android:layout_width="103dp"
+                android:layout_width="95dp"
                 android:layout_height="match_parent"
                 android:inputType="numberSigned"
                 android:id="@+id/addequipment_quantity"
@@ -89,4 +89,82 @@
                 android:onClick="removeEquipment" />
         </LinearLayout>
 
+    <View
+        android:layout_height="2dp"
+        android:layout_width="fill_parent"
+        android:background="#f44242"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="50dp"
+            android:background="#425ff4"/>
+
+        <EditText
+            android:layout_width="120dp"
+            android:layout_height="match_parent"
+            android:id="@+id/addsupply_name"
+            android:layout_gravity="left"
+            android:textStyle="bold"
+            android:hint="@string/addsupplyname_hint"/>
+        <View
+            android:layout_width="2dp"
+            android:layout_height="50dp"
+            android:background="#425ff4"/>
+        <EditText
+            android:layout_width="80dp"
+            android:layout_height="match_parent"
+            android:inputType="numberSigned"
+            android:id="@+id/addsupply_quantity"
+            android:textStyle="italic"
+            android:hint="@string/addsupplyquantity_hint"/>
+        <View
+            android:layout_width="2dp"
+            android:layout_height="50dp"
+            android:background="#425ff4"/>
+        <EditText
+            android:layout_width="144dp"
+            android:layout_height="match_parent"
+            android:id="@+id/addsupply_unit"
+            android:layout_gravity="left"
+            android:textStyle="bold"
+            android:hint="@string/addsupplyunit_hint"/>
+        <View
+            android:layout_width="2dp"
+            android:layout_height="50dp"
+            android:background="#425ff4"/>
+
+
     </LinearLayout>
+
+    <View
+        android:layout_height="2dp"
+        android:layout_width="fill_parent"
+        android:background="#f44242"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addSupply"
+            android:text="@string/addsupply_button"
+            android:layout_gravity="left"
+            android:onClick="addSupply" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/removeSupply"
+            android:text="@string/removesupply_button"
+            android:layout_gravity="right"
+            android:onClick="removeSupply" />
+    </LinearLayout>
+
+</LinearLayout>

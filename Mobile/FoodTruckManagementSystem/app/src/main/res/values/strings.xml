@@ -5,4 +5,9 @@
     <string name="addequipmentquantity_hint"><i>Quantity</i></string>
     <string name="addequipment_button">Add Equipment</string>
     <string name="removeequipment_button">Remove Equipment</string>
+    <string name="addsupplyname_hint">Supply Name</string>
+    <string name="addsupplyquantity_hint">Quantity</string>
+    <string name="addsupplyunit_hint">Unit</string>
+    <string name="removesupply_button">Remove Supply</string>
+    <string name="addsupply_button">Add Supply</string>
 </resources>
