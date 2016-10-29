@@ -25,42 +25,46 @@
 
     <View
             android:layout_height="2dp"
-            android:layout_width="344dp"
+            android:layout_width="match_parent"
             android:background="#f44242"/>
 
     <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="50dp"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:weightSum="1">
+
+        <View
+                android:layout_width="2dp"
+                android:layout_height="50dp"
+                android:background="#425ff4"/>
+
+        <EditText
+            android:layout_width="195dp"
+            android:layout_height="match_parent"
+            android:id="@+id/addequipment_name"
+            android:layout_gravity="left"
+            android:textStyle="bold"
+            android:hint="@string/addequipmentname_hint"/>
 
         <View
                 android:layout_width="2dp"
                 android:layout_height="50dp"
                 android:background="#425ff4"/>
             <EditText
-                android:layout_width="243dp"
-                android:layout_height="match_parent"
-                android:id="@+id/addequipment_name"
-                android:layout_gravity="left"
-                android:textStyle="bold"
-                android:hint="@string/addequipmentname_hint"/>
-            <View
-                android:layout_width="2dp"
-                android:layout_height="50dp"
-                android:background="#425ff4"/>
-            <EditText
-                android:layout_width="95dp"
+                android:layout_width="151dp"
                 android:layout_height="match_parent"
                 android:inputType="numberSigned"
                 android:id="@+id/addequipment_quantity"
                 android:textStyle="italic"
-                android:hint="@string/addequipmentquantity_hint"/>
+                android:hint="@string/addequipmentquantity_hint" />
             <View
                 android:layout_width="2dp"
                 android:layout_height="50dp"
                 android:background="#425ff4"/>
         </LinearLayout>
-        <View
+
+    <View
             android:layout_height="2dp"
             android:layout_width="fill_parent"
             android:background="#f44242"/>
@@ -87,6 +91,7 @@
                 android:text="@string/removeequipment_button"
                 android:layout_gravity="right"
                 android:onClick="removeEquipment" />
+
         </LinearLayout>
 
     <View
@@ -95,8 +100,10 @@
         android:background="#f44242"/>
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="1">
 
         <View
             android:layout_width="2dp"
@@ -104,34 +111,39 @@
             android:background="#425ff4"/>
 
         <EditText
-            android:layout_width="120dp"
             android:layout_height="match_parent"
             android:id="@+id/addsupply_name"
             android:layout_gravity="left"
             android:textStyle="bold"
-            android:hint="@string/addsupplyname_hint"/>
+            android:hint="@string/addsupplyname_hint"
+            android:layout_width="195dp" />
+
         <View
             android:layout_width="2dp"
             android:layout_height="50dp"
             android:background="#425ff4"/>
+
         <EditText
-            android:layout_width="80dp"
             android:layout_height="match_parent"
             android:inputType="numberSigned"
             android:id="@+id/addsupply_quantity"
             android:textStyle="italic"
-            android:hint="@string/addsupplyquantity_hint"/>
+            android:hint="@string/addsupplyquantity_hint"
+            android:layout_width="89dp" />
+
         <View
             android:layout_width="2dp"
             android:layout_height="50dp"
             android:background="#425ff4"/>
+
         <EditText
-            android:layout_width="144dp"
             android:layout_height="match_parent"
+            android:inputType="numberSigned"
             android:id="@+id/addsupply_unit"
-            android:layout_gravity="left"
-            android:textStyle="bold"
-            android:hint="@string/addsupplyunit_hint"/>
+            android:textStyle="italic"
+            android:hint="@string/addsupplyunit_hint"
+            android:layout_width="61dp" />
+
         <View
             android:layout_width="2dp"
             android:layout_height="50dp"
@@ -144,6 +156,7 @@
         android:layout_height="2dp"
         android:layout_width="fill_parent"
         android:background="#f44242"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -153,18 +166,21 @@
             android:id="@+id/addSupply"
             android:text="@string/addsupply_button"
             android:layout_gravity="left"
-            android:onClick="addSupply" />
+            android:onClick="addSupply"
+            android:layout_weight="0.46" />
         <View
             android:layout_width="0dp"
             android:layout_height="0dp"
             android:layout_weight="1" />
+
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:id="@+id/removeSupply"
             android:text="@string/removesupply_button"
             android:layout_gravity="right"
-            android:onClick="removeSupply" />
+            android:onClick="removeSupply"
+            android:layout_weight="0.46" />
     </LinearLayout>
 
 </LinearLayout>
