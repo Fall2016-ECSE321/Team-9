@@ -40,9 +40,6 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals ( 1, count ( $this->m->getEquipments () ) );
 		$this->assertEquals ( $equipmentName, $this->m->getEquipment_index ( 0 )->getName () );
 		$this->assertEquals ( $equipmentQuantity, $this->m->getEquipment_index ( 0 )->getQuantity () );
-		
-		// $this->assertEquals(0, count($this->m->getSupplies()));
-		// $this->assertEquals(0, count($this->m->getStaff()));
 	}
 	
 	public function testCreateEquipmentNull() {
@@ -80,8 +77,6 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		// check file contents
 		$this->m = $this->pm->loadDataFromStore ();
 		$this->assertEquals ( 0, count ( $this->m->getEquipments () ) );
-		// $this->assertEquals(0, count($this->m->getSupplies()));
-		// $this->assertEquals(0, count($this->m->getStaff()));
 	}
 	
 	public function testCreateEquipmentEmpty() {
@@ -119,8 +114,6 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		// check file contents
 		$this->m = $this->pm->loadDataFromStore ();
 		$this->assertEquals ( 0, count ( $this->m->getEquipments () ) );
-		// $this->assertEquals(0, count($this->m->getSupplies()));
-		// $this->assertEquals(0, count($this->m->getStaff()));
 	}
 	
 	public function testCreateEquipmentSpaces() {
@@ -158,8 +151,6 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		// check file contents
 		$this->m = $this->pm->loadDataFromStore ();
 		$this->assertEquals ( 0, count ( $this->m->getEquipments () ) );
-		// $this->assertEquals(0, count($this->m->getSupplies()));
-		// $this->assertEquals(0, count($this->m->getStaff()));
 	}
 	
 	public function testCreateEquipmentNegativeQuantity() {
@@ -196,18 +187,19 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		} catch ( Exception $e ) {
 			$error3 = $e->getMessage ();
 		}
+
+		$error_msg1 = "Equipment name cannot be empty! Equipment quantity cannot be negative!";
+		$error_msg2 = "Equipment quantity cannot be negative!";
 		
 		// check error
-		$this->assertEquals ( "Equipment name cannot be empty! Equipment quantity cannot be negative!", $error0 );
-		$this->assertEquals ( "Equipment name cannot be empty! Equipment quantity cannot be negative!", $error1 );
-		$this->assertEquals ( "Equipment name cannot be empty! Equipment quantity cannot be negative!", $error2 );
-		$this->assertEquals ( "Equipment quantity cannot be negative!", $error3 );
+		$this->assertEquals ( $error_msg1, $error0 );
+		$this->assertEquals ( $error_msg1, $error1 );
+		$this->assertEquals ( $error_msg1, $error2 );
+		$this->assertEquals ( $error_msg2, $error3 );
 		
 		// check file contents
 		$this->m = $this->pm->loadDataFromStore ();
 		$this->assertEquals ( 0, count ( $this->m->getEquipments () ) );
-		// $this->assertEquals(0, count($this->m->getSupplies()));
-		// $this->assertEquals(0, count($this->m->getStaff()));
 	}
 	
 	public function testCreateEquipmentZeroQuantity() {
@@ -244,17 +236,18 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		} catch ( Exception $e ) {
 			$error3 = $e->getMessage ();
 		}
+
+		$error_msg1 = "Equipment name cannot be empty! Equipment quantity cannot be negative!";
+		$error_msg2 = "Equipment quantity cannot be negative!";
 		// check error
-		$this->assertEquals ( "Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", $error0 );
-		$this->assertEquals ( "Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", $error1 );
-		$this->assertEquals ( "Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", $error2 );
-		$this->assertEquals ( "Equipment quantity cannot be empty or zero!", $error3 );
+		$this->assertEquals ( $error_msg1, $error0 );
+		$this->assertEquals ( $error_msg1, $error1 );
+		$this->assertEquals ( $error_msg1, $error2 );
+		$this->assertEquals ( $error_msg2, $error3 );
 		
 		// check file contents
 		$this->m = $this->pm->loadDataFromStore ();
 		$this->assertEquals ( 0, count ( $this->m->getEquipments () ) );
-		// $this->assertEquals(0, count($this->m->getSupplies()));
-		// $this->assertEquals(0, count($this->m->getStaff()));
 	}
 	
 	public function testRemoveEquipment() {
@@ -338,8 +331,6 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		// check file contents
 		$this->m = $this->pm->loadDataFromStore ();
 		$this->assertEquals ( 1, count ( $this->m->getEquipments () ) );
-		// $this->assertEquals(0, count($this->m->getSupplies()));
-		// $this->assertEquals(0, count($this->m->getStaff()));
 	}
 	
 	public function testRemoveEquipmentEmpty() {
@@ -379,8 +370,6 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		// check file contents
 		$this->m = $this->pm->loadDataFromStore ();
 		$this->assertEquals ( 1, count ( $this->m->getEquipments () ) );
-		// $this->assertEquals(0, count($this->m->getSupplies()));
-		// $this->assertEquals(0, count($this->m->getStaff()));
 	}
 	
 	public function testRemoveEquipmentSpaces() {
@@ -461,12 +450,14 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		} catch ( Exception $e ) {
 			$error3 = $e->getMessage ();
 		}
-	
+		
+		$error_msg1 = "Equipment name cannot be empty! Equipment quantity cannot be negative!";
+		$error_msg2 = "Equipment quantity cannot be negative!";
 		// check error
-		$this->assertEquals ( "Equipment name cannot be empty! Equipment quantity cannot be negative!", $error0 );
-		$this->assertEquals ( "Equipment name cannot be empty! Equipment quantity cannot be negative!", $error1 );
-		$this->assertEquals ( "Equipment name cannot be empty! Equipment quantity cannot be negative!", $error2 );
-		$this->assertEquals ( "Equipment quantity cannot be negative!", $error3 );
+		$this->assertEquals ( $error_msg1, $error0 );
+		$this->assertEquals ( $error_msg1, $error1 );
+		$this->assertEquals ( $error_msg1, $error2 );
+		$this->assertEquals ( $error_msg2, $error3 );
 	
 		// check file contents
 		$this->m = $this->pm->loadDataFromStore ();
@@ -510,11 +501,15 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		} catch ( Exception $e ) {
 			$error3 = $e->getMessage ();
 		}
+
+		$error_msg1 = "Equipment name cannot be empty! Equipment quantity cannot be empty or zero!";
+		$error_msg2 = "Equipment quantity cannot be empty or zero!";
+
 		// check error
-		$this->assertEquals ( "Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", $error0 );
-		$this->assertEquals ( "Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", $error1 );
-		$this->assertEquals ( "Equipment name cannot be empty! Equipment quantity cannot be empty or zero!", $error2 );
-		$this->assertEquals ( "Equipment quantity cannot be empty or zero!", $error3 );
+		$this->assertEquals ( $error_msg1, $error0 );
+		$this->assertEquals ( $error_msg1, $error1 );
+		$this->assertEquals ( $error_msg1, $error2 );
+		$this->assertEquals ( $error_msg2, $error3 );
 	
 		// check file contents
 		$this->m = $this->pm->loadDataFromStore ();
@@ -887,24 +882,29 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		} catch ( Exception $e ) {
 			$error15 = $e->getMessage ();
 		}
-	
+		
+		$error_msg1 = "Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!";
+		$error_msg2 = "Supply quantity cannot be negative! Supply unit cannot be empty!";
+		$error_msg3 = "Supply name cannot be empty! Supply quantity cannot be negative!";
+		$error_msg4 = "Supply quantity cannot be negative!";
+
 		// check error
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", $error0 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", $error1 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", $error2 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", $error3 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", $error4 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", $error5 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", $error6 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", $error7 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative! Supply unit cannot be empty!", $error8 );
-		$this->assertEquals ( "Supply quantity cannot be negative! Supply unit cannot be empty!", $error9 );
-		$this->assertEquals ( "Supply quantity cannot be negative! Supply unit cannot be empty!", $error10 );
-		$this->assertEquals ( "Supply quantity cannot be negative! Supply unit cannot be empty!", $error11 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative!", $error12 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative!", $error13 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative!", $error14 );
-		$this->assertEquals ( "Supply quantity cannot be negative!", $error15 );
+		$this->assertEquals ( $error_msg1, $error0 );
+		$this->assertEquals ( $error_msg1, $error1 );
+		$this->assertEquals ( $error_msg1, $error2 );
+		$this->assertEquals ( $error_msg1, $error3 );
+		$this->assertEquals ( $error_msg1, $error4 );
+		$this->assertEquals ( $error_msg1, $error5 );
+		$this->assertEquals ( $error_msg1, $error6 );
+		$this->assertEquals ( $error_msg1, $error7 );
+		$this->assertEquals ( $error_msg1, $error8 );
+		$this->assertEquals ( $error_msg2, $error9 );
+		$this->assertEquals ( $error_msg2, $error10 );
+		$this->assertEquals ( $error_msg2, $error11 );
+		$this->assertEquals ( $error_msg3, $error12 );
+		$this->assertEquals ( $error_msg3, $error13 );
+		$this->assertEquals ( $error_msg3, $error14 );
+		$this->assertEquals ( $error_msg4, $error15 );
 			
 		// check file contents
 		$this->m = $this->pm->loadDataFromStore ();
@@ -1025,23 +1025,27 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 			$error15 = $e->getMessage ();
 		}
 		
+		$error_msg1 = "Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!";
+		$error_msg2 = "Supply quantity cannot be empty or zero! Supply unit cannot be empty!";
+		$error_msg3 = "Supply name cannot be empty! Supply quantity cannot be empty or zero!";
+		$error_msg4 = "Supply quantity cannot be empty or zero!";
 		// check error
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error0 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error1 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error2 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error3 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error4 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error5 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error6 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error7 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error8 );
-		$this->assertEquals ( "Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error9 );
-		$this->assertEquals ( "Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error10 );
-		$this->assertEquals ( "Supply quantity cannot be empty or zero! Supply unit cannot be empty!", $error11 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero!", $error12 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero!", $error13 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero!", $error14 );
-		$this->assertEquals ( "Supply quantity cannot be empty or zero!", $error15 );
+		$this->assertEquals ( $error_msg1, $error0 );
+		$this->assertEquals ( $error_msg1, $error1 );
+		$this->assertEquals ( $error_msg1, $error2 );
+		$this->assertEquals ( $error_msg1, $error3 );
+		$this->assertEquals ( $error_msg1, $error4 );
+		$this->assertEquals ( $error_msg1, $error5 );
+		$this->assertEquals ( $error_msg1, $error6 );
+		$this->assertEquals ( $error_msg1, $error7 );
+		$this->assertEquals ( $error_msg1, $error8 );
+		$this->assertEquals ( $error_msg2, $error9 );
+		$this->assertEquals ( $error_msg2, $error10 );
+		$this->assertEquals ( $error_msg2, $error11 );
+		$this->assertEquals ( $error_msg3, $error12 );
+		$this->assertEquals ( $error_msg3, $error13 );
+		$this->assertEquals ( $error_msg3, $error14 );
+		$this->assertEquals ( $error_msg4, $error15 );
 		
 		// check file contents
 		$this->m = $this->pm->loadDataFromStore ();
@@ -1283,12 +1287,14 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		} catch ( Exception $e ) {
 			$error3 = $e->getMessage ();
 		}
-	
+		
+		$error_msg1 = "Supply name cannot be empty! Supply quantity cannot be negative!";
+		$error_msg2 = "Supply quantity cannot be negative!"
 		// check error
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative!", $error0 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative!", $error1 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be negative!", $error2 );
-		$this->assertEquals ( "Supply quantity cannot be negative!", $error3 );
+		$this->assertEquals ( $error_msg1, $error0 );
+		$this->assertEquals ( $error_msg1, $error1 );
+		$this->assertEquals ( $error_msg1, $error2 );
+		$this->assertEquals ( $error_msg2, $error3 );
 	
 		// check file contents
 		$this->m = $this->pm->loadDataFromStore ();
@@ -1332,12 +1338,14 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		} catch ( Exception $e ) {
 			$error3 = $e->getMessage ();
 		}
-	
+		
+		$error_msg1 = "Supply name cannot be empty! Supply quantity cannot be empty or zero!";
+		$error_msg2 = "Supply quantity cannot be empty or zero!"
 		// check error
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero!", $error0 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero!", $error1 );
-		$this->assertEquals ( "Supply name cannot be empty! Supply quantity cannot be empty or zero!", $error2 );
-		$this->assertEquals ( "Supply quantity cannot be empty or zero!", $error3 );
+		$this->assertEquals ( $error_msg1, $error0 );
+		$this->assertEquals ( $error_msg1, $error1 );
+		$this->assertEquals ( $error_msg1, $error2 );
+		$this->assertEquals ( $error_msg2, $error3 );
 	
 		// check file contents
 		$this->m = $this->pm->loadDataFromStore ();
