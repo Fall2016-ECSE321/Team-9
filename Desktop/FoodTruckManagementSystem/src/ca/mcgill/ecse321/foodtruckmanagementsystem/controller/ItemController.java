@@ -2,8 +2,12 @@ package ca.mcgill.ecse321.foodtruckmanagementsystem.controller;
 
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Equipment;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Manager;
+import ca.mcgill.ecse321.foodtruckmanagementsystem.model.StaffMember;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Supply;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceXStream;
+
+import java.sql.Date;
+import java.util.*;
 
 public class ItemController {
 
@@ -113,9 +117,15 @@ public class ItemController {
 			{
 				if(name.equals(supply.getName()))
 				{
-					isUpdated = true;
-					supply.setQuantity(supply.getQuantity() + quantity);
-					break;
+					if(unit.equals(supply.getUnit()))
+					{
+						isUpdated = true;
+						supply.setQuantity(supply.getQuantity() + quantity);
+						break;
+					}
+					else
+						throw new InvalidInputException("Supply unit does not match: " + supply.getUnit());
+					
 				}
 			}			
 			if(!isUpdated)
@@ -167,4 +177,68 @@ public class ItemController {
 			PersistenceXStream.saveToXMLwithXStream(m);	
 	}
 	
+	public void createStaffMember(String name, String role) throws InvalidInputException
+	{
+		String error = "";
+		if ((name == null || name.trim().length() == 0))
+			error = error + "Staff Member name cannot be empty! ";
+		if ((role == null || role.trim().length() == 0))
+			error = error + "Staff Member role cannot be empty! ";
+		
+		error = error.trim();
+		if(error.length() > 0)
+			throw new InvalidInputException(error);
+		
+			name = name.toLowerCase();
+			role = role.toLowerCase();
+			
+			boolean isUpdated = false;
+			
+			Manager m = Manager.getInstance();
+	
+			for(StaffMember staffmember : m.getStaffmembers())
+			{
+				if(name.equals(staffmember.getName()))
+				{
+					isUpdated = true;
+					staffmember.setRole(role);
+					break;
+				}
+			}			
+			if(!isUpdated)
+			{
+				m.addStaffmember(new StaffMember(name, role));
+			}			
+			
+		PersistenceXStream.saveToXMLwithXStream(m);
+	}
+	
+	public void removeStaffMember(String name, String role) throws InvalidInputException{
+		String error = "";
+		if ((name == null || name.trim().length() == 0))
+			error = error + "Staff Member name cannot be empty! ";
+		if ((role == null || role.trim().length() == 0))
+			error = error + "Staff Member role cannot be empty! ";
+		
+		error = error.trim();
+		if(error.length() > 0)
+			throw new InvalidInputException(error);
+				
+			name = name.toLowerCase();
+			role= role.toLowerCase();
+			boolean findName = false;
+			Manager m = Manager.getInstance();
+			
+			for(StaffMember staffmember : m.getStaffmembers()){
+				if(name.equals(staffmember.getName())){
+					findName = true;
+					m.removeStaffmember(staffmember);
+					break;					
+				}
+			}
+			if(!findName){
+				throw new InvalidInputException("Staff Member does not exist!");
+			}
+			PersistenceXStream.saveToXMLwithXStream(m);	
+	}	
 }
