@@ -27,8 +27,6 @@
 </head>
 <body> 
 	<?php
-	require_once 'model/equipment.php';
-	require_once 'model/supply.php';
 	require_once 'persistence/PersistenceFoodTruckManagementSystem.php';
 	
 	session_start ();
