@@ -6,30 +6,30 @@ session_start();
 $c = new Controller();
 try{
 	
-	if (isset($_POST['staff_name'])){ //name
-		$staffName = $_POST['staff_name'];
+	if (isset($_POST['stuff_name'])){ //name
+		$stuffName = $_POST['stuff_name'];
 	}
-	if (isset($_POST['staff_role'])){ //role
-		$staffRole = $_POST['staff_role'];
-	}
-
-	if (isset($_POST['staff_schedule'])){ //schedule
-		$staffSchedule = $_POST['staff_schedule'];
+	if (isset($_POST['stuff_role'])){ //role
+		$stuffRole = $_POST['stuff_role'];
 	}
 
-	if (isset($_POST['addStaffMember'])) { // check the function name
-		$c->createStaffMember($staffName, $staffRole);
+	if (isset($_POST['stuff_schedule'])){ //schedule
+		$stuffSchedule = $_POST['stuff_schedule'];
 	}
-	elseif (isset($_POST['removeStaffMember'])){ //check the function name
-		$c->removeStaffMember($staffName, $staffRole);
+
+	if (isset($_POST['addStuffMember'])) { // check the function name
+		$c->createStuffMember($stuffName, $stuffRole);
 	}
-	elseif (isset($_POST['editStaffSchedule'])){ //check the function name
-		$c->removeStaffMember($staffName, $staffSchedule);
+	elseif (isset($_POST['removeStuffMember'])){ //check the function name
+		$c->removeStuffMember($stuffName, $stuffRole);
 	}
-	$_SESSION["errorStaff"] = "";
+	elseif (isset($_POST['editStuffSchedule'])){ //check the function name
+		$c->removeStuffMember($stuffName, $stuffSchedule);
+	}
+	$_SESSION["errorStuff"] = "";
 	
 } catch (Exception $e){
-	$_SESSION["errorStaff"] = $e->getMessage();
+	$_SESSION["errorStuff"] = $e->getMessage();
 }
 ?>
 

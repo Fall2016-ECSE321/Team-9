@@ -28,6 +28,6 @@ try{
 
 <!DOCTYPE html> <html>
 	<head>
-	<meta http-equiv="refresh" content="0; url=/FoodTruckManagementSystem/" />
+	<meta http-equiv="refresh" content="0; url=/FoodTruckManagementSystem/inventoryTab.php" />
 	</head>
 </html>
