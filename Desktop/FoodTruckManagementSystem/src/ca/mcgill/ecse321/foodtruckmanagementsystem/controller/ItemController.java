@@ -241,4 +241,34 @@ public class ItemController {
 			}
 			PersistenceXStream.saveToXMLwithXStream(m);	
 	}	
+
+	public void addDateStaffMember(String name, Date shift) throws InvalidInputException{
+		String error = "";	
+		if ((name == null || name.trim().length() == 0))
+			error = error + "Staff Member name cannot be empty! ";
+		if ((shift == null)){
+			error = error + "Staff Member date cannot be empty!";
+		}
+		boolean isUpdated = false;
+		Manager m = Manager.getInstance();
+		
+		for(StaffMember staffmember: m.getStaffmembers()){
+			if(name.equals(staffmember.getName())){
+				isUpdated = true;
+				staffmember.addSchedule(shift);
+				break;
+			}
+		}
+		
+		if(error.length() > 0)
+			throw new InvalidInputException(error);
+		
+		if(!isUpdated){
+			error = error + "Staff Member does not exist!";
+		}
+		
+		
+		
+		PersistenceXStream.saveToXMLwithXStream(m);
+	}
 }

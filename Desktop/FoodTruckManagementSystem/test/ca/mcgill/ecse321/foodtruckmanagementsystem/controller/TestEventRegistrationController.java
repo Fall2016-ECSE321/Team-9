@@ -3,6 +3,8 @@ package ca.mcgill.ecse321.foodtruckmanagementsystem.controller;
 import static org.junit.Assert.*;
 
 import java.io.File;
+import java.text.SimpleDateFormat;
+import java.sql.Date;
 
 import org.junit.After;
 import org.junit.BeforeClass;
@@ -1414,8 +1416,426 @@ public class TestEventRegistrationController {
 		assertEquals(unit, m2.getSupply(0).getUnit());
 	}
 
+	@Test
+	public void testCreateStaffMember(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getStaffmembers().size());
+		
+		String name = "john";
+		String role = "cashier";
+		
+		ItemController ic = new ItemController();
+		try {
+			ic.createStaffMember(name, role);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		
+		checkResultStaffMember(name, role, m);
+		Manager m2 = (Manager) PersistenceXStream.loadFromXMLwithXStream();
+		checkResultStaffMember(name, role, m2);
+	}
 	
-
+	@Test
+	public void testCreateStaffMemberEmpty(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getStaffmembers().size());
+		
+		String name1 = "";
+		String name2 = "james";
+		String role1 = "";
+		String role2 = "cook";
+		
+		String error1 = null;
+		String error2 = null;
+		String error3 = null;
+		
+		ItemController ic = new ItemController();
+		try{
+			ic.createStaffMember(name1, role1);
+		}catch(InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		
+		try{
+			ic.createStaffMember(name2, role1);
+		}catch(InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		
+		try{
+			ic.createStaffMember(name1, role2);
+		}catch(InvalidInputException e){
+			error3 = e.getMessage();
+		}
+		
+		//Check error
+		assertEquals("Staff Member name cannot be empty! Staff Member role cannot be empty!", error1);
+		assertEquals("Staff Member role cannot be empty!", error2);
+		assertEquals("Staff Member name cannot be empty!", error3);
+	}
 	
+	@Test
+	public void testCreateStaffMemberNull(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getStaffmembers().size());
+		
+		String name1 = null;
+		String name2 = "john";
+		String role1 = null;
+		String role2 = "cashier";
+		
+		String error1 = null;
+		String error2 = null;
+		String error3 = null;
+		
+		ItemController ic = new ItemController();
+		try{
+			ic.createStaffMember(name1, role1);
+		}catch(InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		
+		try{
+			ic.createStaffMember(name2, role1);
+		}catch(InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		
+		try{
+			ic.createStaffMember(name1, role2);
+		}catch(InvalidInputException e){
+			error3 = e.getMessage();
+		}
+		
+		//Check error
+		assertEquals("Staff Member name cannot be empty! Staff Member role cannot be empty!", error1);
+		assertEquals("Staff Member role cannot be empty!", error2);
+		assertEquals("Staff Member name cannot be empty!", error3);
+	}
+	
+	@Test
+	public void testCreateStaffMemberSpaces(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getStaffmembers().size());
+		
+		String name1 = " ";
+		String name2 = "john";
+		String role1 = " ";
+		String role2 = "cashier";
+		
+		String error1 = null;
+		String error2 = null;
+		String error3 = null;
+		
+		ItemController ic = new ItemController();
+		try{
+			ic.createStaffMember(name1, role1);
+		}catch(InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		
+		try{
+			ic.createStaffMember(name2, role1);
+		}catch(InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		
+		try{
+			ic.createStaffMember(name1, role2);
+		}catch(InvalidInputException e){
+			error3 = e.getMessage();
+		}
+		
+		//Check error
+		assertEquals("Staff Member name cannot be empty! Staff Member role cannot be empty!", error1);
+		assertEquals("Staff Member role cannot be empty!", error2);
+		assertEquals("Staff Member name cannot be empty!", error3);
+	}
+	
+	@Test
+	public void testRemoveStaffMember(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getStaffmembers().size());
+		
+		String name = "john";
+		String role = "cashier";
+		
+		ItemController ic = new ItemController();
+		
+		try{
+			ic.createStaffMember(name, role);
+			ic.removeStaffMember(name, role);
+		}catch(InvalidInputException e){
+			fail();
+		}
+		
+		/*checkResultStaffMember(name, role, m);
+		Manager m2 = (Manager) PersistenceXStream.loadFromXMLwithXStream();
+		checkResultStaffMember(name, role, m2);*/
+	}
+	
+	@Test
+	public void testRemoveStaffMemberEmpty(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getStaffmembers().size());
+		
+		String name1 = "";
+		String name2 = "james";
+		String role1 = "";
+		String role2 = "cook";
+		
+		String error1 = null;
+		String error2 = null;
+		String error3 = null;
+		
+		ItemController ic = new ItemController();
+		try{
+			ic.createStaffMember(name2, role2);
+			ic.removeStaffMember(name1, role1);
+		}catch(InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		
+		try{
+			ic.createStaffMember(name2, role2);
+			ic.removeStaffMember(name2, role1);
+		}catch(InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		
+		try{
+			ic.createStaffMember(name2, role2);
+			ic.removeStaffMember(name1, role2);
+		}catch(InvalidInputException e){
+			error3 = e.getMessage();
+		}
+		
+		//Check error
+		assertEquals("Staff Member name cannot be empty! Staff Member role cannot be empty!", error1);
+		assertEquals("Staff Member role cannot be empty!", error2);
+		assertEquals("Staff Member name cannot be empty!", error3);
+	}
+	
+	@Test
+	public void testRemoveStaffMemberNull(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getStaffmembers().size());
+		
+		String name1 = null;
+		String name2 = "james";
+		String role1 = null;
+		String role2 = "cook";
+		
+		String error1 = null;
+		String error2 = null;
+		String error3 = null;
+		
+		ItemController ic = new ItemController();
+		try{
+			ic.createStaffMember(name2, role2);
+			ic.removeStaffMember(name1, role1);
+		}catch(InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		
+		try{
+			ic.createStaffMember(name2, role2);
+			ic.removeStaffMember(name2, role1);
+		}catch(InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		
+		try{
+			ic.createStaffMember(name2, role2);
+			ic.removeStaffMember(name1, role2);
+		}catch(InvalidInputException e){
+			error3 = e.getMessage();
+		}
+		
+		//Check error
+		assertEquals("Staff Member name cannot be empty! Staff Member role cannot be empty!", error1);
+		assertEquals("Staff Member role cannot be empty!", error2);
+		assertEquals("Staff Member name cannot be empty!", error3);
+	}
+	
+	public void testRemoveStaffMemberSpaces(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getStaffmembers().size());
+		
+		String name1 = " ";
+		String name2 = "james";
+		String role1 = " ";
+		String role2 = "cook";
+		
+		String error1 = null;
+		String error2 = null;
+		String error3 = null;
+		
+		ItemController ic = new ItemController();
+		try{
+			ic.createStaffMember(name2, role2);
+			ic.removeStaffMember(name1, role1);
+		}catch(InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		
+		try{
+			ic.createStaffMember(name2, role2);
+			ic.removeStaffMember(name2, role1);
+		}catch(InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		
+		try{
+			ic.createStaffMember(name2, role2);
+			ic.removeStaffMember(name1, role2);
+		}catch(InvalidInputException e){
+			error3 = e.getMessage();
+		}
+		
+		//Check error
+		assertEquals("Staff Member name cannot be empty! Staff Member role cannot be empty!", error1);
+		assertEquals("Staff Member role cannot be empty!", error2);
+		assertEquals("Staff Member name cannot be empty!", error3);
+	}
 
+	public void checkResultStaffMember(String name, String role, Manager m2){
+		assertEquals(1, m2.getStaffmembers().size());
+		assertEquals(name, m2.getStaffmember(0).getName());
+		assertEquals(role, m2.getStaffmember(0).getRole());
+	}
+	
+	public void testAddDateStaffMember(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getStaffmembers().size());
+		
+		String name = "john";
+		Date date = new Date(14112016);
+		
+		ItemController ic = new ItemController();
+		
+		try{
+			ic.addDateStaffMember(name, date);	
+		}catch(InvalidInputException e){
+			fail();
+		}
+	}
+
+	@Test
+	public void testAddDateStaffMemberEmpty(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getStaffmembers().size());
+		
+		String name1 = "";
+		String name2 = "james";
+		Date date1 = null;
+		Date date2 = new Date(14112016);
+		
+		String error1 = null;
+		String error2 = null;
+		String error3 = null;
+		
+		ItemController ic = new ItemController();
+		try{
+			ic.addDateStaffMember(name1, date1);
+		}catch(InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		
+		try{
+			ic.addDateStaffMember(name2, date1);
+		}catch(InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		
+		try{
+			ic.addDateStaffMember(name1, date2);
+		}catch(InvalidInputException e){
+			error3 = e.getMessage();
+		}
+		
+		//Check error
+		assertEquals("Staff Member name cannot be empty! Staff Member date cannot be empty!", error1);
+		assertEquals("Staff Member date cannot be empty!", error2);
+		assertEquals("Staff Member name cannot be empty! ", error3);
+	}
+	
+	@Test
+	public void testAddDateStaffMemberNull(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getStaffmembers().size());
+		
+		String name1 = null;
+		String name2 = "james";
+		Date date1 = null;
+		Date date2 = new Date(14112016);
+		
+		String error1 = null;
+		String error2 = null;
+		String error3 = null;
+		
+		ItemController ic = new ItemController();
+		try{
+			ic.addDateStaffMember(name1, date1);
+		}catch(InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		
+		try{
+			ic.addDateStaffMember(name2, date1);
+		}catch(InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		
+		try{
+			ic.addDateStaffMember(name1, date2);
+		}catch(InvalidInputException e){
+			error3 = e.getMessage();
+		}
+		
+		//Check error
+		assertEquals("Staff Member name cannot be empty! Staff Member date cannot be empty!", error1);
+		assertEquals("Staff Member date cannot be empty!", error2);
+		assertEquals("Staff Member name cannot be empty! ", error3);
+	}
+	
+	@Test
+	public void testAddDateStaffMemberSpaces(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getStaffmembers().size());
+		
+		String name1 = " ";
+		String name2 = "james";
+		Date date1 = null;
+		Date date2 = new Date(14112016);
+		
+		String error1 = null;
+		String error2 = null;
+		String error3 = null;
+		
+		ItemController ic = new ItemController();
+		try{
+			ic.addDateStaffMember(name1, date1);
+		}catch(InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		
+		try{
+			ic.addDateStaffMember(name2, date1);
+		}catch(InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		
+		try{
+			ic.addDateStaffMember(name1, date2);
+		}catch(InvalidInputException e){
+			error3 = e.getMessage();
+		}
+		
+		//Check error
+		assertEquals("Staff Member name cannot be empty! Staff Member date cannot be empty!", error1);
+		assertEquals("Staff Member date cannot be empty!", error2);
+		assertEquals("Staff Member name cannot be empty! ", error3);
+	}
 }
