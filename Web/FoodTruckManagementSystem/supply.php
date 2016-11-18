@@ -18,14 +18,17 @@ try{
 
 	if (isset($_POST['addSupply'])) {
 		$c->createSupply($supplyName, $supplyQuantity, $supplyUnit);
+		$_SESSION ["successSupply"] = "Successfully add ".$supplyName." item(s)!";
 	}
 	elseif (isset($_POST['removeSupply'])){
 		$c->removeSupply($supplyName, $supplyQuantity);
+		$_SESSION ["successSupply"] = "Successfully remove ".$supplyName." item(s)!";
 	}
 	$_SESSION["errorSupply"] = "";
 	
 } catch (Exception $e){
 	$_SESSION["errorSupply"] = $e->getMessage();
+	$_SESSION ["successSupply"] = "";
 }
 ?>
 

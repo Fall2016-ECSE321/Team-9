@@ -15,16 +15,24 @@ try{
 
 	if (isset($_POST['addEquipment'])) {
 		$c->createEquipment($equipmentName, $equipmentQuantity);
+		$_SESSION["successEquipment"] = "Successfully Add ".$equipmentName." item(s)!";
 	}
 	elseif (isset($_POST['removeEquipment'])){
 		$c->removeEquipment($equipmentName, $equipmentQuantity);
+		$_SESSION["successEquipment"] = "Successfully remove ".$equipmentName." item(s)!";
 	}
 	$_SESSION["errorEquipment"] = "";
 	
 } catch (Exception $e){
 	$_SESSION["errorEquipment"] = $e->getMessage();
+	$_SESSION["successEquipment"] = "";
 }
+if (isset($err_equipment)) {
+
+}
+
 ?>
+
 
 <!DOCTYPE html> <html>
 	<head>

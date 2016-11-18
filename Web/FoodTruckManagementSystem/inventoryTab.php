@@ -12,6 +12,7 @@ session_start ();
 
 <title>Food Truck Management System</title>
 
+
 <style>
 	.btn-default {
 		background: #000;
@@ -22,25 +23,27 @@ session_start ();
 		background: #fff;
 		color: #000;
 	}
-	.error {color : #FF0000}
+	.error {
+			color: #D8000C;
+	}
+	.success {
+			color: #4F8A10;
+	}
 </style>
 </head>
-<body> 
+<body > 
 	<div class="container">
-	  <h3 ><strong style="color:#808080">Food Truck Management System</strong></h3>
-	  <br><br>
+	  <h3 ><strong style="color:#808080">Food Truck Management System</strong><img style="width: 10%;
+    height: auto;" src="img/logo.png"></h3>
 	  <ul class="nav nav-tabs">
-	    <li class="active"><a href="index.php">Home</a></li>
-	    <li><a href="inventoryTab.php">Inventory</a></li>
+	    <li><a href="index.php">Home</a></li>
+	    <li class="active"><a href="inventoryTab.php">Inventory</a></li>
 	    <li><a href="staffTab.php">Staff</a></li>
 	    <li><a href="reportTab.php">Report</a></li>
 	  </ul>
 
 		  
 		<?php
-		// require_once 'equipment.php';
-		// require_once 'supply.php';
-		// require_once 'staffMember.php';
 		require_once 'persistence/PersistenceFoodTruckManagementSystem.php';
 
 		
@@ -48,18 +51,35 @@ session_start ();
 		$pm = new PersistenceFoodTruckManagementSystem ();
 		$m = $pm->loadDataFromStore ();
 		?>
-		<br><br><br>
+		<br><br>
 
 		<h4 style="color:#778899"> <strong>Equipment Item</strong></h4>
 		<div style="background-color:#c0c0c0;color:black;padding:20px;"">
             <!-- <h4> <strong>Equipment Item</strong></h4> -->
        
 			<form class="form-inline" action="equipment.php" method="post">
-		
+				
+				<span class="error input-sm">
+					<?php
+						if (isset ( $_SESSION ['errorEquipment'] ) && ! empty ( $_SESSION ['errorEquipment'] )) {
+							echo " * " . $_SESSION ["errorEquipment"];
+							session_unset($_SESSION ["errorEquipment"]);
+						}
+					?>
+				<span class="success input-md">
+					<?php
+						
+						if (isset ( $_SESSION ['successEquipment'] ) && ! empty ( $_SESSION ['successEquipment'] )) {
+						echo $_SESSION ["successEquipment"];
+						session_unset($_SESSION ["successEquipment"]);
+						}	
+					?>
+				</span> 
+				</span>
+				<br>
 				<div class="form-group">
 					&nbsp&nbsp <input class="form-control input-sm" type="text"
 						name="equipment_name" placeholder="Enter Equipment Name" />
-
 				</div>
 				&nbsp&nbsp
 				<div class="form-group">
@@ -68,28 +88,37 @@ session_start ();
 						type="number" name="equipment_quantity" placeholder="0" />
 
 				</div>
-				&nbsp&nbsp <span class="error input-sm">
-					<?php
-					
-					if (isset ( $_SESSION ['errorEquipment'] ) && ! empty ( $_SESSION ['errorEquipment'] )) {
-						echo " * " . $_SESSION ["errorEquipment"];
-					}
-					
-					?>
-					</span> <br>
-				<br> &nbsp&nbsp
+				<br><br>&nbsp&nbsp
 				<button type="submit" name="addEquipment" class="btn btn-default">Add</button>
 				<button type="submit" name="removeEquipment" class="btn btn-default">Remove</button>
 			</form>
 		</div>
 
-		<br><br><br>
+		<br><br>
 
 		<h4 style="color:#778899">  <strong>Supply Item</strong></h4>
 		<div style="background-color:#c0c0c0;color:black;padding:20px;"">
             
 			<form class="form-inline" action="supply.php" method="post">
-	
+				<span class="error input-sm">
+					<?php
+						if (isset ( $_SESSION ['errorSupply'] ) && ! empty ( $_SESSION ['errorSupply'] )) {
+							echo " * " . $_SESSION ["errorSupply"];
+							session_unset($_SESSION ["errorSupply"]);
+						}
+					?>
+				 
+				<span class="success input-md">
+					<?php
+						
+						if (isset ( $_SESSION ['successSupply'] ) && ! empty ( $_SESSION ['successSupply'] )) {
+						echo $_SESSION ["successSupply"];
+						session_unset($_SESSION ["successSupply"]);
+						}	
+					?>
+				</span>
+				</span>
+				<br>
 				<div class="form-group">
 				&nbsp&nbsp 
 					<input  class="form-control input-sm" type="text"
@@ -98,7 +127,7 @@ session_start ();
 				&nbsp&nbsp
 				<div class="form-group">
 
-					<input class="form-control input-s " style="width: 100px"
+					<input class="form-control input-sm " style="width: 100px"
 						type="number" name="supply_quantity" placeholder="0" />
 				</div>
 				&nbsp&nbsp
@@ -108,15 +137,7 @@ session_start ();
 						type="text" name="supply_unit" placeholder="kg" />
 				</div>
 
-				&nbsp&nbsp <span class="error input-sm">
-					<?php
-					if (isset ( $_SESSION ['errorSupply'] ) && ! empty ( $_SESSION ['errorSupply'] )) {
-						echo " * " . $_SESSION ["errorSupply"];
-					}
-					
-					?>
-					</span> <br>
-				<br> &nbsp&nbsp
+				<br><br>&nbsp&nbsp
 				<button type="submit" name="addSupply" class="btn btn-default">Add</button>
 				<button type="submit" name="removeSupply" class="btn btn-default">Remove</button>
 			</form>
