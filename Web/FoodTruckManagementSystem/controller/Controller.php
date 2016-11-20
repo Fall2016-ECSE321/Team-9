@@ -310,23 +310,26 @@ class Controller{
 			//now check that the start time is less than the end time
 			//times are received in format "hh:mm" where h is hour and m is minute
 			//therefore we cast to an integer while removing the ':'
-			$tempStart="";
-			$tempEnd="";
-			for($j=0; $j<5; $j++){
-				if($j==2){
-					$j++; //skip the ':' 
+			if(($startTime[$i]!=null && $endTime[$i]!=null) || ($startTime[$i]!="" && $endTime[$i]!="")){
+				$tempStart="";
+				$tempEnd="";
+				for($j=0; $j<5; $j++){
+					if($j==2){
+						$j++; //skip the ':' 
+					}
+					$tempStart .= substr($startTime[$i], $j);
+					$tempEnd .= substr($endTime[$i], $j);
 				}
-				$tempStart .= substr($startTime[$i], $j);
-				$tempEnd .= substr($endTime[$i], $j);
-			}
-			$tempStart=trim($tempStart);
-			$tempEnd=trim($tempEnd);
-			$startInt=(int)$tempStart;
-			$endInt=(int)$tempEnd;
-			if($startInt > $endInt){
-				$error .= "End time must be greater than start time! ";
+				$tempStart=trim($tempStart);
+				$tempEnd=trim($tempEnd);
+				$startInt=(int)$tempStart;
+				$endInt=(int)$tempEnd;
+				if($startInt > $endInt){
+					$error .= "End time must be greater than start time! ";
+				}
 			}
 		}
+	
 		$error = trim($error);
 		
 		if(strlen($error)>0){
