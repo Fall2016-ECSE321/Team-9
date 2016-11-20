@@ -237,8 +237,8 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 			$error3 = $e->getMessage ();
 		}
 
-		$error_msg1 = "Equipment name cannot be empty! Equipment quantity cannot be negative!";
-		$error_msg2 = "Equipment quantity cannot be negative!";
+		$error_msg1 = "Equipment name cannot be empty! Equipment quantity cannot be empty or zero!";
+		$error_msg2 = "Equipment quantity cannot be empty or zero!";
 		// check error
 		$this->assertEquals ( $error_msg1, $error0 );
 		$this->assertEquals ( $error_msg1, $error1 );
@@ -1289,7 +1289,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		}
 		
 		$error_msg1 = "Supply name cannot be empty! Supply quantity cannot be negative!";
-		$error_msg2 = "Supply quantity cannot be negative!"
+		$error_msg2 = "Supply quantity cannot be negative!";
 		// check error
 		$this->assertEquals ( $error_msg1, $error0 );
 		$this->assertEquals ( $error_msg1, $error1 );
@@ -1340,7 +1340,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		}
 		
 		$error_msg1 = "Supply name cannot be empty! Supply quantity cannot be empty or zero!";
-		$error_msg2 = "Supply quantity cannot be empty or zero!"
+		$error_msg2 = "Supply quantity cannot be empty or zero!";
 		// check error
 		$this->assertEquals ( $error_msg1, $error0 );
 		$this->assertEquals ( $error_msg1, $error1 );
@@ -1378,5 +1378,173 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		$this->m = $this->pm->loadDataFromStore ();
 		$this->assertEquals ( 1, count ( $this->m->getSupplies () ) );
 	}
+	
+	public function testCreateStaffMember() {
+		$this->assertEquals ( 0, count ( $this->m->getStaffmembers () ) );
+	
+		$name = "jim";
+		$role = "cook";
+	
+		try {
+			$this->c->createStaffMember($name, $role);
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$this->fail ();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getStaffmembers () ) );
+		$this->assertEquals ( $name, $this->m->getStaffmember_index(0)->getName () );
+		$this->assertEquals ( $role, $this->m->getStaffmember_index(0)->getRole () );
+	}
+	
+	public function testCreateStaffMemberNull() {
+		$this->assertEquals ( 0, count ( $this->m->getStaffmembers () ) );
+	
+		$name0 = null;
+		$name1 = "jim";
+		$role0 = null;
+		$role1 = "cook";
+		
+		$error0="";
+		$error1="";
+		$error2="";
+	
+		try {
+			$this->c->createStaffMember($name0, $role0);
+		} catch ( Exception $e ) {
+			$error0 = $e->getMessage ();
+		}
+		try {
+			$this->c->createStaffMember($name0, $role1);
+		} catch ( Exception $e ) {
+			$error1 = $e->getMessage ();
+		}
+		try {
+			$this->c->createStaffMember($name1, $role0);
+		} catch ( Exception $e ) {
+			$error2 = $e->getMessage ();
+		}
+	
+		$this->assertEquals ( "Staff Member name cannot be empty! Staff Member role cannot be empty!", $error0 );
+		$this->assertEquals ( "Staff Member name cannot be empty!", $error1 );
+		$this->assertEquals ( "Staff Member role cannot be empty!", $error2 );
+		
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 0, count ( $this->m->getStaffmembers () ) );	
+	}
+	
+	public function testCreateStaffMemberEmpty() {
+		$this->assertEquals ( 0, count ( $this->m->getStaffmembers () ) );
+	
+		$name0 = "";
+		$name1 = "jim";
+		$role0 = "";
+		$role1 = "cook";
+	
+		$error0="";
+		$error1="";
+		$error2="";
+	
+		try {
+			$this->c->createStaffMember($name0, $role0);
+		} catch ( Exception $e ) {
+			$error0 = $e->getMessage ();
+		}
+		try {
+			$this->c->createStaffMember($name0, $role1);
+		} catch ( Exception $e ) {
+			$error1 = $e->getMessage ();
+		}
+		try {
+			$this->c->createStaffMember($name1, $role0);
+		} catch ( Exception $e ) {
+			$error2 = $e->getMessage ();
+		}
+	
+		$this->assertEquals ( "Staff Member name cannot be empty! Staff Member role cannot be empty!", $error0 );
+		$this->assertEquals ( "Staff Member name cannot be empty!", $error1 );
+		$this->assertEquals ( "Staff Member role cannot be empty!", $error2 );
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 0, count ( $this->m->getStaffmembers () ) );
+	}
+	
+	public function testCreateStaffMemberSpaces() {
+		$this->assertEquals ( 0, count ( $this->m->getStaffmembers () ) );
+	
+		$name0 = " ";
+		$name1 = "jim";
+		$role0 = " ";
+		$role1 = "cook";
+	
+		$error0="";
+		$error1="";
+		$error2="";
+	
+		try {
+			$this->c->createStaffMember($name0, $role0);
+		} catch ( Exception $e ) {
+			$error0 = $e->getMessage ();
+		}
+		try {
+			$this->c->createStaffMember($name0, $role1);
+		} catch ( Exception $e ) {
+			$error1 = $e->getMessage ();
+		}
+		try {
+			$this->c->createStaffMember($name1, $role0);
+		} catch ( Exception $e ) {
+			$error2 = $e->getMessage ();
+		}
+	
+		$this->assertEquals ( "Staff Member name cannot be empty! Staff Member role cannot be empty!", $error0 );
+		$this->assertEquals ( "Staff Member name cannot be empty!", $error1 );
+		$this->assertEquals ( "Staff Member role cannot be empty!", $error2 );
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 0, count ( $this->m->getStaffmembers () ) );
+	}
+	
+	public function testCreateStaffMemberAlreadyExists(){
+		$this->assertEquals ( 0, count ( $this->m->getStaffmembers () ) );
+		$this->c->createStaffMember("jim", "cook");
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals(1, count($this->m->getStaffmembers()));
+		
+		$name = "jim";
+		$role = "cook";
+		$error = "";
+		
+		try {
+			$this->c->createStaffMember($name, $role);
+		} catch ( Exception $e ) {
+			$error = $e->getMessage();
+		}
+		
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getStaffmembers () ) );
+		$this->assertEquals ( $name, $this->m->getStaffmember_index(0)->getName () );
+		$this->assertEquals ( $role, $this->m->getStaffmember_index(0)->getRole () );
+		$this->assertEquals ( "Staff Member already exists!",$error );
+	}
+	
+// 	public function testRemoveStaffMember(){
+// 		$this->assertEquals(0, count($this->m->getStaffmembers()));
+// 		$this->c->createStaffMember("jim", "cook");
+// 		$this->assertEquals(1, count($this->m->getStaffmembers()));
+// 		$error = "";
+		
+// 		try{
+// 			$this->c->removeStaffMember("jim");
+// 		} catch (Exception $e){
+// 			$error = $e->getMessage();
+// 		}
+// 	}
 }
 ?>

@@ -4,7 +4,7 @@ require_once __DIR__.'../../model/Manager.php';
 require_once __DIR__.'../../model/Equipment.php';
 require_once __DIR__.'../../model/Supply.php';
 //require_once __DIR__.'../../model/Order.php';
-//require_once __DIR__.'../../model/StaffMember.php';
+require_once __DIR__.'../../model/StaffMember.php';
 require_once __DIR__.'../../persistence/PersistenceFoodTruckManagementSystem.php';
 
 class Controller{
@@ -220,5 +220,79 @@ class Controller{
 			throw new Exception ($error);
 		}
 	}
+		
+	public function createStaffMember($name, $role){
+		$error = "";
+		$staffName= InputValidator::validate_input($name);
+		$staffRole = InputValidator::validate_input($role);
+		
+		if($staffName == null || strlen($staffName) == 0){
+			$error .= "Staff Member name cannot be empty! ";
+		}
+		if($staffRole == null || strlen($staffRole) == 0){
+			$error .= "Staff Member role cannot be empty! ";
+		}
+		$error = trim($error);
+		
+		if(strlen($error)>0){
+			throw new Exception($error);
+		}
+		
+
+		$pm = new PersistenceFoodTruckManagementSystem();
+		$m  = $pm->loadDataFromStore();
+		$flag = false;
+		
+		for ($i = 0; $i < $m->numberOfStaffmembers(); $i++){
+			if($staffName == $m->getStaffmember_index($i)->getName()){
+				if($staffRole == $m->getStaffmember_index($i)->getRole()){
+					throw new Exception ("Staff Member already exists!");
+				}
+			$flag=true;
+			$m->getStaffmember_index($i)->setRole($staffRole);
+			break;
+			}
+		}
+		if(!$flag){
+			$staffMember = new StaffMember($staffName, $staffRole);
+			$m->addStaffmember($staffMember);
+		}
+		$pm->writeDataToStore($m);
+
+	}
+	
+	public function removeStaffMember($name){
+		$error = "";
+		$staffName= InputValidator::validate_input($name);
+	
+		if($staffName == null || strlen($staffName) == 0){
+			$error = $error + "Staff Member name cannot be empty! ";
+		}
+		$error = trim($error);
+	
+		if(strlen($error)>0){
+			throw new Exception($error);
+		}
+	
+	
+		$pm = new PersistenceFoodTruckManagementSystem();
+		$m  = $pm->loadDataFromStore();
+		$flag = false;
+	
+		for ($i = 0; $i < $m->numberOfStaffmembers(); $i++){
+			if($staffName == $m->getStaffmember_index($i)->getName()){
+				$flag=true;
+				$m->removeStaffmember($m->getStaffmember_index($i));
+				break;
+			}
+		}
+		if (!$flag){
+			$error = "Staff Member does not exist!";
+			throw new Exception($error);
+		}
+		$pm->writeDataToStore($m);
+	
+	}
+	
 }
 ?>
