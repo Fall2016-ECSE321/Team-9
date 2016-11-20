@@ -1551,6 +1551,27 @@ public class TestEventRegistrationController {
 	}
 	
 	@Test
+	public void testCreateStaffMemberExists(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getStaffmembers().size());
+		
+		String name = "john";
+		String role = "cashier";
+		String error1 = null;
+		
+		ItemController ic = new ItemController();
+		try{
+			ic.createStaffMember(name, role);
+			ic.createStaffMember(name, role);
+		} catch(InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		
+		assertEquals("Staff member already exists!", error1);
+		checkResultStaffMember(name, role, m);
+	}
+	
+	@Test
 	public void testRemoveStaffMember(){
 		Manager m = Manager.getInstance();
 		assertEquals(0, m.getStaffmembers().size());
@@ -1562,7 +1583,7 @@ public class TestEventRegistrationController {
 		
 		try{
 			ic.createStaffMember(name, role);
-			ic.removeStaffMember(name, role);
+			ic.removeStaffMember(name);
 		}catch(InvalidInputException e){
 			fail();
 		}
@@ -1579,39 +1600,21 @@ public class TestEventRegistrationController {
 		
 		String name1 = "";
 		String name2 = "james";
-		String role1 = "";
 		String role2 = "cook";
 		
 		String error1 = null;
-		String error2 = null;
-		String error3 = null;
-		
+
 		ItemController ic = new ItemController();
 		try{
 			ic.createStaffMember(name2, role2);
-			ic.removeStaffMember(name1, role1);
+			ic.removeStaffMember(name1);
 		}catch(InvalidInputException e){
 			error1 = e.getMessage();
 		}
 		
-		try{
-			ic.createStaffMember(name2, role2);
-			ic.removeStaffMember(name2, role1);
-		}catch(InvalidInputException e){
-			error2 = e.getMessage();
-		}
-		
-		try{
-			ic.createStaffMember(name2, role2);
-			ic.removeStaffMember(name1, role2);
-		}catch(InvalidInputException e){
-			error3 = e.getMessage();
-		}
-		
 		//Check error
-		assertEquals("Staff member name cannot be empty! Staff member role cannot be empty!", error1);
-		assertEquals("Staff member role cannot be empty!", error2);
-		assertEquals("Staff member name cannot be empty!", error3);
+		assertEquals("Staff member name cannot be empty!", error1);
+		
 	}
 	
 	@Test
@@ -1621,39 +1624,21 @@ public class TestEventRegistrationController {
 		
 		String name1 = null;
 		String name2 = "james";
-		String role1 = null;
 		String role2 = "cook";
 		
 		String error1 = null;
-		String error2 = null;
-		String error3 = null;
 		
 		ItemController ic = new ItemController();
 		try{
 			ic.createStaffMember(name2, role2);
-			ic.removeStaffMember(name1, role1);
+			ic.removeStaffMember(name1);
 		}catch(InvalidInputException e){
 			error1 = e.getMessage();
 		}
 		
-		try{
-			ic.createStaffMember(name2, role2);
-			ic.removeStaffMember(name2, role1);
-		}catch(InvalidInputException e){
-			error2 = e.getMessage();
-		}
-		
-		try{
-			ic.createStaffMember(name2, role2);
-			ic.removeStaffMember(name1, role2);
-		}catch(InvalidInputException e){
-			error3 = e.getMessage();
-		}
-		
 		//Check error
-		assertEquals("Staff member name cannot be empty! Staff member role cannot be empty!", error1);
-		assertEquals("Staff member role cannot be empty!", error2);
-		assertEquals("Staff member name cannot be empty!", error3);
+		assertEquals("Staff member name cannot be empty!", error1);
+		
 	}
 	
 	public void testRemoveStaffMemberSpaces(){
@@ -1662,39 +1647,21 @@ public class TestEventRegistrationController {
 		
 		String name1 = " ";
 		String name2 = "james";
-		String role1 = " ";
 		String role2 = "cook";
 		
 		String error1 = null;
-		String error2 = null;
-		String error3 = null;
+
 		
 		ItemController ic = new ItemController();
 		try{
 			ic.createStaffMember(name2, role2);
-			ic.removeStaffMember(name1, role1);
+			ic.removeStaffMember(name1);
 		}catch(InvalidInputException e){
 			error1 = e.getMessage();
 		}
 		
-		try{
-			ic.createStaffMember(name2, role2);
-			ic.removeStaffMember(name2, role1);
-		}catch(InvalidInputException e){
-			error2 = e.getMessage();
-		}
-		
-		try{
-			ic.createStaffMember(name2, role2);
-			ic.removeStaffMember(name1, role2);
-		}catch(InvalidInputException e){
-			error3 = e.getMessage();
-		}
-		
 		//Check error
-		assertEquals("Staff member name cannot be empty! Staff member role cannot be empty!", error1);
-		assertEquals("Staff member role cannot be empty!", error2);
-		assertEquals("Staff member name cannot be empty!", error3);
+		assertEquals("Staff member name cannot be empty!", error1);
 	}
 
 	public void checkResultStaffMember(String name, String role, Manager m2){

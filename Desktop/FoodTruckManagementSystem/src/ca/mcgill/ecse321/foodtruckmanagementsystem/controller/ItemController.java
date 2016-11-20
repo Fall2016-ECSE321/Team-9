@@ -201,6 +201,9 @@ public class ItemController {
 			{
 				if(name.equals(staffmember.getName()))
 				{
+					if(role.equals(staffmember.getRole())){
+						throw new InvalidInputException(error + "Staff member already exists!") ;
+					}
 					isUpdated = true;
 					staffmember.setRole(role);
 					break;
@@ -214,19 +217,16 @@ public class ItemController {
 		PersistenceXStream.saveToXMLwithXStream(m);
 	}
 	
-	public void removeStaffMember(String name, String role) throws InvalidInputException{
+	public void removeStaffMember(String name) throws InvalidInputException{
 		String error = "";
 		if ((name == null || name.trim().length() == 0))
 			error = error + "Staff member name cannot be empty! ";
-		if ((role == null || role.trim().length() == 0))
-			error = error + "Staff member role cannot be empty! ";
 		
 		error = error.trim();
 		if(error.length() > 0)
 			throw new InvalidInputException(error);
 				
 			name = name.toLowerCase();
-			role= role.toLowerCase();
 			boolean findName = false;
 			Manager m = Manager.getInstance();
 			
@@ -275,7 +275,10 @@ public class ItemController {
 
 	public void addTimeStaffMember(String name, Time startTime, Time endTime) throws InvalidInputException{
 		String error = "";
-		boolean isUpdated = false;
+		Time defaultTime = new Time(0000);
+		
+		name = name.toLowerCase();
+
 		Manager m = Manager.getInstance();
 		
 		if (name == null || name.trim().length() == 0){
@@ -286,6 +289,12 @@ public class ItemController {
 		}
 		if (endTime == null){
 			error = error + "End time cannot be empty! ";
+		}
+		
+		if(!startTime.equals(defaultTime) && !endTime.equals(defaultTime)){
+			if(startTime.equals(endTime)){
+				error = error + "End time cannot be equal to start time!";
+			}
 		}
 		
 		if(startTime != null && endTime != null){
@@ -300,17 +309,22 @@ public class ItemController {
 		
 		for(StaffMember staffmember: m.getStaffmembers()){
 			if(name.equals(staffmember.getName())){
-				isUpdated = true;
-				staffmember.addStartTime(startTime);
-				staffmember.addEndTime(endTime);
-				break;
+				if(startTime.equals(defaultTime) && endTime.equals(defaultTime)){
+					staffmember.addStartTime(null);
+					staffmember.addEndTime(null);
+					break;
+				}else{
+					staffmember.addStartTime(startTime);
+					staffmember.addEndTime(endTime);
+					break;
+				}
 			}
 		}
 			
-		if(!isUpdated){
+		/*if(!isUpdated){
 			error = error + "Staff member does not exist!";
 		}
-		
+		*/
 		PersistenceXStream.saveToXMLwithXStream(m);
 	}
 	
