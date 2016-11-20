@@ -243,41 +243,11 @@ public class ItemController {
 			PersistenceXStream.saveToXMLwithXStream(m);	
 	}	
 
-	/*public void addDateStaffMember(String name, Date shift) throws InvalidInputException{
-		String error = "";	
-		if ((name == null || name.trim().length() == 0))
-			error = error + "Staff member name cannot be empty! ";
-		if ((shift == null)){
-			error = error + "Staff member date cannot be empty!";
-		}
-		boolean isUpdated = false;
-		Manager m = Manager.getInstance();
-		
-		if(error.length() > 0)
-			throw new InvalidInputException(error);
-		
-		for(StaffMember staffmember: m.getStaffmembers()){
-			if(name.equals(staffmember.getName())){
-				isUpdated = true;
-				staffmember.addSchedule(shift);
-				break;
-			}
-		}
-		
-		if(!isUpdated){
-			error = error + "Staff Member does not exist!";
-		}
-		
-		
-		
-		PersistenceXStream.saveToXMLwithXStream(m);
-	}*/
-
 	public void addTimeStaffMember(String name, Time startTime, Time endTime) throws InvalidInputException{
 		String error = "";
 		Time defaultTime = new Time(0000);
 		
-		name = name.toLowerCase();
+		
 
 		Manager m = Manager.getInstance();
 		
@@ -291,11 +261,12 @@ public class ItemController {
 			error = error + "End time cannot be empty! ";
 		}
 		
-		if(!startTime.equals(defaultTime) && !endTime.equals(defaultTime)){
-			if(startTime.equals(endTime)){
+		if(startTime != null && endTime != null){
+			if(!startTime.equals(defaultTime) && !endTime.equals(defaultTime) && startTime.equals(endTime)){
 				error = error + "End time cannot be equal to start time!";
 			}
 		}
+		
 		
 		if(startTime != null && endTime != null){
 			if (endTime.before(startTime)){
@@ -306,6 +277,8 @@ public class ItemController {
 		if(error.length() > 0){
 			throw new InvalidInputException(error);
 		}
+		
+		name = name.toLowerCase();
 		
 		for(StaffMember staffmember: m.getStaffmembers()){
 			if(name.equals(staffmember.getName())){

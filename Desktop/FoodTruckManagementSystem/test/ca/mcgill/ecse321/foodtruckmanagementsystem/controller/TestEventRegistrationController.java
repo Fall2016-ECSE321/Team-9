@@ -1664,6 +1664,28 @@ public class TestEventRegistrationController {
 		assertEquals("Staff member name cannot be empty!", error1);
 	}
 
+	@Test
+	public void testRemoveStaffMemberExist(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getStaffmembers().size());
+		
+		String name1 = "john";
+		String name2 = "james";
+		String role1 = "cook";
+		
+		String error1 = null;
+		
+		ItemController ic = new ItemController();
+		try{
+			ic.createStaffMember(name1, role1);
+			ic.removeStaffMember(name2);
+		} catch(InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		
+		assertEquals("Staff member does not exist!", error1);
+	}
+	
 	public void checkResultStaffMember(String name, String role, Manager m2){
 		assertEquals(1, m2.getStaffmembers().size());
 		assertEquals(name, m2.getStaffmember(0).getName());
@@ -1674,6 +1696,231 @@ public class TestEventRegistrationController {
 		assertEquals(0, m2.getStaffmembers().size());
 		assertEquals(name, m2.getStaffmember(0).getName());
 		assertEquals(role, m2.getStaffmember(0).getRole());
+	}
+	
+	@Test
+	public void testAddTimeStaffMember(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getStaffmembers().size());
+		
+		String name = "john";
+		String role = "cashier";
+		Time startTime = new Time(120000);
+		Time endTime = new Time(130000);
+		
+		ItemController ic = new ItemController();
+		
+		try{
+			ic.createStaffMember(name, role);
+			ic.addTimeStaffMember(name, startTime, endTime);
+		} catch(InvalidInputException e){
+			fail();
+		}
+	}
+	
+	@Test
+	public void testAddTimeStaffMemberEmpty(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getStaffmembers().size());
+		
+		String name1 = "";
+		String name2 = "james";
+		Time startTime1 = null;
+		Time startTime2 = new Time(160000);
+		Time endTime1 = null;
+		Time endTime2 = new Time(180000);
+		
+		String error1 = null;
+		String error2 = null;
+		String error3 = null;
+		String error4 = null;
+		String error5 = null;
+		String error6 = null;
+		
+		String nameError = "Staff member name cannot be empty! ";
+		String startTimeError = "Start time cannot be empty! ";
+		String endTimeError = "End time cannot be empty! ";
+		ItemController ic = new ItemController();
+		
+		try{
+			ic.addTimeStaffMember(name1, startTime1, endTime1);
+		} catch(InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		
+		try{
+			ic.addTimeStaffMember(name1, startTime1, endTime2);
+		} catch(InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		
+		try{
+			ic.addTimeStaffMember(name1, startTime2, endTime1);
+		} catch(InvalidInputException e){
+			error3 = e.getMessage();
+		}
+		
+		try{
+			ic.addTimeStaffMember(name1, startTime2, endTime2);
+		} catch(InvalidInputException e){
+			error4 = e.getMessage();
+		}
+		
+		try{
+			ic.addTimeStaffMember(name2, startTime1, endTime2);
+		} catch(InvalidInputException e){
+			error5 = e.getMessage();
+		}
+		
+		try{
+			ic.addTimeStaffMember(name2, startTime2, endTime1);
+		} catch(InvalidInputException e){
+			error6 = e.getMessage();
+		}
+		
+		assertEquals(nameError + startTimeError + endTimeError, error1);
+		assertEquals(nameError + startTimeError, error2);
+		assertEquals(nameError + endTimeError, error3);
+		assertEquals(nameError, error4);
+		assertEquals(startTimeError, error5);
+		assertEquals(endTimeError, error6);
+		
+	}
+
+	@Test
+	public void testAddTimeStaffMemberNull(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getStaffmembers().size());
+		
+		String name1 = null;
+		String name2 = "james";
+		Time startTime1 = null;
+		Time startTime2 = new Time(160000);
+		Time endTime1 = null;
+		Time endTime2 = new Time(180000);
+		
+		String error1 = null;
+		String error2 = null;
+		String error3 = null;
+		String error4 = null;
+		String error5 = null;
+		String error6 = null;
+		
+		String nameError = "Staff member name cannot be empty! ";
+		String startTimeError = "Start time cannot be empty! ";
+		String endTimeError = "End time cannot be empty! ";
+		ItemController ic = new ItemController();
+		
+		try{
+			ic.addTimeStaffMember(name1, startTime1, endTime1);
+		} catch(InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		
+		try{
+			ic.addTimeStaffMember(name1, startTime1, endTime2);
+		} catch(InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		
+		try{
+			ic.addTimeStaffMember(name1, startTime2, endTime1);
+		} catch(InvalidInputException e){
+			error3 = e.getMessage();
+		}
+		
+		try{
+			ic.addTimeStaffMember(name1, startTime2, endTime2);
+		} catch(InvalidInputException e){
+			error4 = e.getMessage();
+		}
+		
+		try{
+			ic.addTimeStaffMember(name2, startTime1, endTime2);
+		} catch(InvalidInputException e){
+			error5 = e.getMessage();
+		}
+		
+		try{
+			ic.addTimeStaffMember(name2, startTime2, endTime1);
+		} catch(InvalidInputException e){
+			error6 = e.getMessage();
+		}
+		
+		assertEquals(nameError + startTimeError + endTimeError, error1);
+		assertEquals(nameError + startTimeError, error2);
+		assertEquals(nameError + endTimeError, error3);
+		assertEquals(nameError, error4);
+		assertEquals(startTimeError, error5);
+		assertEquals(endTimeError, error6);
+	}
+
+	@Test
+	public void testAddTimeStaffMemberSpaces(){
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getStaffmembers().size());
+		
+		String name1 = " ";
+		String name2 = "james";
+		Time startTime1 = null;
+		Time startTime2 = new Time(160000);
+		Time endTime1 = null;
+		Time endTime2 = new Time(180000);
+		
+		String error1 = null;
+		String error2 = null;
+		String error3 = null;
+		String error4 = null;
+		String error5 = null;
+		String error6 = null;
+		
+		String nameError = "Staff member name cannot be empty! ";
+		String startTimeError = "Start time cannot be empty! ";
+		String endTimeError = "End time cannot be empty! ";
+		ItemController ic = new ItemController();
+		
+		try{
+			ic.addTimeStaffMember(name1, startTime1, endTime1);
+		} catch(InvalidInputException e){
+			error1 = e.getMessage();
+		}
+		
+		try{
+			ic.addTimeStaffMember(name1, startTime1, endTime2);
+		} catch(InvalidInputException e){
+			error2 = e.getMessage();
+		}
+		
+		try{
+			ic.addTimeStaffMember(name1, startTime2, endTime1);
+		} catch(InvalidInputException e){
+			error3 = e.getMessage();
+		}
+		
+		try{
+			ic.addTimeStaffMember(name1, startTime2, endTime2);
+		} catch(InvalidInputException e){
+			error4 = e.getMessage();
+		}
+		
+		try{
+			ic.addTimeStaffMember(name2, startTime1, endTime2);
+		} catch(InvalidInputException e){
+			error5 = e.getMessage();
+		}
+		
+		try{
+			ic.addTimeStaffMember(name2, startTime2, endTime1);
+		} catch(InvalidInputException e){
+			error6 = e.getMessage();
+		}
+		
+		assertEquals(nameError + startTimeError + endTimeError, error1);
+		assertEquals(nameError + startTimeError, error2);
+		assertEquals(nameError + endTimeError, error3);
+		assertEquals(nameError, error4);
+		assertEquals(startTimeError, error5);
+		assertEquals(endTimeError, error6);
 	}
 	
 	@Test
