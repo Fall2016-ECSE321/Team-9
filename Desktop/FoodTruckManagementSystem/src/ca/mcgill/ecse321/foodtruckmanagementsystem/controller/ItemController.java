@@ -245,9 +245,7 @@ public class ItemController {
 
 	public void addTimeStaffMember(String name, Time startTime, Time endTime) throws InvalidInputException{
 		String error = "";
-		Time defaultTime = new Time(0000);
-		
-		
+		Time defaultTime = new Time(0000);	
 
 		Manager m = Manager.getInstance();
 		
@@ -263,7 +261,7 @@ public class ItemController {
 		
 		if(startTime != null && endTime != null){
 			if(!startTime.equals(defaultTime) && !endTime.equals(defaultTime) && startTime.equals(endTime)){
-				error = error + "End time cannot be equal to start time!";
+				error = error + "End time cannot be equal to start time! ";
 			}
 		}
 		
