@@ -1,9 +1,6 @@
 package ca.mcgill.ecse321.foodtruckmanagementsystem.view;
 
-import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.EventQueue;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -21,10 +18,9 @@ import net.miginfocom.swing.MigLayout;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
+import javax.swing.SpinnerDateModel;
 import javax.swing.SpinnerNumberModel;
-import javax.swing.SwingConstants;
 import javax.swing.JComboBox;
-import javax.swing.JComponent;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
@@ -34,9 +30,6 @@ import javax.swing.JSpinner;
 
 public class FoodTruckManagementSystemPage extends JFrame {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTextField staffName;	
@@ -64,6 +57,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		refreshData();
 	}
 	
+	@SuppressWarnings("unchecked")
 	public void initComponents() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1437, 980);
@@ -231,64 +225,92 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		JLabel lblMonday = new JLabel("Monday:");
 		tab3.add(lblMonday, "flowx,cell 1 8,alignx left");
 		
-		JSpinner mondayStartTime = new JSpinner();
+		JSpinner mondayStartTime = new JSpinner(new SpinnerDateModel());
+		JSpinner.DateEditor mondayStartTimeEditor = new JSpinner.DateEditor(mondayStartTime, "HH:mm");
+		mondayStartTime.setEditor(mondayStartTimeEditor);
 		tab3.add(mondayStartTime, "cell 2 8,alignx left");
 		
-		JSpinner mondayEndTime = new JSpinner();
+		JSpinner mondayEndTime = new JSpinner(new SpinnerDateModel());
+		JSpinner.DateEditor mondayEndTimeEditor = new JSpinner.DateEditor(mondayEndTime, "HH:mm");
+		mondayEndTime.setEditor(mondayEndTimeEditor);
 		tab3.add(mondayEndTime, "cell 3 8,aligny center");
 		
 		JLabel lblTuesday = new JLabel("Tuesday:");
 		tab3.add(lblTuesday, "flowx,cell 1 10,alignx left");
 		
-		JSpinner tuesdayStartTime = new JSpinner();
+		JSpinner tuesdayStartTime = new JSpinner(new SpinnerDateModel());
+		JSpinner.DateEditor tuesdayStartTimeEditor = new JSpinner.DateEditor(tuesdayStartTime, "HH:mm");
+		tuesdayStartTime.setEditor(tuesdayStartTimeEditor);
 		tab3.add(tuesdayStartTime, "cell 2 10,alignx left");
 		
-		JSpinner tuesdayEndTime = new JSpinner();
+		JSpinner tuesdayEndTime = new JSpinner(new SpinnerDateModel());
+		JSpinner.DateEditor tuesdayEndTimeEditor = new JSpinner.DateEditor(tuesdayEndTime, "HH:mm");
+		tuesdayEndTime.setEditor(tuesdayEndTimeEditor);
 		tab3.add(tuesdayEndTime, "cell 3 10");
 		
 		JLabel lblWednesday = new JLabel("Wednesday:");
 		tab3.add(lblWednesday, "flowx,cell 1 12,alignx left");
 		
-		JSpinner wednesdayStartTime = new JSpinner();
+		JSpinner wednesdayStartTime = new JSpinner(new SpinnerDateModel());
+		JSpinner.DateEditor wednesdayStartTimeEditor = new JSpinner.DateEditor(wednesdayStartTime, "HH:mm");
+		wednesdayStartTime.setEditor(wednesdayStartTimeEditor);
 		tab3.add(wednesdayStartTime, "cell 2 12");
 		
-		JSpinner wednesdayEndTime = new JSpinner();
+		JSpinner wednesdayEndTime = new JSpinner(new SpinnerDateModel());
+		JSpinner.DateEditor wednesdayEndTimeEditor = new JSpinner.DateEditor(wednesdayEndTime, "HH:mm");
+		wednesdayEndTime.setEditor(wednesdayEndTimeEditor);		
 		tab3.add(wednesdayEndTime, "cell 3 12");
 		
 		JLabel lblThursday = new JLabel("Thursday:");
 		tab3.add(lblThursday, "cell 1 14,alignx left");
 		
-		JSpinner thursdayStartTime = new JSpinner();
+		JSpinner thursdayStartTime = new JSpinner(new SpinnerDateModel());
+		JSpinner.DateEditor thursdayStartTimeEditor = new JSpinner.DateEditor(thursdayStartTime, "HH:mm");
+		thursdayStartTime.setEditor(thursdayStartTimeEditor);
 		tab3.add(thursdayStartTime, "cell 2 14");
 		
-		JSpinner thursdayEndTime = new JSpinner();
+		JSpinner thursdayEndTime = new JSpinner(new SpinnerDateModel());
+		JSpinner.DateEditor thursdayEndTimeEditor = new JSpinner.DateEditor(thursdayEndTime, "HH:mm");
+		thursdayEndTime.setEditor(thursdayEndTimeEditor);
 		tab3.add(thursdayEndTime, "cell 3 14");
 		
 		JLabel lblFriday = new JLabel("Friday:");
 		tab3.add(lblFriday, "cell 1 16,alignx left");
 		
-		JSpinner fridayStartTime = new JSpinner();
+		JSpinner fridayStartTime = new JSpinner(new SpinnerDateModel());
+		JSpinner.DateEditor fridayStartTimeEditor = new JSpinner.DateEditor(fridayStartTime, "HH:mm");
+		fridayStartTime.setEditor(fridayStartTimeEditor);
 		tab3.add(fridayStartTime, "cell 2 16");
 		
-		JSpinner fridayEndTime = new JSpinner();
+		JSpinner fridayEndTime = new JSpinner(new SpinnerDateModel());
+		JSpinner.DateEditor fridayEndTimeEditor = new JSpinner.DateEditor(fridayEndTime, "HH:mm");
+		fridayEndTime.setEditor(fridayEndTimeEditor);		
 		tab3.add(fridayEndTime, "cell 3 16");
 		
 		JLabel lblSaturday = new JLabel("Saturday:");
 		tab3.add(lblSaturday, "cell 1 18,alignx left");
 		
-		JSpinner saturdayStartTime = new JSpinner();
+		JSpinner saturdayStartTime = new JSpinner(new SpinnerDateModel());
+		JSpinner.DateEditor saturdayStartTimeEditor = new JSpinner.DateEditor(saturdayStartTime, "HH:mm");
+		saturdayStartTime.setEditor(saturdayStartTimeEditor);
 		tab3.add(saturdayStartTime, "cell 2 18");
 		
-		JSpinner saturdayEndTime = new JSpinner();
+		JSpinner saturdayEndTime = new JSpinner(new SpinnerDateModel());
+		JSpinner.DateEditor saturdayEndTimeEditor = new JSpinner.DateEditor(saturdayEndTime, "HH:mm");
+		saturdayEndTime.setEditor(saturdayEndTimeEditor);
 		tab3.add(saturdayEndTime, "cell 3 18");
 		
 		JLabel lblSunday = new JLabel("Sunday:");
 		tab3.add(lblSunday, "cell 1 20,alignx left");
 		
-		JSpinner sundayStartTime = new JSpinner();
+		JSpinner sundayStartTime = new JSpinner(new SpinnerDateModel());
+		JSpinner.DateEditor sundayStartTimeEditor = new JSpinner.DateEditor(sundayStartTime, "HH:mm");
+		sundayStartTime.setEditor(sundayStartTimeEditor);
 		tab3.add(sundayStartTime, "cell 2 20");
 		
-		JSpinner sundayEndTime = new JSpinner();
+		JSpinner sundayEndTime = new JSpinner(new SpinnerDateModel());
+		JSpinner.DateEditor sundayEndTimeEditor = new JSpinner.DateEditor(sundayEndTime, "HH:mm");
+		sundayEndTime.setEditor(sundayEndTimeEditor);
 		tab3.add(sundayEndTime, "cell 3 20");
 		
 		JButton btnSaveSchedule = new JButton("Save");
@@ -341,8 +363,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 	
 	private void resetStaffMemberData() {
 		staffName.setText("");
-//		selectedStaffRole = -1;
-//		staffroleComboBox.setSelectedItem(selectedStaffMember);
+		//TODO: reset ComboBox
 	}
 	
 	private void addEquipmentActionPerformed(java.awt.event.ActionEvent evt) {
