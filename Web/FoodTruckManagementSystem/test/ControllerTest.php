@@ -1613,6 +1613,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		$this->c->createStaffMember("jim", "cook");
 		$this->m = $this->pm->loadDataFromStore ();
 		$this->assertEquals(1, count($this->m->getStaffmembers()));
+		
 		$name = "sam";
 		$error = "";
 	
@@ -1625,6 +1626,183 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		$this->m = $this->pm->loadDataFromStore ();
 		$this->assertEquals ( 1, count ( $this->m->getStaffmembers () ) );
 		$this->assertEquals("Staff Member does not exist!", $error);
+	}
+	
+	public function testAddTimeStaffMember(){
+		$this->assertEquals(0, count($this->m->getStaffmembers()));
+		$this->c->createStaffMember("jim", "cook");
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals(1, count($this->m->getStaffmembers()));
+		
+		$name = "jim";
+		$error = "";
+		$startTime = array("1","2","3","4","5","6","7");
+		$endTime = array("2","3","4","5","6","7","8");
+		
+		try{
+			$this->c->addTimeStaffMember($name, $startTime, $endTime);
+		} catch (Exception $e){
+			$this->fail();
+		}
+		
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals(1, count($this->m->getStaffmembers()));
+		
+	}
+	
+	public function testAddTimeStaffMemberNull(){
+		$this->assertEquals(0, count($this->m->getStaffmembers()));
+		$this->c->createStaffMember("jim", "cook");
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals(1, count($this->m->getStaffmembers()));
+	
+		$name = null;
+		$error = "";
+		$startTime = array("1","2","3","4","5","6","7");
+		$endTime = array("2","3","4","5","6","7","8");
+	
+		try{
+			$this->c->addTimeStaffMember($name, $startTime, $endTime);
+		} catch (Exception $e){
+			$error=$e->getMessage();
+		}
+		
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getStaffmembers () ) );
+		$this->assertEquals("Staff Member name cannot be empty!", $error);	
+	}
+	
+	public function testAddTimeStaffMemberEmpty(){
+		$this->assertEquals(0, count($this->m->getStaffmembers()));
+		$this->c->createStaffMember("jim", "cook");
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals(1, count($this->m->getStaffmembers()));
+	
+		$name = "";
+		$error = "";
+		$startTime = array("1","2","3","4","5","6","7");
+		$endTime = array("2","3","4","5","6","7","8");
+	
+		try{
+			$this->c->addTimeStaffMember($name, $startTime, $endTime);
+		} catch (Exception $e){
+			$error=$e->getMessage();
+		}
+	
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getStaffmembers () ) );
+		$this->assertEquals("Staff Member name cannot be empty!", $error);
+	}
+	
+	public function testAddTimeStaffMemberSpaces(){
+		$this->assertEquals(0, count($this->m->getStaffmembers()));
+		$this->c->createStaffMember("jim", "cook");
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals(1, count($this->m->getStaffmembers()));
+	
+		$name = " ";
+		$error = "";
+		$startTime = array("1","2","3","4","5","6","7");
+		$endTime = array("2","3","4","5","6","7","8");
+	
+		try{
+			$this->c->addTimeStaffMember($name, $startTime, $endTime);
+		} catch (Exception $e){
+			$error=$e->getMessage();
+		}
+	
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getStaffmembers () ) );
+		$this->assertEquals("Staff Member name cannot be empty!", $error);
+	}
+	
+	public function testAddTimeStaffMemberMultipleEqualTime(){
+		$this->assertEquals(0, count($this->m->getStaffmembers()));
+		$this->c->createStaffMember("jim", "cook");
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals(1, count($this->m->getStaffmembers()));
+	
+		$name = "jim";
+		$error = "";
+		$startTime = array("02:00","03:00","04:00","04:00","05:00","07:00","07:00");
+		$endTime = array("02:00","03:00","04:00","05:00","06:00","07:00","08:00");
+	
+		try{
+			$this->c->addTimeStaffMember($name, $startTime, $endTime);
+		} catch (Exception $e){
+			$error=$e->getMessage();
+		}
+	
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getStaffmembers () ) );
+		$this->assertEquals("End time cannot equal start time!", $error);
+	}
+	
+	public function testAddTimeStaffMemberSingleEqualTime(){
+		$this->assertEquals(0, count($this->m->getStaffmembers()));
+		$this->c->createStaffMember("jim", "cook");
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals(1, count($this->m->getStaffmembers()));
+	
+		$name = "jim";
+		$error = "";
+		$startTime = array("03:00","02:00","03:00","04:00","05:00","06:00","07:00");
+		$endTime = array("03:00","03:00","04:00","05:00","06:00","07:00","08:00");
+	
+		try{
+			$this->c->addTimeStaffMember($name, $startTime, $endTime);
+		} catch (Exception $e){
+			$error=$e->getMessage();
+		}
+	
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getStaffmembers () ) );
+		$this->assertEquals("End time cannot equal start time!", $error);
+	}
+	
+	public function testAddTimeStaffMemberDoesNotExist(){
+		$this->assertEquals(0, count($this->m->getStaffmembers()));
+		$this->c->createStaffMember("joe", "cook");
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals(1, count($this->m->getStaffmembers()));
+	
+		$name = "jim";
+		$error = "";
+		$startTime = array("1","2","3","4","5","6","7");
+		$endTime = array("2","3","4","5","6","7","8");
+	
+		try{
+			$this->c->addTimeStaffMember($name, $startTime, $endTime);
+		} catch (Exception $e){
+			$error=$e->getMessage();
+		}
+	
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals(1, count($this->m->getStaffmembers()));
+		$this->assertEquals("Staff Member does not exist!", $error);
+	}
+	
+	public function testAddTimeStaffMemberEndBeforeStart(){
+		$this->assertEquals(0, count($this->m->getStaffmembers()));
+		$this->c->createStaffMember("jim", "cook");
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals(1, count($this->m->getStaffmembers()));
+	
+		$name = "jim";
+		$error = "";
+		$startTime = array("03:00","02:00","03:00","04:00","05:00","06:00","07:00");
+		$endTime = array("02:00","03:00","04:00","05:00","06:00","07:00","08:00");
+	
+		try{
+			$this->c->addTimeStaffMember($name, $startTime, $endTime);
+		} catch (Exception $e){
+			$error=$e->getMessage();
+		}
+	
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals(1, count($this->m->getStaffmembers()));
+		$this->assertEquals("End time must be greater than start time!", $error);
+	
 	}
 }
 ?>
