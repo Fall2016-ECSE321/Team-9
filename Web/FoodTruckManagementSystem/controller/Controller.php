@@ -294,5 +294,62 @@ class Controller{
 	
 	}
 	
+	public function addTimeStaffMember($name, $startTime, $endTime){
+		$error = "";
+		$numberOfDaysInWeek=7;
+		$staffName= InputValidator::validate_input($name);
+			
+		if($staffName == null || strlen($staffName) == 0){
+			$error .= "Staff Member name cannot be empty! ";
+		}
+		for($i=0; $i<$numberOfDaysInWeek-1; $i++){
+			if($startTime[$i]==$endTime[$i] && $startTime[$i]!=null){
+				$error .= "End time cannot equal start time! ";
+				break;
+			}
+			//now check that the start time is less than the end time
+			//times are received in format "hh:mm" where h is hour and m is minute
+			//therefore we cast to an integer while removing the ':'
+			$tempStart="";
+			$tempEnd="";
+			for($j=0; $j<5; $j++){
+				if($j==2){
+					$j++; //skip the ':' 
+				}
+				$tempStart .= substr($startTime[$i], $j);
+				$tempEnd .= substr($endTime[$i], $j);
+			}
+			$tempStart=trim($tempStart);
+			$tempEnd=trim($tempEnd);
+			$startInt=(int)$tempStart;
+			$endInt=(int)$tempEnd;
+			if($startInt > $endInt){
+				$error .= "End time must be greater than start time! ";
+			}
+		}
+		$error = trim($error);
+		
+		if(strlen($error)>0){
+			throw new Exception($error);
+		}
+		
+		$pm = new PersistenceFoodTruckManagementSystem();
+		$m  = $pm->loadDataFromStore();
+		$staffFound=false;
+		
+		for ($i = 0; $i < $m->numberOfStaffmembers(); $i++){
+			if($staffName == $m->getStaffmember_index($i)->getName()){
+				$staffFound=true;
+				$m->getStaffmember_index($i)->addStartTime($startTime);
+				$m->getStaffmember_index($i)->addEndTime($endTime);
+			}
+		}
+		if(!$staffFound){
+			$error = "Staff Member does not exist!";
+			throw new Exception ($error);
+		}
+		$pm->writeDataToStore($m);
+	}
+	
 }
 ?>
