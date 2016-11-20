@@ -237,8 +237,8 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 			$error3 = $e->getMessage ();
 		}
 
-		$error_msg1 = "Equipment name cannot be empty! Equipment quantity cannot be negative!";
-		$error_msg2 = "Equipment quantity cannot be negative!";
+		$error_msg1 = "Equipment name cannot be empty! Equipment quantity cannot be empty or zero!";
+		$error_msg2 = "Equipment quantity cannot be empty or zero!";
 		// check error
 		$this->assertEquals ( $error_msg1, $error0 );
 		$this->assertEquals ( $error_msg1, $error1 );
@@ -1289,7 +1289,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		}
 		
 		$error_msg1 = "Supply name cannot be empty! Supply quantity cannot be negative!";
-		$error_msg2 = "Supply quantity cannot be negative!"
+		$error_msg2 = "Supply quantity cannot be negative!";
 		// check error
 		$this->assertEquals ( $error_msg1, $error0 );
 		$this->assertEquals ( $error_msg1, $error1 );
@@ -1340,7 +1340,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		}
 		
 		$error_msg1 = "Supply name cannot be empty! Supply quantity cannot be empty or zero!";
-		$error_msg2 = "Supply quantity cannot be empty or zero!"
+		$error_msg2 = "Supply quantity cannot be empty or zero!";
 		// check error
 		$this->assertEquals ( $error_msg1, $error0 );
 		$this->assertEquals ( $error_msg1, $error1 );
