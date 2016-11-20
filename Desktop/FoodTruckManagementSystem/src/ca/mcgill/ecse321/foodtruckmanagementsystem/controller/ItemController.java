@@ -7,6 +7,7 @@ import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Supply;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceXStream;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.*;
 
 public class ItemController {
@@ -252,6 +253,9 @@ public class ItemController {
 		boolean isUpdated = false;
 		Manager m = Manager.getInstance();
 		
+		if(error.length() > 0)
+			throw new InvalidInputException(error);
+		
 		for(StaffMember staffmember: m.getStaffmembers()){
 			if(name.equals(staffmember.getName())){
 				isUpdated = true;
@@ -259,9 +263,6 @@ public class ItemController {
 				break;
 			}
 		}
-		
-		if(error.length() > 0)
-			throw new InvalidInputException(error);
 		
 		if(!isUpdated){
 			error = error + "Staff Member does not exist!";
@@ -271,4 +272,44 @@ public class ItemController {
 		
 		PersistenceXStream.saveToXMLwithXStream(m);
 	}
+
+	public void addTimeStaffMember(String name, Time startTime, Time endTime) throws InvalidInputException{
+		String error = "";
+		boolean isUpdated = false;
+		Manager m = Manager.getInstance();
+		
+		if (name == null || name.trim().length() == 0){
+			error = error + "Staff member name cannot be empty! ";
+		}
+		if (startTime == null){
+			error = error + "Start time cannot be empty! ";
+		}
+		if (endTime == null){
+			error = error + "End time cannot be empty! ";
+		}
+		
+		if(startTime != null && endTime != null){
+			if (endTime.before(startTime)){
+				error = error + "End time cannot be before start time!";
+			}
+		}
+		
+		if(error.length() > 0){
+			throw new InvalidInputException(error);
+		}
+		
+		for(StaffMember staffmember: m.getStaffmembers()){
+			if(name.equals(staffmember.getName())){
+				isUpdated = true;
+				staffmember.addStartTime(startTime);
+				staffmember.addEndTime(endTime);
+				break;
+			}
+		}
+			
+		if(!isUpdated){
+			error = error + "Staff Member does not exist!";
+		}
+	}
+	
 }
