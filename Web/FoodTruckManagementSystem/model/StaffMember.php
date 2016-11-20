@@ -1,6 +1,6 @@
 <?php
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.24.0-2a9bef6 modeling language!*/
+/*This code was generated using the UMPLE 1.24.0-abedcd4 modeling language!*/
 
 class StaffMember
 {
@@ -12,8 +12,9 @@ class StaffMember
   //StaffMember Attributes
   private $name;
   private $role;
-  private $startTimes;
-  private $endTimes;
+  private $schedule;
+  private $startTime;
+  private $endTime;
 
   //------------------------
   // CONSTRUCTOR
@@ -23,8 +24,9 @@ class StaffMember
   {
     $this->name = $aName;
     $this->role = $aRole;
-    $this->startTimes = array();
-    $this->endTimes = array();
+    $this->schedule = array();
+    $this->startTime = array();
+    $this->endTime = array();
   }
 
   //------------------------
@@ -47,10 +49,27 @@ class StaffMember
     return $wasSet;
   }
 
+  public function addSchedule($aSchedule)
+  {
+    $wasAdded = false;
+    $this->schedule[] = $aSchedule;
+    $wasAdded = true;
+    return $wasAdded;
+  }
+
+  public function removeSchedule($aSchedule)
+  {
+    $wasRemoved = false;
+    unset($this->schedule[$this->indexOfSchedule($aSchedule)]);
+    $this->schedule = array_values($this->schedule);
+    $wasRemoved = true;
+    return $wasRemoved;
+  }
+
   public function addStartTime($aStartTime)
   {
     $wasAdded = false;
-    $this->startTimes[] = $aStartTime;
+    $this->startTime[] = $aStartTime;
     $wasAdded = true;
     return $wasAdded;
   }
@@ -58,8 +77,8 @@ class StaffMember
   public function removeStartTime($aStartTime)
   {
     $wasRemoved = false;
-    unset($this->startTimes[$this->indexOfStartTime($aStartTime)]);
-    $this->startTimes = array_values($this->startTimes);
+    unset($this->startTime[$this->indexOfStartTime($aStartTime)]);
+    $this->startTime = array_values($this->startTime);
     $wasRemoved = true;
     return $wasRemoved;
   }
@@ -67,7 +86,7 @@ class StaffMember
   public function addEndTime($aEndTime)
   {
     $wasAdded = false;
-    $this->endTimes[] = $aEndTime;
+    $this->endTime[] = $aEndTime;
     $wasAdded = true;
     return $wasAdded;
   }
@@ -75,8 +94,8 @@ class StaffMember
   public function removeEndTime($aEndTime)
   {
     $wasRemoved = false;
-    unset($this->endTimes[$this->indexOfEndTime($aEndTime)]);
-    $this->endTimes = array_values($this->endTimes);
+    unset($this->endTime[$this->indexOfEndTime($aEndTime)]);
+    $this->endTime = array_values($this->endTime);
     $wasRemoved = true;
     return $wasRemoved;
   }
@@ -91,64 +110,95 @@ class StaffMember
     return $this->role;
   }
 
-  public function getStartTime($index)
+  public function getSchedule($index)
   {
-    $aStartTime = $this->startTimes[$index];
-    return $aStartTime;
+    $aSchedule = $this->schedule[$index];
+    return $aSchedule;
   }
 
-  public function getStartTimes()
+  public function getSchedule()
   {
-    $newStartTimes = $this->startTimes;
-    return $newStartTimes;
+    $newSchedule = $this->schedule;
+    return $newSchedule;
   }
 
-  public function numberOfStartTimes()
+  public function numberOfSchedule()
   {
-    $number = count($this->startTimes);
+    $number = count($this->schedule);
     return $number;
   }
 
-  public function hasStartTimes()
+  public function hasSchedule()
   {
-    $has = startTimes.size() > 0;
+    $has = schedule.size() > 0;
+    return $has;
+  }
+
+  public function indexOfSchedule($aSchedule)
+  {
+    $rawAnswer = array_search($aSchedule,$this->schedule);
+    $index = $rawAnswer == null && $rawAnswer !== 0 ? -1 : $rawAnswer;
+    return $index;
+  }
+
+  public function getStartTime($index)
+  {
+    $aStartTime = $this->startTime[$index];
+    return $aStartTime;
+  }
+
+  public function getStartTime()
+  {
+    $newStartTime = $this->startTime;
+    return $newStartTime;
+  }
+
+  public function numberOfStartTime()
+  {
+    $number = count($this->startTime);
+    return $number;
+  }
+
+  public function hasStartTime()
+  {
+    $has = startTime.size() > 0;
     return $has;
   }
 
   public function indexOfStartTime($aStartTime)
   {
-    $rawAnswer = array_search($aStartTime,$this->startTimes);
+    $rawAnswer = array_search($aStartTime,$this->startTime);
     $index = $rawAnswer == null && $rawAnswer !== 0 ? -1 : $rawAnswer;
     return $index;
   }
 
   public function getEndTime($index)
   {
-    $aEndTime = $this->endTimes[$index];
+    $aEndTime = $this->endTime[$index];
     return $aEndTime;
   }
 
-  public function getEndTimes()
+  public function getEndTime()
   {
-    $newEndTimes = $this->endTimes;
-    return $newEndTimes;
+    $newEndTime = $this->endTime;
+    return $newEndTime;
   }
 
-  public function numberOfEndTimes()
+  public function numberOfEndTime()
   {
-    $number = count($this->endTimes);
+    $number = count($this->endTime);
     return $number;
   }
 
-  public function hasEndTimes()
+  public function hasEndTime()
   {
-    $has = endTimes.size() > 0;
+    $has = endTime.size() > 0;
     return $has;
   }
 
   public function indexOfEndTime($aEndTime)
   {
-    $rawAnswer = array_search($aEndTime,$this->endTimes);
+    $rawAnswer = array_search($aEndTime,$this->endTime);
     $index = $rawAnswer == null && $rawAnswer !== 0 ? -1 : $rawAnswer;
     return $index;
   }

@@ -1,102 +1,55 @@
+
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<script
-	src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-<script
-	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <title>Food Truck Management System</title>
 
 <style>
-	.btn-default {
-		background: #000;
-		color: #fff;
-	}
-	
-	.btn-default:hover {
-		background: #fff;
-		color: #000;
-	}
-	.error {color : #FF0000}
+  .btn-default {
+    background: #000;
+    color: #fff;
+  }
+  
+  .btn-default:hover {
+    background: #fff;
+    color: #000;
+  }
+  .error {
+      color: #D8000C;
+  }
+  .success {
+      color: #4F8A10;
+  }
 </style>
 </head>
-<body> 
+<body > 
+  <div class="container">
+    <h3 ><strong style="color:#808080">Food Truck Management System</strong><img style="width: 10%;
+    height: auto;" src="img/logo.png"></h3>
+  <ul class="nav nav-tabs">
+    <li class="active"><a href="index.php">Home</a></li>
+    <li><a href="inventoryTab.php">Inventory</a></li>
+    <li><a href="staffTab.php">Staff</a></li>
+    <li><a href="reportTab.php">Report</a></li>
+  </ul>
+  <br>
+  <p><strong>Note:</strong> This page is to display Menu items and allow user to input order</p>
+
 	<?php
+	
 	require_once 'persistence/PersistenceFoodTruckManagementSystem.php';
 	
 	session_start ();
 	
-	// Retreive the data from the model
-	$pm = new PersistenceFoodTruckManagementSystem ();
-	$m = $pm->loadDataFromStore ();
-	?>
-	<form class="form-inline" action="equipment.php" method="post">
-		<br>
-		<br>
-		<div class="form-group">
-			&nbsp&nbsp <input class="form-control input-lg" type="text"
-				name="equipment_name" placeholder="Enter Equipment Name" />
-
-		</div>
-		&nbsp&nbsp
-		<div class="form-group">
-
-			<input class="form-control input-lg " style="width: 100px"
-				type="number" name="equipment_quantity" placeholder="0" />
-
-		</div>
-		&nbsp&nbsp <span class="error">
-			<?php
-			if (isset ( $_SESSION ['errorEquipment'] ) && ! empty ( $_SESSION ['errorEquipment'] )) {
-				echo " * " . $_SESSION ["errorEquipment"];
-			}
-			
-			?>
-			</span> <br>
-		<br> &nbsp&nbsp
-		<button type="submit" name="addEquipment" class="btn btn-default">Add Equipment</button>
-		<button type="submit" name="removeEquipment" class="btn btn-default">Remove Equipment</button>
-
-	</form>
-		<form class="form-inline" action="supply.php" method="post">
-		<br>
-		<br>
-		<div class="form-group">
-		&nbsp&nbsp 
-			<input class="form-control input-lg" type="text"
-				name="supply_name" placeholder="Enter Supply Name" />
-		</div>
-		&nbsp&nbsp
-		<div class="form-group">
-
-			<input class="form-control input-lg " style="width: 100px"
-				type="number" name="supply_quantity" placeholder="0" />
-		</div>
-		&nbsp&nbsp
-		<div class="form-group">
-
-			<input class="form-control input-lg " style="width: 100px"
-				type="text" name="supply_unit" placeholder="kg" />
-		</div>
-
-		&nbsp&nbsp <span class="error">
-			<?php
-			if (isset ( $_SESSION ['errorSupply'] ) && ! empty ( $_SESSION ['errorSupply'] )) {
-				echo " * " . $_SESSION ["errorSupply"];
-			}
-			
-			?>
-			</span> <br>
-		<br> &nbsp&nbsp
-		<button type="submit" name="addSupply" class="btn btn-default">Add Supply</button>
-		<button type="submit" name="removeSupply" class="btn btn-default">Remove Supply</button>
-	</form>
-
+?>
+</div>
+		
 
 </body>
 </html>

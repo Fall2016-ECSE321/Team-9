@@ -1,11 +1,11 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.24.0-d348116 modeling language!*/
+/*This code was generated using the UMPLE 1.24.0-2a9bef6 modeling language!*/
 
 package ca.mcgill.ecse321.foodtruckmanagementsystem.model;
 import java.util.*;
 
 // line 13 "../../../../../../../../ump/161011249430/model.ump"
-// line 50 "../../../../../../../../ump/161011249430/model.ump"
+// line 52 "../../../../../../../../ump/161011249430/model.ump"
 public class Order
 {
 
