@@ -266,7 +266,7 @@ class Controller{
 		$staffName= InputValidator::validate_input($name);
 	
 		if($staffName == null || strlen($staffName) == 0){
-			$error = $error + "Staff Member name cannot be empty! ";
+			$error .= "Staff Member name cannot be empty! ";
 		}
 		$error = trim($error);
 	
