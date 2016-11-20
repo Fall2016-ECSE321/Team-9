@@ -1,0 +1,21 @@
+<manager id="1">
+  <equipments id="2"/>
+  <supplies id="3"/>
+  <orders id="4"/>
+  <staffmembers id="5">
+    <staffmember id="6">
+      <name>john</name>
+      <role>cashier</role>
+      <schedule id="7"/>
+      <startTime id="8"/>
+      <endTime id="9"/>
+    </staffmember>
+    <staffmember id="10">
+      <name>john williams</name>
+      <role>cashier</role>
+      <schedule id="11"/>
+      <startTime id="12"/>
+      <endTime id="13"/>
+    </staffmember>
+  </staffmembers>
+</manager>

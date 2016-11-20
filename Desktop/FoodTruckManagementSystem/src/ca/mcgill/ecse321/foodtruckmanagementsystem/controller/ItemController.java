@@ -7,6 +7,7 @@ import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Supply;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceXStream;
 
 import java.sql.Date;
+import java.sql.Time;
 import java.util.*;
 
 public class ItemController {
@@ -181,9 +182,9 @@ public class ItemController {
 	{
 		String error = "";
 		if ((name == null || name.trim().length() == 0))
-			error = error + "Staff Member name cannot be empty! ";
+			error = error + "Staff member name cannot be empty! ";
 		if ((role == null || role.trim().length() == 0))
-			error = error + "Staff Member role cannot be empty! ";
+			error = error + "Staff member role cannot be empty! ";
 		
 		error = error.trim();
 		if(error.length() > 0)
@@ -200,6 +201,9 @@ public class ItemController {
 			{
 				if(name.equals(staffmember.getName()))
 				{
+					if(role.equals(staffmember.getRole())){
+						throw new InvalidInputException(error + "Staff member already exists!") ;
+					}
 					isUpdated = true;
 					staffmember.setRole(role);
 					break;
@@ -213,19 +217,16 @@ public class ItemController {
 		PersistenceXStream.saveToXMLwithXStream(m);
 	}
 	
-	public void removeStaffMember(String name, String role) throws InvalidInputException{
+	public void removeStaffMember(String name) throws InvalidInputException{
 		String error = "";
 		if ((name == null || name.trim().length() == 0))
-			error = error + "Staff Member name cannot be empty! ";
-		if ((role == null || role.trim().length() == 0))
-			error = error + "Staff Member role cannot be empty! ";
+			error = error + "Staff member name cannot be empty! ";
 		
 		error = error.trim();
 		if(error.length() > 0)
 			throw new InvalidInputException(error);
 				
 			name = name.toLowerCase();
-			role= role.toLowerCase();
 			boolean findName = false;
 			Manager m = Manager.getInstance();
 			
@@ -237,8 +238,67 @@ public class ItemController {
 				}
 			}
 			if(!findName){
-				throw new InvalidInputException("Staff Member does not exist!");
+				throw new InvalidInputException("Staff member does not exist!");
 			}
 			PersistenceXStream.saveToXMLwithXStream(m);	
 	}	
+
+	public void addTimeStaffMember(String name, Time startTime, Time endTime) throws InvalidInputException{
+		String error = "";
+		Time defaultTime = new Time(0000);
+		
+		
+
+		Manager m = Manager.getInstance();
+		
+		if (name == null || name.trim().length() == 0){
+			error = error + "Staff member name cannot be empty! ";
+		}
+		if (startTime == null){
+			error = error + "Start time cannot be empty! ";
+		}
+		if (endTime == null){
+			error = error + "End time cannot be empty! ";
+		}
+		
+		if(startTime != null && endTime != null){
+			if(!startTime.equals(defaultTime) && !endTime.equals(defaultTime) && startTime.equals(endTime)){
+				error = error + "End time cannot be equal to start time!";
+			}
+		}
+		
+		
+		if(startTime != null && endTime != null){
+			if (endTime.before(startTime)){
+				error = error + "End time cannot be before start time!";
+			}
+		}
+		
+		if(error.length() > 0){
+			throw new InvalidInputException(error);
+		}
+		
+		name = name.toLowerCase();
+		
+		for(StaffMember staffmember: m.getStaffmembers()){
+			if(name.equals(staffmember.getName())){
+				if(startTime.equals(defaultTime) && endTime.equals(defaultTime)){
+					staffmember.addStartTime(null);
+					staffmember.addEndTime(null);
+					break;
+				}else{
+					staffmember.addStartTime(startTime);
+					staffmember.addEndTime(endTime);
+					break;
+				}
+			}
+		}
+			
+		/*if(!isUpdated){
+			error = error + "Staff member does not exist!";
+		}
+		*/
+		PersistenceXStream.saveToXMLwithXStream(m);
+	}
+	
 }
