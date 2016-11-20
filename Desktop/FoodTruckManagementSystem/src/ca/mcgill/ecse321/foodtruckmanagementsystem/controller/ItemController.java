@@ -243,7 +243,7 @@ public class ItemController {
 			PersistenceXStream.saveToXMLwithXStream(m);	
 	}	
 
-	public void addDateStaffMember(String name, Date shift) throws InvalidInputException{
+	/*public void addDateStaffMember(String name, Date shift) throws InvalidInputException{
 		String error = "";	
 		if ((name == null || name.trim().length() == 0))
 			error = error + "Staff member name cannot be empty! ";
@@ -271,7 +271,7 @@ public class ItemController {
 		
 		
 		PersistenceXStream.saveToXMLwithXStream(m);
-	}
+	}*/
 
 	public void addTimeStaffMember(String name, Time startTime, Time endTime) throws InvalidInputException{
 		String error = "";
@@ -310,6 +310,8 @@ public class ItemController {
 		if(!isUpdated){
 			error = error + "Staff member does not exist!";
 		}
+		
+		PersistenceXStream.saveToXMLwithXStream(m);
 	}
 	
 }
