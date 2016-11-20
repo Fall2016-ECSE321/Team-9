@@ -506,8 +506,6 @@ public class TestEventRegistrationController {
 		
 		String error0 = null;
 		String error1 = null;
-		String error2 = null;
-		String error3 = null;
 		
 		ItemController ic = new ItemController();
 		
@@ -1471,9 +1469,9 @@ public class TestEventRegistrationController {
 		}
 		
 		//Check error
-		assertEquals("Staff Member name cannot be empty! Staff Member role cannot be empty!", error1);
-		assertEquals("Staff Member role cannot be empty!", error2);
-		assertEquals("Staff Member name cannot be empty!", error3);
+		assertEquals("Staff member name cannot be empty! Staff member role cannot be empty!", error1);
+		assertEquals("Staff member role cannot be empty!", error2);
+		assertEquals("Staff member name cannot be empty!", error3);
 	}
 	
 	@Test
@@ -1510,9 +1508,9 @@ public class TestEventRegistrationController {
 		}
 		
 		//Check error
-		assertEquals("Staff Member name cannot be empty! Staff Member role cannot be empty!", error1);
-		assertEquals("Staff Member role cannot be empty!", error2);
-		assertEquals("Staff Member name cannot be empty!", error3);
+		assertEquals("Staff member name cannot be empty! Staff member role cannot be empty!", error1);
+		assertEquals("Staff member role cannot be empty!", error2);
+		assertEquals("Staff member name cannot be empty!", error3);
 	}
 	
 	@Test
@@ -1549,9 +1547,9 @@ public class TestEventRegistrationController {
 		}
 		
 		//Check error
-		assertEquals("Staff Member name cannot be empty! Staff Member role cannot be empty!", error1);
-		assertEquals("Staff Member role cannot be empty!", error2);
-		assertEquals("Staff Member name cannot be empty!", error3);
+		assertEquals("Staff member name cannot be empty! Staff member role cannot be empty!", error1);
+		assertEquals("Staff member role cannot be empty!", error2);
+		assertEquals("Staff member name cannot be empty!", error3);
 	}
 	
 	@Test
@@ -1571,9 +1569,9 @@ public class TestEventRegistrationController {
 			fail();
 		}
 		
-		/*checkResultStaffMember(name, role, m);
+		checkResultRemovedStaffMember(name, role, m);
 		Manager m2 = (Manager) PersistenceXStream.loadFromXMLwithXStream();
-		checkResultStaffMember(name, role, m2);*/
+		checkResultRemovedStaffMember(name, role, m2);
 	}
 	
 	@Test
@@ -1613,9 +1611,9 @@ public class TestEventRegistrationController {
 		}
 		
 		//Check error
-		assertEquals("Staff Member name cannot be empty! Staff Member role cannot be empty!", error1);
-		assertEquals("Staff Member role cannot be empty!", error2);
-		assertEquals("Staff Member name cannot be empty!", error3);
+		assertEquals("Staff member name cannot be empty! Staff member role cannot be empty!", error1);
+		assertEquals("Staff member role cannot be empty!", error2);
+		assertEquals("Staff member name cannot be empty!", error3);
 	}
 	
 	@Test
@@ -1655,9 +1653,9 @@ public class TestEventRegistrationController {
 		}
 		
 		//Check error
-		assertEquals("Staff Member name cannot be empty! Staff Member role cannot be empty!", error1);
-		assertEquals("Staff Member role cannot be empty!", error2);
-		assertEquals("Staff Member name cannot be empty!", error3);
+		assertEquals("Staff member name cannot be empty! Staff member role cannot be empty!", error1);
+		assertEquals("Staff member role cannot be empty!", error2);
+		assertEquals("Staff member name cannot be empty!", error3);
 	}
 	
 	public void testRemoveStaffMemberSpaces(){
@@ -1696,13 +1694,19 @@ public class TestEventRegistrationController {
 		}
 		
 		//Check error
-		assertEquals("Staff Member name cannot be empty! Staff Member role cannot be empty!", error1);
-		assertEquals("Staff Member role cannot be empty!", error2);
-		assertEquals("Staff Member name cannot be empty!", error3);
+		assertEquals("Staff member name cannot be empty! Staff member role cannot be empty!", error1);
+		assertEquals("Staff member role cannot be empty!", error2);
+		assertEquals("Staff member name cannot be empty!", error3);
 	}
 
 	public void checkResultStaffMember(String name, String role, Manager m2){
 		assertEquals(1, m2.getStaffmembers().size());
+		assertEquals(name, m2.getStaffmember(0).getName());
+		assertEquals(role, m2.getStaffmember(0).getRole());
+	}
+	
+	public void checkResultRemovedStaffMember(String name, String role, Manager m2){
+		assertEquals(0, m2.getStaffmembers().size());
 		assertEquals(name, m2.getStaffmember(0).getName());
 		assertEquals(role, m2.getStaffmember(0).getRole());
 	}
@@ -1760,9 +1764,9 @@ public class TestEventRegistrationController {
 		}
 		
 		//Check error
-		assertEquals("Staff Member name cannot be empty! Staff Member date cannot be empty!", error1);
-		assertEquals("Staff Member date cannot be empty!", error2);
-		assertEquals("Staff Member name cannot be empty! ", error3);
+		assertEquals("Staff member name cannot be empty! Staff member date cannot be empty!", error1);
+		assertEquals("Staff member date cannot be empty!", error2);
+		assertEquals("Staff member name cannot be empty! ", error3);
 	}
 	
 	@Test
@@ -1799,9 +1803,9 @@ public class TestEventRegistrationController {
 		}
 		
 		//Check error
-		assertEquals("Staff Member name cannot be empty! Staff Member date cannot be empty!", error1);
-		assertEquals("Staff Member date cannot be empty!", error2);
-		assertEquals("Staff Member name cannot be empty! ", error3);
+		assertEquals("Staff member name cannot be empty! Staff member date cannot be empty!", error1);
+		assertEquals("Staff member date cannot be empty!", error2);
+		assertEquals("Staff member name cannot be empty! ", error3);
 	}
 	
 	@Test
@@ -1838,9 +1842,9 @@ public class TestEventRegistrationController {
 		}
 		
 		//Check error
-		assertEquals("Staff Member name cannot be empty! Staff Member date cannot be empty!", error1);
-		assertEquals("Staff Member date cannot be empty!", error2);
-		assertEquals("Staff Member name cannot be empty! ", error3);
+		assertEquals("Staff member name cannot be empty! Staff member date cannot be empty!", error1);
+		assertEquals("Staff member date cannot be empty!", error2);
+		assertEquals("Staff member name cannot be empty! ", error3);
 	}
 
 	@Test

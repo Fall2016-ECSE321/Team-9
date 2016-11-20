@@ -182,9 +182,9 @@ public class ItemController {
 	{
 		String error = "";
 		if ((name == null || name.trim().length() == 0))
-			error = error + "Staff Member name cannot be empty! ";
+			error = error + "Staff member name cannot be empty! ";
 		if ((role == null || role.trim().length() == 0))
-			error = error + "Staff Member role cannot be empty! ";
+			error = error + "Staff member role cannot be empty! ";
 		
 		error = error.trim();
 		if(error.length() > 0)
@@ -217,9 +217,9 @@ public class ItemController {
 	public void removeStaffMember(String name, String role) throws InvalidInputException{
 		String error = "";
 		if ((name == null || name.trim().length() == 0))
-			error = error + "Staff Member name cannot be empty! ";
+			error = error + "Staff member name cannot be empty! ";
 		if ((role == null || role.trim().length() == 0))
-			error = error + "Staff Member role cannot be empty! ";
+			error = error + "Staff member role cannot be empty! ";
 		
 		error = error.trim();
 		if(error.length() > 0)
@@ -238,7 +238,7 @@ public class ItemController {
 				}
 			}
 			if(!findName){
-				throw new InvalidInputException("Staff Member does not exist!");
+				throw new InvalidInputException("Staff member does not exist!");
 			}
 			PersistenceXStream.saveToXMLwithXStream(m);	
 	}	
@@ -246,9 +246,9 @@ public class ItemController {
 	public void addDateStaffMember(String name, Date shift) throws InvalidInputException{
 		String error = "";	
 		if ((name == null || name.trim().length() == 0))
-			error = error + "Staff Member name cannot be empty! ";
+			error = error + "Staff member name cannot be empty! ";
 		if ((shift == null)){
-			error = error + "Staff Member date cannot be empty!";
+			error = error + "Staff member date cannot be empty!";
 		}
 		boolean isUpdated = false;
 		Manager m = Manager.getInstance();
@@ -308,7 +308,7 @@ public class ItemController {
 		}
 			
 		if(!isUpdated){
-			error = error + "Staff Member does not exist!";
+			error = error + "Staff member does not exist!";
 		}
 	}
 	
