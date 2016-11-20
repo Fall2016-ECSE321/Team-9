@@ -220,5 +220,20 @@ class Controller{
 			throw new Exception ($error);
 		}
 	}
+		
+	public function createStaffMember($name, $role){
+		$error = "";
+		$name= InputValidator::validate_input($name);
+		$quantity = InputValidator::validate_input($role);
+		
+		if($name == null || strlen($name) == 0){
+			$error = $error + "Staff Member name cannot be empty! ";
+		}
+		if($role == null || strlen($role) == 0){
+			$error = $error + "Staff Member role cannot be empty! ";
+		}
+		$error = trim($error);
+	}
+	
 }
 ?>
