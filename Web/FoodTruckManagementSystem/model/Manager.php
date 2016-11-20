@@ -1,6 +1,6 @@
 <?php
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.24.0-abedcd4 modeling language!*/
+/*This code was generated using the UMPLE 1.24.0-2a9bef6 modeling language!*/
 
 class Manager
 {

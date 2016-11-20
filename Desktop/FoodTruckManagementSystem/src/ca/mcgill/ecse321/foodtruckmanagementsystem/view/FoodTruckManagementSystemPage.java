@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 
 import ca.mcgill.ecse321.foodtruckmanagementsystem.controller.InvalidInputException;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.controller.ItemController;
+import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Equipment;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Manager;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.StaffMember;
 
@@ -23,10 +24,18 @@ import javax.swing.SpinnerNumberModel;
 import javax.swing.JComboBox;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.Set;
 import java.awt.event.ActionEvent;
 import javax.swing.JSpinner;
+import java.awt.Toolkit;
 
 public class FoodTruckManagementSystemPage extends JFrame {
 
@@ -37,30 +46,34 @@ public class FoodTruckManagementSystemPage extends JFrame {
 	private JTextField equipmentName;
 	private JTextField supplyName;
 	private JTextField supplyUnit;
-	private JLabel lblSupplyMessage, lblEquipmentMessage, lblStaffMemberMessage;
+	private JLabel lblSupplyMessage, lblEquipmentMessage, lblStaffMemberMessage, lblscheduleMessage;
 	private SpinnerNumberModel equipmentModel, supplyModel;
 	private JComboBox<String> staffMemberList;
 	private JComboBox staffroleComboBox;
 	private HashMap<Integer, StaffMember> staffMembers;
 	
+	private JSpinner[] startTimes = new JSpinner[7];
+	private JSpinner[] endTimes = new JSpinner[7];	
+	private JLabel[] lbldaysOfTheWeek = new JLabel[7];
 	private String[] staffRoles = {"Cashier", "Chef", "Inventory Clerk", "Manager"};
+	private String[] daysOfTheWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 	private String sMessage = "";
 	private String eMessage = "";
 	private String schedMessage = "";
 	private String smMessage = "";
-	private Integer selectedStaffMember = -1;
-	private Integer selectedStaffRole = -1;
-	
+	private Integer selectedStaffMember = -1;	
 
 	public FoodTruckManagementSystemPage() {
 		initComponents();
 		refreshData();
 	}
 	
-	@SuppressWarnings("unchecked")
 	public void initComponents() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(FoodTruckManagementSystemPage.class.getResource("/ca/mcgill/ecse321/foodtruckmanagementsystem/view/foodtruck.png")));
+		setTitle("Food Truck Management System");
+		setResizable(false);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1437, 980);
+		setBounds(100, 100, 1500, 980);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
@@ -195,17 +208,35 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		
 		staffroleComboBox = new JComboBox(staffRoles);
 		tab3.add(staffroleComboBox, "cell 3 2");
-		tab3.add(btnAddStaff, "cell 5 2,alignx center");
+		tab3.add(btnAddStaff, "cell 5 2,alignx left");
 		
 		JLabel lblRegisterStaffsWeekly = new JLabel("Register Staff's Weekly Schedule");
 		lblRegisterStaffsWeekly.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab3.add(lblRegisterStaffsWeekly, "cell 0 4 2 1");
 		
-		JLabel lblscheduleMessage = new JLabel("");
-		tab3.add(lblscheduleMessage, "cell 1 5");
+		lblscheduleMessage = new JLabel("");
+		tab3.add(lblscheduleMessage, "cell 0 5 8 1");
 		
 		JLabel lblSelectStaffName = new JLabel("Select Staff Name:");
 		tab3.add(lblSelectStaffName, "cell 1 6,alignx trailing");
+		
+		JSpinner.DateEditor[] startTimeEditors = new JSpinner.DateEditor[7];
+		for(int i = 0; i < startTimes.length; i++) {
+			startTimes[i] = new JSpinner(new SpinnerDateModel());
+			startTimeEditors[i] = new JSpinner.DateEditor(startTimes[i], "h:mm a");
+			startTimes[i].setEditor(startTimeEditors[i]);
+			startTimes[i].setValue(new Date(0,0,0,0,0,0));
+			tab3.add(startTimes[i], "cell 2 " + (8+(2*i)) +",alignx left");
+		}
+		
+		JSpinner.DateEditor[] endTimeEditors = new JSpinner.DateEditor[7];
+		for(int i = 0; i < startTimes.length; i++) {
+			endTimes[i] = new JSpinner(new SpinnerDateModel());
+			endTimeEditors[i] = new JSpinner.DateEditor(endTimes[i], "h:mm a");
+			endTimes[i].setEditor(endTimeEditors[i]);
+			endTimes[i].setValue(new Date(0,0,0,0,0,0));
+			tab3.add(endTimes[i], "cell 3 " +(8+(2*i)) + ",aligny center");
+		}
 		
 		staffMemberList = new JComboBox<String>(new String[0]);
 		staffMemberList.addActionListener(new java.awt.event.ActionListener(){
@@ -214,104 +245,26 @@ public class FoodTruckManagementSystemPage extends JFrame {
 				selectedStaffMember = cb.getSelectedIndex();
 			}
 		});
-		tab3.add(staffMemberList, "cell 2 5 2 1,growx");
+		tab3.add(staffMemberList, "cell 2 6 2 1,growx");
+		
+		for(int i = 0; i < daysOfTheWeek.length; i++) {
+			lbldaysOfTheWeek[i] = new JLabel(daysOfTheWeek[i] + ":");
+			tab3.add(lbldaysOfTheWeek[i], "flowx,cell 1 " + (8+(2*i)) + ",alignx left");
+		}
+		
+		JButton btnRemoveStaff = new JButton("Remove Staff");
+		btnRemoveStaff.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				deleteStaffMemberActionPerformed(e);
+			}
+		});
+		tab3.add(btnRemoveStaff, "cell 4 6 2 1");
 		
 		JLabel lblStartTime = new JLabel("Start Time");
 		tab3.add(lblStartTime, "cell 2 7,alignx left");
 		
 		JLabel lblEndTime = new JLabel("End Time");
 		tab3.add(lblEndTime, "cell 3 7");
-		
-		JLabel lblMonday = new JLabel("Monday:");
-		tab3.add(lblMonday, "flowx,cell 1 8,alignx left");
-		
-		JSpinner mondayStartTime = new JSpinner(new SpinnerDateModel());
-		JSpinner.DateEditor mondayStartTimeEditor = new JSpinner.DateEditor(mondayStartTime, "HH:mm");
-		mondayStartTime.setEditor(mondayStartTimeEditor);
-		tab3.add(mondayStartTime, "cell 2 8,alignx left");
-		
-		JSpinner mondayEndTime = new JSpinner(new SpinnerDateModel());
-		JSpinner.DateEditor mondayEndTimeEditor = new JSpinner.DateEditor(mondayEndTime, "HH:mm");
-		mondayEndTime.setEditor(mondayEndTimeEditor);
-		tab3.add(mondayEndTime, "cell 3 8,aligny center");
-		
-		JLabel lblTuesday = new JLabel("Tuesday:");
-		tab3.add(lblTuesday, "flowx,cell 1 10,alignx left");
-		
-		JSpinner tuesdayStartTime = new JSpinner(new SpinnerDateModel());
-		JSpinner.DateEditor tuesdayStartTimeEditor = new JSpinner.DateEditor(tuesdayStartTime, "HH:mm");
-		tuesdayStartTime.setEditor(tuesdayStartTimeEditor);
-		tab3.add(tuesdayStartTime, "cell 2 10,alignx left");
-		
-		JSpinner tuesdayEndTime = new JSpinner(new SpinnerDateModel());
-		JSpinner.DateEditor tuesdayEndTimeEditor = new JSpinner.DateEditor(tuesdayEndTime, "HH:mm");
-		tuesdayEndTime.setEditor(tuesdayEndTimeEditor);
-		tab3.add(tuesdayEndTime, "cell 3 10");
-		
-		JLabel lblWednesday = new JLabel("Wednesday:");
-		tab3.add(lblWednesday, "flowx,cell 1 12,alignx left");
-		
-		JSpinner wednesdayStartTime = new JSpinner(new SpinnerDateModel());
-		JSpinner.DateEditor wednesdayStartTimeEditor = new JSpinner.DateEditor(wednesdayStartTime, "HH:mm");
-		wednesdayStartTime.setEditor(wednesdayStartTimeEditor);
-		tab3.add(wednesdayStartTime, "cell 2 12");
-		
-		JSpinner wednesdayEndTime = new JSpinner(new SpinnerDateModel());
-		JSpinner.DateEditor wednesdayEndTimeEditor = new JSpinner.DateEditor(wednesdayEndTime, "HH:mm");
-		wednesdayEndTime.setEditor(wednesdayEndTimeEditor);		
-		tab3.add(wednesdayEndTime, "cell 3 12");
-		
-		JLabel lblThursday = new JLabel("Thursday:");
-		tab3.add(lblThursday, "cell 1 14,alignx left");
-		
-		JSpinner thursdayStartTime = new JSpinner(new SpinnerDateModel());
-		JSpinner.DateEditor thursdayStartTimeEditor = new JSpinner.DateEditor(thursdayStartTime, "HH:mm");
-		thursdayStartTime.setEditor(thursdayStartTimeEditor);
-		tab3.add(thursdayStartTime, "cell 2 14");
-		
-		JSpinner thursdayEndTime = new JSpinner(new SpinnerDateModel());
-		JSpinner.DateEditor thursdayEndTimeEditor = new JSpinner.DateEditor(thursdayEndTime, "HH:mm");
-		thursdayEndTime.setEditor(thursdayEndTimeEditor);
-		tab3.add(thursdayEndTime, "cell 3 14");
-		
-		JLabel lblFriday = new JLabel("Friday:");
-		tab3.add(lblFriday, "cell 1 16,alignx left");
-		
-		JSpinner fridayStartTime = new JSpinner(new SpinnerDateModel());
-		JSpinner.DateEditor fridayStartTimeEditor = new JSpinner.DateEditor(fridayStartTime, "HH:mm");
-		fridayStartTime.setEditor(fridayStartTimeEditor);
-		tab3.add(fridayStartTime, "cell 2 16");
-		
-		JSpinner fridayEndTime = new JSpinner(new SpinnerDateModel());
-		JSpinner.DateEditor fridayEndTimeEditor = new JSpinner.DateEditor(fridayEndTime, "HH:mm");
-		fridayEndTime.setEditor(fridayEndTimeEditor);		
-		tab3.add(fridayEndTime, "cell 3 16");
-		
-		JLabel lblSaturday = new JLabel("Saturday:");
-		tab3.add(lblSaturday, "cell 1 18,alignx left");
-		
-		JSpinner saturdayStartTime = new JSpinner(new SpinnerDateModel());
-		JSpinner.DateEditor saturdayStartTimeEditor = new JSpinner.DateEditor(saturdayStartTime, "HH:mm");
-		saturdayStartTime.setEditor(saturdayStartTimeEditor);
-		tab3.add(saturdayStartTime, "cell 2 18");
-		
-		JSpinner saturdayEndTime = new JSpinner(new SpinnerDateModel());
-		JSpinner.DateEditor saturdayEndTimeEditor = new JSpinner.DateEditor(saturdayEndTime, "HH:mm");
-		saturdayEndTime.setEditor(saturdayEndTimeEditor);
-		tab3.add(saturdayEndTime, "cell 3 18");
-		
-		JLabel lblSunday = new JLabel("Sunday:");
-		tab3.add(lblSunday, "cell 1 20,alignx left");
-		
-		JSpinner sundayStartTime = new JSpinner(new SpinnerDateModel());
-		JSpinner.DateEditor sundayStartTimeEditor = new JSpinner.DateEditor(sundayStartTime, "HH:mm");
-		sundayStartTime.setEditor(sundayStartTimeEditor);
-		tab3.add(sundayStartTime, "cell 2 20");
-		
-		JSpinner sundayEndTime = new JSpinner(new SpinnerDateModel());
-		JSpinner.DateEditor sundayEndTimeEditor = new JSpinner.DateEditor(sundayEndTime, "HH:mm");
-		sundayEndTime.setEditor(sundayEndTimeEditor);
-		tab3.add(sundayEndTime, "cell 3 20");
 		
 		JButton btnSaveSchedule = new JButton("Save");
 		btnSaveSchedule.addActionListener(new ActionListener() {
@@ -330,8 +283,9 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		lblEquipmentMessage.setText(eMessage);
 		lblSupplyMessage.setText(sMessage);
 		lblStaffMemberMessage.setText(smMessage);
+		lblscheduleMessage.setText(schedMessage);
 		Manager m = Manager.getInstance();
-		if(smMessage == null || smMessage.length() == 0) {
+		if(smMessage.contains("successfully")) {
 			staffMembers = new HashMap<Integer, StaffMember>();
 			staffMemberList.removeAllItems();
 			Iterator<StaffMember> smIt = m.getStaffmembers().iterator();
@@ -363,7 +317,6 @@ public class FoodTruckManagementSystemPage extends JFrame {
 	
 	private void resetStaffMemberData() {
 		staffName.setText("");
-		//TODO: reset ComboBox
 	}
 	
 	private void addEquipmentActionPerformed(java.awt.event.ActionEvent evt) {
@@ -478,7 +431,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		
 		if(smMessage.contains("Staff Member name")) 
 			staffName.setText("");		
-		if(smMessage.contains("Staff Member role"))
+		//if(smMessage.contains("Staff Member role"))
 			//TODO: reset role			
 		if(smMessage.equals("")) {
 			lblStaffMemberMessage.setForeground(Color.GREEN);
@@ -490,6 +443,67 @@ public class FoodTruckManagementSystemPage extends JFrame {
 	}
 	
 	private void saveScheduleActionPerformed(java.awt.event.ActionEvent evt) {
+		StaffMember staffMember = new StaffMember("","");
+		ItemController c = new ItemController();
+		schedMessage = "";
 		
+		if(selectedStaffMember != -1)
+			staffMember = staffMembers.get(selectedStaffMember);
+				
+		for(int i = 0; i < startTimes.length; i++) { 
+			Calendar cal = Calendar.getInstance();
+			cal.setTime((Date) startTimes[i].getValue());
+			Time startTime = new Time(cal.getTime().getTime());
+			cal.setTime((Date) startTimes[i].getValue());
+			Time endTime = new Time(cal.getTime().getTime());
+			try {
+				c.addTimeStaffMember(staffMember.getName(), startTime, endTime);
+			} catch (InvalidInputException e) {
+				schedMessage += e.getMessage();
+			}
+		}
+				
+		if(schedMessage.equals("")) {
+			lblscheduleMessage.setForeground(Color.GREEN);
+			schedMessage = "Staff Member Schdule was successfully updated!";
+		}
+		else {
+			lblscheduleMessage.setForeground(Color.RED);
+			String[] split = schedMessage.split("! ");
+			Set<String> stringSet = new HashSet<>(Arrays.asList(split));
+			String[] filteredArray = stringSet.toArray(new String[0]);
+			schedMessage = "";
+			for(int i = 0; i < filteredArray.length; i++)
+				schedMessage += filteredArray[i] + "! ";
+		}
+		
+		refreshData();
+	}
+	
+	private void deleteStaffMemberActionPerformed(java.awt.event.ActionEvent evt) {
+		ItemController c = new ItemController();
+		StaffMember staffMember = new StaffMember("","");
+		schedMessage = "";
+		
+		if(selectedStaffMember != -1) 
+			staffMember = staffMembers.get(selectedStaffMember);
+		
+		try {
+			c.removeStaffMember(staffMember.getName());
+		} catch (InvalidInputException e) {
+			schedMessage = e.getMessage();
+			lblscheduleMessage.setForeground(Color.RED);
+		}
+		
+		if(schedMessage.contains("Staff member name")) {
+			selectedStaffMember = -1;
+			staffMemberList.setSelectedIndex(selectedStaffMember);
+		}
+		if(schedMessage.equals("")) {
+			schedMessage = "Staff Member successfully removed!";
+			lblscheduleMessage.setForeground(Color.GREEN);
+		}
+		
+		refreshData();		
 	}
 }
