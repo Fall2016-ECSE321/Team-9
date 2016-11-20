@@ -44,22 +44,10 @@
     <li><a href="reportTab.php">Report</a></li>
   </ul>
     <br>
-    <!-- JavaScript to create Table dynamically -->
-    <script>
-    function myCreateFunction() {
-        var table = document.getElementById("myTable");
-        var row = table.insertRow(0);
-        var cell1 = row.insertCell(0);
-        cell1.innerHTML = "NEW CELL1";
-    }
 
-    function myDeleteFunction() {
-        document.getElementById("myTable").deleteRow(0);
-    }
-    </script>
     <?php
     require_once 'persistence/PersistenceFoodTruckManagementSystem.php';
-    require_once 'model/Equipment.php';
+    require_once 'model/StaffMember.php';
     require_once 'model/Manager.php';
 
     session_start();
@@ -71,10 +59,10 @@
     <br>
 
     <h4 style="color:#778899"> <strong>Add New Staff</strong></h4>
-    <div style="background-color:#c0c0c0;color:black;padding:20px;"">
+    <div style="background-color:#BCB7C1;color:black;padding:20px;"">
             <!-- <h4> <strong>Equipment Item</strong></h4> -->
        
-      <form class="form-inline" action="staffMember.php" method="post">
+      <form class="form-inline" action="addStaffMember.php" method="post">
         
         <span class="error input-sm">
           <?php
@@ -114,7 +102,7 @@
     </div>
     <br>
     <h4 style="color:#778899"><strong>Register Staff's Weekly Schedule</strong></h4>
-    <div style="max-height: 450px;overflow-y: scroll;; background-color:#c0c0c0;color:black;padding:20px;"">
+    <div style="max-height: 450px;overflow-y: scroll;; background-color:#BCB7C1;color:black;padding:20px;"">
             <!-- <h4> <strong>Equipment Item</strong></h4> -->
        
       <form class="form-inline" action="addSchedule.php" method="post">
@@ -136,17 +124,19 @@
           ?>
         </span> 
         </span>
+        <br>
     
         <div class="form-group">
         <!-- Change equipment to staff name later on, this is just a place holder fo -->
         <?php
           echo "<p><strong>Select Staff Name: </strong><select class='form-control input-md' name='staffMemberSpinner'>";
-          foreach ($m->getEquipments() as $staff) {
+          foreach ($m->getStaffMembers() as $staff) {
             echo "<option>" . $staff->getName() ."</option>";
           }
           echo "</select>";
         ?>
-
+        <button align="right" type="submit" name="removeStaff" class="btn btn-default">Remove Staff</button>
+        
         <br>
         <dd>
 
@@ -159,7 +149,7 @@
         <label>Monday:</label>
           <input style="position: relative;left: 24px;" class="form-control input-sm" type="time"
             name="start_time1" />
-          <input style="position: relative;left: 34px;"class="form-control input-sm" type="time"
+          <input style="position: relative;left: 34px;" class="form-control input-sm" type="time"
           name="end_time1"  />
       
         <br><br>
@@ -203,7 +193,7 @@
           name="end_time7"  />
         <br><br>
         <!-- <input type="button"  class="btn btn-default" onclick="myFunction()" value="Cancel"> -->
-        <button type="submit" name="EditStaffSchedul" class="btn btn-default">Save</button>
+        <button type="submit" name="editStaffSchedule" class="btn btn-default">Save</button>
         </div>
       </form>
 

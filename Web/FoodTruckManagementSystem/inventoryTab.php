@@ -54,7 +54,8 @@ session_start ();
 		<br><br>
 
 		<h4 style="color:#778899"> <strong>Equipment Item</strong></h4>
-		<div style="background-color:#c0c0c0;color:black;padding:20px;"">
+		<!-- #c0c0c0 -->
+		<div style="background-color:#BCB7C1;color:black;padding:20px;"">
             <!-- <h4> <strong>Equipment Item</strong></h4> -->
        
 			<form class="form-inline" action="equipment.php" method="post">
@@ -97,7 +98,7 @@ session_start ();
 		<br><br>
 
 		<h4 style="color:#778899">  <strong>Supply Item</strong></h4>
-		<div style="background-color:#c0c0c0;color:black;padding:20px;"">
+		<div style="background-color:#BCB7C1;color:black;padding:20px;"">
             
 			<form class="form-inline" action="supply.php" method="post">
 				<span class="error input-sm">
