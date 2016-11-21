@@ -9,22 +9,20 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="ca.mcgill.ecse321.myapplication.MainActivity"
-    tools:showIn="@layout/activity_main">
+    tools:context="ca.mcgill.ecse321.myapplication.MainActivity">
 
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+
 
     <View
-        android:layout_marginTop="40dp"
+        android:id="@+id/redBarOne"
+        android:layout_marginTop="20dp"
         android:layout_height="2dp"
         android:background="#f44242"
         android:layout_width="325dp" />
 
     <LinearLayout
-        android:layout_marginTop="40dp"
+        android:id="@+id/equipmentTextFields"
+        android:layout_below="@+id/redBarOne"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
         android:orientation="horizontal"
@@ -60,6 +58,136 @@
             android:layout_width="2dp"
             android:layout_height="50dp"
             android:background="#425ff4"/>
+    </LinearLayout>
+
+    <View
+        android:id="@+id/redBarTwo"
+        android:layout_below="@+id/equipmentTextFields"
+        android:layout_height="2dp"
+        android:background="#f44242"
+        android:layout_width="325dp" />
+
+    <LinearLayout
+        android:id="@+id/equipmentButtons"
+        android:layout_below="@+id/equipmentTextFields"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addEquipment"
+            android:text="@string/addequipment_button"
+            android:layout_gravity="left"
+            android:onClick="addEquipment" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/removeEquipment"
+            android:text="@string/removeequipment_button"
+            android:layout_gravity="right"
+            android:onClick="removeEquipment" />
+    </LinearLayout>
+    
+    <View
+        android:id="@+id/redBarThree"
+        android:layout_marginTop="40dp"
+        android:layout_below="@+id/equipmentButtons"
+        android:layout_width="325dp"
+        android:layout_height="2dp"
+        android:background="#f44242"/>
+
+    <LinearLayout
+        android:id="@+id/supplyTextFields"
+        android:layout_below="@+id/redBarThree"
+        android:layout_width="wrap_content"
+        android:layout_height="50dp"
+        android:orientation="horizontal"
+        android:weightSum="1">
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="50dp"
+            android:background="#425ff4"/>
+
+        <EditText
+            android:layout_height="match_parent"
+            android:id="@+id/addsupply_name"
+            android:layout_gravity="left"
+            android:textStyle="bold"
+            android:hint="@string/addsupplyname_hint"
+            android:layout_width="195dp" />
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="50dp"
+            android:background="#425ff4"/>
+
+        <EditText
+            android:layout_height="match_parent"
+            android:inputType="numberSigned"
+            android:id="@+id/addsupply_quantity"
+            android:textStyle="italic"
+            android:hint="@string/addsupplyquantity_hint"
+            android:layout_width="78dp" />
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="50dp"
+            android:background="#425ff4"/>
+
+        <EditText
+            android:layout_height="match_parent"
+            android:inputType="text"
+            android:id="@+id/addsupply_unit"
+            android:textStyle="italic"
+            android:hint="@string/addsupplyunit_hint"
+            android:layout_width="45dp" />
+
+        <View
+            android:layout_width="2dp"
+            android:layout_height="50dp"
+            android:background="#425ff4"/>
+
+
+    </LinearLayout>
+
+    <View
+        android:id="@+id/redBarFour"
+        android:layout_below="@+id/supplyTextFields"
+        android:layout_width="325dp"
+        android:layout_height="2dp"
+        android:background="#f44242"/>
+
+    <LinearLayout
+        android:id="@+id/supplyButtons"
+        android:layout_below="@+id/redBarFour"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/addSupply"
+            android:text="@string/addsupply_button"
+            android:layout_gravity="left"
+            android:onClick="addSupply"
+            android:layout_weight="0.46" />
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/removeSupply"
+            android:text="@string/removesupply_button"
+            android:layout_gravity="right"
+            android:onClick="removeSupply"
+            android:layout_weight="0.46" />
     </LinearLayout>
 
 
