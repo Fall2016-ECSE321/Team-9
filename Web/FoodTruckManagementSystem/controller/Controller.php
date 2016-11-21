@@ -302,7 +302,9 @@ class Controller{
 		if($staffName == null || strlen($staffName) == 0){
 			$error .= "Staff Member name cannot be empty! ";
 		}
+
 		for($i=0; $i<$numberOfDaysInWeek; $i++){
+
 			if($startTime[$i]==$endTime[$i] && $startTime[$i]!=""){
 				$error .= "End time cannot equal start time! ";
 				break;
@@ -316,7 +318,7 @@ class Controller{
 			//now check that the start time is less than the end time
 			//times are received in format "hh:mm" where h is hour and m is minute
 			//therefore we cast to an integer while removing the ':'
-			if(($startTime[$i]!=null && $endTime[$i]!=null) || ($startTime[$i]!="" && $endTime[$i]!="")){
+			if ($startTime[$i]!="" && $endTime[$i]!=""){
 				$tempStart="";
 				$tempEnd="";
 				for($j=0; $j<5; $j++){
@@ -332,6 +334,7 @@ class Controller{
 				$endInt=(int)$tempEnd;
 				if($startInt > $endInt){
 					$error .= "End time must be greater than start time! ";
+					break;
 				}
 			}
 		}

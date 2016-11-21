@@ -65,23 +65,21 @@ if (isset($_POST['end_time7'])){ //end time
 }
 
 if (isset($_POST['editStaffSchedule'])) {	
-	echo "Monday ".$staffStartTime[0] ;
-	echo " Tueday:".$staffStartTime[1];
-	// $c->addTimeStaffMember($staffName, $staffStartTime, $staffEndTime);
-	// $_SESSION ["successStaff"] = "Successfully save ".$staffName."'s' new weekly schedule!";
+	$c->addTimeStaffMember($staffName, $staffStartTime, $staffEndTime);
+	$_SESSION ["successSchedule"] = "Successfully save ".$staffName."'s' new weekly schedule!";
 
-	$_SESSION["errorStaff"] = "";
+	$_SESSION["errorSchedule"] = "";
 }
 elseif (isset($_POST['removeStaff'])) {
 	$c->removeStaffMember($staffName);
-	$_SESSION ["successStaff"] = "Successfully remove ".$staffName." from staff list!";
+	$_SESSION ["successSchedule"] = "Successfully remove ".$staffName." from staff list!";
 }
+$_SESSION["errorSchedule"] = "";
 	
 } catch (Exception $e){ 
-	$_SESSION["errorStaff"] = $e->getMessage();
+	$_SESSION["errorSchedule"] = $e->getMessage();
 }
 
-$_SESSION["errorStaff"] = "";
 
 ?>
 

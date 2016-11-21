@@ -117,14 +117,15 @@
         <span class="success input-md">
           <?php
             
-            if (isset ( $_SESSION ['successSave'] ) && ! empty ( $_SESSION ['successSave'] )) {
-            echo $_SESSION ["successSave"];
-            session_unset($_SESSION ["successSave"]);
+            if (isset ( $_SESSION ['successSchedule'] ) && ! empty ( $_SESSION ['successSchedule'] )) {
+            echo $_SESSION ["successSchedule"];
+            session_unset($_SESSION ["successSchedule"]);
             } 
           ?>
         </span> 
         </span>
-        <br>
+        <br><br>
+      
     
         <div class="form-group">
         <!-- Change equipment to staff name later on, this is just a place holder fo -->
@@ -199,7 +200,7 @@
 
   </div>
 
-</div>		
+</div>    
 
 </body>
 </html>
