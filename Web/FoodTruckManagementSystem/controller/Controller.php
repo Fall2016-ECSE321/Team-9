@@ -302,10 +302,16 @@ class Controller{
 		if($staffName == null || strlen($staffName) == 0){
 			$error .= "Staff Member name cannot be empty! ";
 		}
-		for($i=0; $i<$numberOfDaysInWeek-1; $i++){
-			if($startTime[$i]==$endTime[$i] && $startTime[$i]!=null){
+		for($i=0; $i<$numberOfDaysInWeek; $i++){
+			if($startTime[$i]==$endTime[$i] && $startTime[$i]!=""){
 				$error .= "End time cannot equal start time! ";
 				break;
+			}
+			if($startTime[$i]!=""&&$endTime[$i]==""){
+				$error .= "End time is empty! ";
+			}
+			if($startTime[$i]==""&&$endTime[$i]!=""){
+				$error .= "Start time is empty! ";
 			}
 			//now check that the start time is less than the end time
 			//times are received in format "hh:mm" where h is hour and m is minute
