@@ -1802,7 +1802,51 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		$this->m = $this->pm->loadDataFromStore ();
 		$this->assertEquals(1, count($this->m->getStaffmembers()));
 		$this->assertEquals("End time must be greater than start time!", $error);
-	
 	}
+	
+	public function testAddTimeStaffMemberOnlyStartTimeEntered(){
+		$this->assertEquals(0, count($this->m->getStaffmembers()));
+		$this->c->createStaffMember("jim", "cook");
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals(1, count($this->m->getStaffmembers()));
+	
+		$name = "jim";
+		$error = "";
+		$startTime = array("03:00","02:00","03:00","04:00","05:00","06:00","07:00");
+		$endTime = array("","03:00","04:00","05:00","06:00","07:00","08:00");
+	
+		try{
+			$this->c->addTimeStaffMember($name, $startTime, $endTime);
+		} catch (Exception $e){
+			$error=$e->getMessage();
+		}
+	
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals(1, count($this->m->getStaffmembers()));
+		$this->assertEquals("End time is empty!", $error);
+	}
+	
+	public function testAddTimeStaffMemberOnlyEndTimeEntered(){
+		$this->assertEquals(0, count($this->m->getStaffmembers()));
+		$this->c->createStaffMember("jim", "cook");
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals(1, count($this->m->getStaffmembers()));
+	
+		$name = "jim";
+		$error = "";
+		$startTime = array("03:00","02:00","03:00","04:00","05:00","06:00","");
+		$endTime = array("4:00","03:00","04:00","05:00","06:00","07:00","08:00");
+	
+		try{
+			$this->c->addTimeStaffMember($name, $startTime, $endTime);
+		} catch (Exception $e){
+			$error=$e->getMessage();
+		}
+	
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals(1, count($this->m->getStaffmembers()));
+		$this->assertEquals("Start time is empty!", $error);
+	}
+	
 }
 ?>
