@@ -8,7 +8,7 @@ $staffEndTime= array();
 try {
 $staffName = NULL;
 if (isset($_POST['staffMemberSpinner'])) {
-$staffName= $_POST['staffMemberSpinner'];
+	$staffName= $_POST['staffMemberSpinner'];
 }
 // Start time and End time for 7 days 
 
@@ -35,7 +35,7 @@ if (isset($_POST['end_time3'])){ //end time
 }
 // Thurday
 if (isset($_POST['start_time4'])){ //start time 
-	$staffEndTime[3] = $_POST['start_time4'];
+	$staffStartTime[3] = $_POST['start_time4'];
 }
 if (isset($_POST['end_time4'])){ //end time
 	$staffEndTime[3] = $_POST['end_time4'];
@@ -64,7 +64,7 @@ if (isset($_POST['end_time7'])){ //end time
 	$staffEndTime[6] = $_POST['end_time7'];
 }
 
-if (isset($_POST['editStaffSchedule'])) {	
+if (isset($_POST['editStaffSchedule'])) {
 	$c->addTimeStaffMember($staffName, $staffStartTime, $staffEndTime);
 	$_SESSION ["successSchedule"] = "Successfully save ".$staffName."'s' new weekly schedule!";
 
@@ -78,8 +78,8 @@ $_SESSION["errorSchedule"] = "";
 	
 } catch (Exception $e){ 
 	$_SESSION["errorSchedule"] = $e->getMessage();
+	$_SESSION ["successSchedule"] = "";
 }
-
 
 ?>
 
