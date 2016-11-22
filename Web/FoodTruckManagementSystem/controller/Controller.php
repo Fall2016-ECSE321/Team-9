@@ -380,9 +380,15 @@ class Controller{
 			// if trying to make menu item that already exists, update its price to new price
 			for($i = 0; $i < $m->numberOfMenus(); $i++){
 				if($name == $m->getMenus_index($i)->getName()){
-					$m->getMenus_index($i)->setPrice(floatval($price) + floatval($m->getMenus_index($i)->getPrice()));
-					$flag = true; //flag indicates the menu name already exists.
-					break;
+					if(floatval($price)== floatval($m->getMenus_index($i)->getPrice())){
+						$error="Menu Item already exists at price: ".floatval($m->getMenus_index($i)->getPrice());
+						throw new Exception($error);
+					}
+					else{
+						$m->getMenus_index($i)->setPrice(floatval($price));
+						$flag = true; //flag indicates the menu name already exists.
+						break;
+					}
 				}
 			}
 			if (! $flag){ //if menu name does not exist, create a new menu item.
