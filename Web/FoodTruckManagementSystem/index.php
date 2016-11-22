@@ -39,15 +39,104 @@
     <li><a href="reportTab.php">Report</a></li>
   </ul>
   <br>
-  <p><strong>Note:</strong> This page is to display Menu items and allow user to input order</p>
+  
 
 	<?php
 	
 	require_once 'persistence/PersistenceFoodTruckManagementSystem.php';
+  require_once 'model/Manager.php';
+  require_once 'model/MenuItem.php';
+
 	
 	session_start ();
+  // Retreive the data from the model
+  $pm = new PersistenceFoodTruckManagementSystem ();
+  $m = $pm->loadDataFromStore ();
 	
-?>
+  ?>
+    <br><br>
+
+    <h4 style="color:#778899"> <strong>Menu Item</strong></h4>
+    <!-- #c0c0c0 -->
+    <div style="background-color:#BCB7C1;color:black;padding:20px;"">
+            <!-- <h4> <strong>Equipment Item</strong></h4> -->
+       
+      <form class="form-inline" action="addRemoveMenuItem.php" method="post">
+        
+        <span class="error input-sm">
+          <?php
+            if (isset ( $_SESSION ['errorItem'] ) && ! empty ( $_SESSION ['errorItem'] )) {
+              echo " * " . $_SESSION ["errorItem"];
+              session_unset($_SESSION ["errorItem"]);
+            }
+          ?>
+        <span class="success input-md">
+          <?php
+            
+            if (isset ( $_SESSION ['successItem'] ) && ! empty ( $_SESSION ['successItem'] )) {
+            echo $_SESSION ["successItem"];
+            session_unset($_SESSION ["successItem"]);
+            } 
+          ?>
+        </span> 
+        </span>
+        <br>
+        <div class="form-group">
+          &nbsp&nbsp <input class="form-control input-sm" type="text"
+            name="menuItem_name" placeholder="Enter Item Name" />
+        </div>
+        &nbsp&nbsp
+        <div class="form-group">
+
+          <input class="form-control input-sm" style="width: 110px"
+            type="number" name="menuItem_price" placeholder="Enter Price($)" />
+
+        </div>
+        <br><br>&nbsp&nbsp
+        <button type="submit" name="addEquipment" class="btn btn-default">Add To Menu List</button>
+        <button type="submit" name="removeEquipment" class="btn btn-default">Remove Item</button>
+      </form>
+    </div>
+
+    <br><br>
+
+    <h4 style="color:#778899">  <strong>Add Order</strong></h4>
+    <div style="background-color:#BCB7C1;color:black;padding:20px;"">
+    <form class="form-inline" action="addRemoveMenuItem.php" method="post">
+        
+        <span class="error input-sm">
+          <?php
+            if (isset ( $_SESSION ['errorOrder'] ) && ! empty ( $_SESSION ['errorOrder'] )) {
+              echo " * " . $_SESSION ["errorOrder"];
+              session_unset($_SESSION ["errorOrder"]);
+            }
+          ?>
+        <span class="success input-md">
+          <?php
+            
+            if (isset ( $_SESSION ['successOrder'] ) && ! empty ( $_SESSION ['successOrder'] )) {
+            echo $_SESSION ["successOrder"];
+            session_unset($_SESSION ["successOrder"]);
+            } 
+          ?>
+        </span> 
+        </span>
+        <br>
+        <div class="form-group">
+        <!-- Change equipment to staff name later on, this is just a place holder fo -->
+        <?php
+          echo "<p><strong>&nbsp&nbsp&nbsp Select Item to Order: </strong><select class='form-control input-md' name='itemSpinner'>";
+          foreach ($m->getMenus() as $order) {
+            echo "<option>" . $order->getName() ."</option>";
+          }
+          echo "</select>";
+          echo "&nbsp&nbsp <input class='form-control input-md' name='order_quantity' style='width: 120px' placeholder='Enter quantity'>";
+        ?>
+
+        <br><br>&nbsp&nbsp
+        <button type="submit" name="addEquipment" class="btn btn-default">Order</button>
+      </form>
+    </div>
 </div>
 		
 

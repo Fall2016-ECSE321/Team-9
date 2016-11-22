@@ -58,7 +58,7 @@ session_start ();
 		<div style="background-color:#BCB7C1;color:black;padding:20px;"">
             <!-- <h4> <strong>Equipment Item</strong></h4> -->
        
-			<form class="form-inline" action="equipment.php" method="post">
+			<form class="form-inline" action="addRemoveEquipment.php" method="post">
 				
 				<span class="error input-sm">
 					<?php
@@ -100,7 +100,7 @@ session_start ();
 		<h4 style="color:#778899">  <strong>Supply Item</strong></h4>
 		<div style="background-color:#BCB7C1;color:black;padding:20px;"">
             
-			<form class="form-inline" action="supply.php" method="post">
+			<form class="form-inline" action="addRemoveSupply.php" method="post">
 				<span class="error input-sm">
 					<?php
 						if (isset ( $_SESSION ['errorSupply'] ) && ! empty ( $_SESSION ['errorSupply'] )) {
