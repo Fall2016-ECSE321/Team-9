@@ -1944,6 +1944,53 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals("Menu Item price cannot be negative!", $error);
 	}
 	
+	public function testCreateMenuItemUpdatePrice() {
+	
+		$menuItemName = "burger";
+		$menuItemPrice0 = 3.45;
+		$menuItemPrice1 = 14.32;
+	
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->c->createMenuItem($menuItemName, $menuItemPrice0);
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+	
+		try {
+			$this->c->createMenuItem( $menuItemName, $menuItemPrice1 );
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$error=$e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+		$this->assertEquals($menuItemPrice1, $this->m->getMenus_index(0)->getPrice());
+	}
+	
+	public function testCreateMenuItemUpdateSamePrice() {
+	
+		$menuItemName = "burger";
+		$menuItemPrice = 3.45;
+		
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->c->createMenuItem($menuItemName, $menuItemPrice);
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+	
+		try {
+			$this->c->createMenuItem( $menuItemName, $menuItemPrice );
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$error=$e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+		$this->assertEquals("Menu Item already exists at price: ".$menuItemPrice, $error);
+	}
+	
 	public function testCreateMenuItemPriceZeroInt() {
 		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
 	
