@@ -2,8 +2,8 @@
 require_once __DIR__ . '../../model/Equipment.php';
 require_once __DIR__ . '../../model/Manager.php';
 require_once __DIR__.'../../model/Supply.php';
-//require_once __DIR__.'../../model/Order.php';
-//require_once __DIR__.'../../model/StaffMember.php';
+require_once __DIR__.'../../model/MenuItem.php';
+require_once __DIR__.'../../model/StaffMember.php';
 require_once __DIR__ . '../../persistence/PersistenceFoodTruckManagementSystem.php';
 require_once __DIR__ . '../../controller/Controller.php';
 
@@ -1846,6 +1846,576 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		$this->m = $this->pm->loadDataFromStore ();
 		$this->assertEquals(1, count($this->m->getStaffmembers()));
 		$this->assertEquals("Start time is empty!", $error);
+	}
+	
+	public function testCreateMenuItem() {
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+	
+		$menuItemName = "burger";
+		$menuItemPrice = 3.45;
+	
+		try {
+			$this->c->createMenuItem( $menuItemName, $menuItemPrice );
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$this->fail ();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+		$this->assertEquals ( $menuItemName, $this->m->getMenus_index ( 0 )->getName () );
+		$this->assertEquals ( $menuItemPrice, $this->m->getMenus_index ( 0 )->getPrice () );
+	}
+	
+	public function testCreateMenuItemNull() {
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+	
+		$menuItemName = null;
+		$menuItemPrice = 3.45;
+	
+		try {
+			$this->c->createMenuItem( $menuItemName, $menuItemPrice );
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$error=$e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->assertEquals("Menu Item name cannot be empty!", $error);
+	}
+	
+	public function testCreateMenuItemEmpty() {
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+	
+		$menuItemName = "";
+		$menuItemPrice = 3.45;
+	
+		try {
+			$this->c->createMenuItem( $menuItemName, $menuItemPrice );
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$error=$e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->assertEquals("Menu Item name cannot be empty!", $error);
+	}
+	
+	public function testCreateMenuItemSpaces() {
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+	
+		$menuItemName = " ";
+		$menuItemPrice = 3.45;
+	
+		try {
+			$this->c->createMenuItem( $menuItemName, $menuItemPrice );
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$error=$e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->assertEquals("Menu Item name cannot be empty!", $error);
+	}
+	
+	public function testCreateMenuItemPriceNegative() {
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+	
+		$menuItemName = "burger";
+		$menuItemPrice = -3.45;
+	
+		try {
+			$this->c->createMenuItem( $menuItemName, $menuItemPrice );
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$error=$e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->assertEquals("Menu Item price cannot be negative!", $error);
+	}
+	
+	public function testCreateMenuItemPriceZeroInt() {
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+	
+		$menuItemName = "burger";
+		$menuItemPrice = 0;
+	
+		try {
+			$this->c->createMenuItem( $menuItemName, $menuItemPrice );
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$error=$e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->assertEquals("Menu Item price cannot be empty or zero!", $error);
+	}
+	
+	public function testCreateMenuItemPriceZeroFloat() {
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+	
+		$menuItemName = "burger";
+		$menuItemPrice = 0.00;
+	
+		try {
+			$this->c->createMenuItem( $menuItemName, $menuItemPrice );
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$error=$e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->assertEquals("Menu Item price cannot be empty or zero!", $error);
+	}
+	
+	public function testCreateMenuItemPriceNull() {
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+	
+		$menuItemName = "burger";
+		$menuItemPrice = null;
+	
+		try {
+			$this->c->createMenuItem( $menuItemName, $menuItemPrice );
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$error=$e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->assertEquals("Menu Item price cannot be empty or zero!", $error);
+	}
+	
+	public function testCreateMenuItemPriceEmpty() {
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+	
+		$menuItemName = "burger";
+		$menuItemPrice = "";
+	
+		try {
+			$this->c->createMenuItem( $menuItemName, $menuItemPrice );
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$error=$e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->assertEquals("Menu Item price cannot be empty or zero!", $error);
+	}
+	
+	public function testCreateMenuItemPriceSpaces() {
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+	
+		$menuItemName = "burger";
+		$menuItemPrice = " ";
+	
+		try {
+			$this->c->createMenuItem( $menuItemName, $menuItemPrice );
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$error=$e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->assertEquals("Menu Item price cannot be empty or zero!", $error);
+	}
+	
+	public function testRemoveMenuItem() {
+		$menuItemName = "burger";
+		$menuItemPrice = "2.53";
+		
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->c->createMenuItem($menuItemName, $menuItemPrice);
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+	
+		try {
+			$this->c->removeMenuItem($menuItemName);
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$this->fail ();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+	}
+	
+	public function testRemoveMenuItemNull() {
+		$menuItemName = null;
+		$menuItemPrice = "2.53";
+		$error="";
+	
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->c->createMenuItem("burger", $menuItemPrice);
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+	
+		try {
+			$this->c->removeMenuItem($menuItemName);
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$error = $e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+		$this->assertEquals("Menu Item name cannot be empty!", $error);
+	}
+	
+	public function testRemoveMenuItemEmpty() {
+		$menuItemName = "";
+		$menuItemPrice = "2.53";
+		$error="";
+	
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->c->createMenuItem("burger", $menuItemPrice);
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+	
+		try {
+			$this->c->removeMenuItem($menuItemName);
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$error = $e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+		$this->assertEquals("Menu Item name cannot be empty!", $error);
+	}
+	
+	public function testRemoveMenuItemSpaces() {
+		$menuItemName = " ";
+		$menuItemPrice = "2.53";
+		$error="";
+	
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->c->createMenuItem("burger", $menuItemPrice);
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+	
+		try {
+			$this->c->removeMenuItem($menuItemName);
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$error = $e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+		$this->assertEquals("Menu Item name cannot be empty!", $error);
+	}
+	
+	public function testRemoveMenuItemDoesNotExist() {
+		$menuItemName = "soup";
+		$menuItemPrice = "2.53";
+		$error="";
+	
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->c->createMenuItem("burger", $menuItemPrice);
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+	
+		try {
+			$this->c->removeMenuItem($menuItemName);
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$error = $e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+		$this->assertEquals("Menu Item name does not exist!", $error);
+	}
+	
+	public function testMenuItemOrdered (){
+		$orderName = "burger";
+		$orderQuantity = 4;
+		$menuItemPrice = "2.53";
+		
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->c->createMenuItem($orderName, $menuItemPrice);
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+		
+		try {
+			$this->c->MenuItemOrdered( $orderName, $orderQuantity );
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$this->fail ();
+		}
+		
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+		$this->assertEquals ( $orderName, $this->m->getMenus_index ( 0 )->getName () );
+		$this->assertEquals ( $orderQuantity, $this->m->getMenus_index ( 0 )->getPopularityCounter () );
+	}
+	
+	public function testMenuItemOrderedAlreadyHasQuantity (){
+		$orderName = "burger";
+		$orderQuantity0 = 4;
+		$orderQuantity1 = 7;
+		$menuItemPrice = "2.53";
+	
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->c->createMenuItem($orderName, $menuItemPrice);
+		$this->c->MenuItemOrdered($orderName, $orderQuantity0 );
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+	
+		try {
+			$this->c->MenuItemOrdered( $orderName, $orderQuantity1 );
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$this->fail ();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+		$this->assertEquals ( $orderName, $this->m->getMenus_index ( 0 )->getName () );
+		$this->assertEquals ( $orderQuantity0 + $orderQuantity1, $this->m->getMenus_index ( 0 )->getPopularityCounter () );
+	}
+	
+	public function testMenuItemOrderedNull (){
+		$orderName = null;
+		$orderQuantity = 4;
+		$menuItemName = "burger";
+		$menuItemPrice = "23.221";
+
+	
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->c->createMenuItem($menuItemName, $menuItemPrice);
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+	
+		try {
+			$this->c->MenuItemOrdered( $orderName, $orderQuantity );
+		} catch ( Exception $e ) {
+			$error=$e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+		$this->assertEquals("Order name cannot be empty!", $error);
+	}
+	
+	public function testMenuItemOrderedEmpty (){
+		$orderName = "";
+		$orderQuantity = 4;
+		$menuItemName = "burger";
+		$menuItemPrice = "23.221";
+	
+	
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->c->createMenuItem($menuItemName, $menuItemPrice);
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+	
+		try {
+			$this->c->MenuItemOrdered( $orderName, $orderQuantity );
+		} catch ( Exception $e ) {
+			$error=$e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+		$this->assertEquals("Order name cannot be empty!", $error);
+	}
+	
+	public function testMenuItemOrderedSpaces (){
+		$orderName = " ";
+		$orderQuantity = 4;
+		$menuItemName = "burger";
+		$menuItemPrice = "23.221";
+	
+	
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->c->createMenuItem($menuItemName, $menuItemPrice);
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+	
+		try {
+			$this->c->MenuItemOrdered( $orderName, $orderQuantity );
+		} catch ( Exception $e ) {
+			$error=$e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+		$this->assertEquals("Order name cannot be empty!", $error);
+	}
+	
+	public function testMenuItemOrderedDoesNotExist (){
+		$orderName = "fries";
+		$orderQuantity = 4;
+		$menuItemName = "burger";
+		$menuItemPrice = "23.221";
+	
+	
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->c->createMenuItem($menuItemName, $menuItemPrice);
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+	
+		try {
+			$this->c->MenuItemOrdered( $orderName, $orderQuantity );
+		} catch ( Exception $e ) {
+			$error=$e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+		$this->assertEquals("Order name does not exist!", $error);
+	}
+	
+	public function testMenuItemOrderedQuantityNull (){
+		$orderName = "burger";
+		$orderQuantity = null;
+		$menuItemName = "burger";
+		$menuItemPrice = "23.221";
+	
+	
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->c->createMenuItem($menuItemName, $menuItemPrice);
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+	
+		try {
+			$this->c->MenuItemOrdered( $orderName, $orderQuantity );
+		} catch ( Exception $e ) {
+			$error=$e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+		$this->assertEquals("Order quantity cannot be empty or zero!", $error);
+	}
+	
+	public function testMenuItemOrderedQuantityEmpty (){
+		$orderName = "burger";
+		$orderQuantity = "";
+		$menuItemName = "burger";
+		$menuItemPrice = "23.221";
+	
+	
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->c->createMenuItem($menuItemName, $menuItemPrice);
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+	
+		try {
+			$this->c->MenuItemOrdered( $orderName, $orderQuantity );
+		} catch ( Exception $e ) {
+			$error=$e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+		$this->assertEquals("Order quantity cannot be empty or zero!", $error);
+	}
+	
+	public function testMenuItemOrderedQuantitySpaces (){
+		$orderName = "burger";
+		$orderQuantity = " ";
+		$menuItemName = "burger";
+		$menuItemPrice = "23.221";
+	
+	
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->c->createMenuItem($menuItemName, $menuItemPrice);
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+	
+		try {
+			$this->c->MenuItemOrdered( $orderName, $orderQuantity );
+		} catch ( Exception $e ) {
+			$error=$e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+		$this->assertEquals("Order quantity cannot be empty or zero!", $error);
+	}
+	
+	public function testMenuItemOrderedQuantityNegative (){
+		$orderName = "burger";
+		$orderQuantity = -2;
+		$menuItemName = "burger";
+		$menuItemPrice = "23.221";
+	
+	
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->c->createMenuItem($menuItemName, $menuItemPrice);
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+	
+		try {
+			$this->c->MenuItemOrdered( $orderName, $orderQuantity );
+		} catch ( Exception $e ) {
+			$error=$e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+		$this->assertEquals("Order quantity cannot be negative!", $error);
+	}
+	
+	public function testMenuItemOrderedQuantityZero (){
+		$orderName = "burger";
+		$orderQuantity = 0;
+		$menuItemName = "burger";
+		$menuItemPrice = "23.221";
+	
+	
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->c->createMenuItem($menuItemName, $menuItemPrice);
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+	
+		try {
+			$this->c->MenuItemOrdered( $orderName, $orderQuantity );
+		} catch ( Exception $e ) {
+			$error=$e->getMessage();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+		$this->assertEquals("Order quantity cannot be empty or zero!", $error);
 	}
 	
 }
