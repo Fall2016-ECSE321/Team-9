@@ -59,8 +59,7 @@
 		$m = $pm->loadDataFromStore ();
 		
 		?>
-    <br>
-		<br>
+    <br> <br>
 
 		<h4 style="color: #778899">
 			<strong>Menu Item</strong>
@@ -100,8 +99,7 @@
 						type="number" name="menuItem_price" placeholder="Enter Price($)" />
 
 				</div>
-				<br>
-				<br>&nbsp&nbsp
+				<br> <br>&nbsp&nbsp
 				<button type="submit" name="addMenuItem" class="btn btn-default">Add
 					To Menu List</button>
 				<button type="submit" name="removeMenuItem" class="btn btn-default">Remove
@@ -110,14 +108,12 @@
 		</div>
 
 		<br>
-		<br>
 
 		<h4 style="color: #778899">
 			<strong>Add Order</strong>
 		</h4>
 		<div style="background-color: #BCB7C1; color: black; padding: 20px;"">
-			<form class="form-inline" action="addOrder.php"
-				method="post">
+			<form class="form-inline" action="addOrder.php" method="post">
 
 				<span class="error input-sm">
           <?php
@@ -147,8 +143,7 @@
 								echo "&nbsp&nbsp <input class='form-control input-md' name='order_quantity' style='width: 120px' placeholder='Enter quantity'>";
 								?>
 
-        <br>
-					<br>&nbsp&nbsp
+        <br> <br>&nbsp&nbsp
 					<button type="submit" name="menuItemOrder" class="btn btn-default">Order</button>
 			
 			</form>
