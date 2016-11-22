@@ -3,7 +3,7 @@ require_once __DIR__.'../../Controller/InputValidator.php';
 require_once __DIR__.'../../model/Manager.php';
 require_once __DIR__.'../../model/Equipment.php';
 require_once __DIR__.'../../model/Supply.php';
-//require_once __DIR__.'../../model/Order.php';
+require_once __DIR__.'../../model/MenuItem.php';
 require_once __DIR__.'../../model/StaffMember.php';
 require_once __DIR__.'../../persistence/PersistenceFoodTruckManagementSystem.php';
 
@@ -364,6 +364,133 @@ class Controller{
 			throw new Exception ($error);
 		}
 		$pm->writeDataToStore($m);
+	}
+	
+	public function createMenuItem($menuItemName, $menuItemPrice){
+	
+		$error = "";
+		$name= InputValidator::validate_input($menuItemName);
+		$price = InputValidator::validate_input($menuItemPrice);
+		if (($name != null || strlen($name)!=0)&&($price != null || $price !=0.00 || $price !=0) &&($price>0)){
+			//1. Load all of the data
+			$pm = new PersistenceFoodTruckManagementSystem();
+			$m  = $pm->loadDataFromStore();
+			$flag = false;
+			
+			// if trying to make menu item that already exists, update its price to new price
+			for($i = 0; $i < $m->numberOfMenus(); $i++){
+				if($name == $m->getMenus_index($i)->getName()){
+					$m->getMenus_index($i)->setPrice(floatval($price) + floatval($m->getMenus_index($i)->getPrice()));
+					$flag = true; //flag indicates the menu name already exists.
+					break;
+				}
+			}
+			if (! $flag){ //if menu name does not exist, create a new menu item.
+				//2. Add the new menu item
+				$counter = 0; //when creating a new menu item, it has zero popularity
+				$menuItem = new MenuItem($name, $price, $counter);
+				$m->addMenus($menuItem);
+			}
+			//3. Write all of the data
+			$pm->writeDataToStore($m);
+		}
+		else{
+			// 4. Validate all the innputs
+			if ($name == null || strlen($name)==0){
+				$error .="Menu Item name cannot be empty!";
+			}
+			if ($price == null || $price == 0 || $price == 0.00){
+				$error .= " Menu Item price cannot be empty or zero!";
+			}
+			if ($price < 0){
+				$error .= " Menu Item price cannot be negative!";
+			}
+			$error = trim($error);
+			throw new Exception ($error);
+		}
+	
+	}
+	
+	public function removeMenuItem($menuItemName){
+	
+		$error = "";
+		$name= InputValidator::validate_input($menuItemName);
+	
+		//1. Load all of the data
+		$pm = new PersistenceFoodTruckManagementSystem();
+		$m  = $pm->loadDataFromStore();
+		$flag = false;
+	
+		if ($name != null || strlen($name)!=0){
+			//2. Remove the menu item
+			for($i = 0; $i < $m->numberOfMenus(); $i++){
+				if($name == $m->getMenus_index($i)->getName()){
+					$flag = true;
+					$m->removeMenus($m->getMenus_index($i));
+					break;
+				}		
+			}
+				
+			if (!$flag){
+				$error = "Menu Item name does not exist!";
+				throw new Exception($error);
+			}
+				
+			//3. Write all of the data
+			$pm->writeDataToStore($m);
+		}
+		else{
+			// 4. Validate the input
+			if ($name == null || strlen($name)==0){
+				$error ="Menu Item name cannot be empty!";
+				throw new Exception ($error);
+			}
+		}
+	}
+	
+	public function menuItemOrdered($menuItemName, $menuItemQuantity){
+		
+		$error = "";
+		$name= InputValidator::validate_input($menuItemName);
+		$quantity = InputValidator::validate_input($menuItemQuantity);
+		
+		if (($name != null || strlen($name)!=0)&&($quantity != null || $quantity !=0) &&($quantity>0)){
+			//1. Load all of the data
+			$pm = new PersistenceFoodTruckManagementSystem();
+			$m  = $pm->loadDataFromStore();
+			$flag = false;
+				
+			// if menu item is ordered that already exists, update its popularity counter
+			for($i = 0; $i < $m->numberOfMenus(); $i++){
+				if($name == $m->getMenus_index($i)->getName()){
+					$currentQuantity = $m->getMenus_index($i)->getPopularityCounter();
+					$m->getMenus_index($i)->setPopularityCounter((string)($quantity + $currentQuantity));
+					$flag = true; //flag indicates the menu name already exists.
+					break;
+				}
+			}
+			if (! $flag){ //if menu name does not exist, throw error.
+				$error = "Order name does not exist!";
+				throw new Exception($error);
+			}
+			//3. Write all of the data
+			$pm->writeDataToStore($m);
+		}
+		else{
+			// 4. Validate all the innputs
+			if ($name == null || strlen($name)==0){
+				$error .="Order name cannot be empty!";
+			}
+			if ($quantity == null || $quantity == 0){
+				$error .= " Order quantity cannot be empty or zero!";
+			}
+			if ($quantity < 0){
+				$error .= " Order quantity cannot be negative!";
+			}
+			$error = trim($error);
+			throw new Exception ($error);
+		}
+		
 	}
 	
 }

@@ -2,25 +2,27 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
 /*This code was generated using the UMPLE 1.24.0-c37463a modeling language!*/
 
-class Equipment
+class MenuItem
 {
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
-  //Equipment Attributes
+  //MenuItem Attributes
   private $name;
-  private $quantity;
+  private $price;
+  private $popularityCounter;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public function __construct($aName, $aQuantity)
+  public function __construct($aName, $aPrice, $aPopularityCounter)
   {
     $this->name = $aName;
-    $this->quantity = $aQuantity;
+    $this->price = $aPrice;
+    $this->popularityCounter = $aPopularityCounter;
   }
 
   //------------------------
@@ -35,10 +37,18 @@ class Equipment
     return $wasSet;
   }
 
-  public function setQuantity($aQuantity)
+  public function setPrice($aPrice)
   {
     $wasSet = false;
-    $this->quantity = $aQuantity;
+    $this->price = $aPrice;
+    $wasSet = true;
+    return $wasSet;
+  }
+
+  public function setPopularityCounter($aPopularityCounter)
+  {
+    $wasSet = false;
+    $this->popularityCounter = $aPopularityCounter;
     $wasSet = true;
     return $wasSet;
   }
@@ -48,9 +58,14 @@ class Equipment
     return $this->name;
   }
 
-  public function getQuantity()
+  public function getPrice()
   {
-    return $this->quantity;
+    return $this->price;
+  }
+
+  public function getPopularityCounter()
+  {
+    return $this->popularityCounter;
   }
 
   public function equals($compareTo)
