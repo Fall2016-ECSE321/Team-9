@@ -77,7 +77,7 @@ tbody {
 			<li><a href="staffTab.php">Staff</a></li>
 			<li class="active"><a href="reportTab.php">Report</a></li>
 		</ul>
-		<br>
+		<br> <br>
 
     <?php
 				require_once 'persistence/PersistenceFoodTruckManagementSystem.php';
@@ -96,7 +96,7 @@ tbody {
     <br>
 		<div class="form-group">
 			<div class="row">
-				<div class="col-sm-6 " style="background-color: #BCB7C1;">
+				<div class="col-sm-5 " style="background-color: #BCB7C1;">
 					<h3 style="text-align: center;">Staff List</h3>
 					<br>
 					<table class="table table-hover">
@@ -122,7 +122,8 @@ tbody {
         </tbody>
 					</table>
 				</div>
-				<div class="col-sm-6" style="background-color: lightcyan;">
+				<div class="col-sm-2"></div>
+				<div class="col-sm-5" style="background-color: lightcyan;">
 					<h3 style="text-align: center;">Popularity List</h3>
 					<br>
 					<table class="table table table-hover">
@@ -134,27 +135,32 @@ tbody {
 							</tr>
 						</thead>
 						<tbody>
-        <?php
-								$rank = array ();
-								$i = 1;
-								foreach ($m->getMenus() as $menu) {
-								$rank[$menu->getName()] = $menu->getPopularityCounter();
-								}
-								arsort ( $rank );
-								foreach ( $rank as $itemName => $itemQuantity ) {
-									echo "<tr> <th scope='row' >" . $i;
-									echo "</th>";
-									echo "<td>" . $itemName . "</td>";
-									echo "<td>" . $itemQuantity . "</td>";
-									echo "</tr>";
-									$i = $i + 1;
-								}
-								?>
-        </tbody>
+          <?php
+										$rank = array ();
+										$i = 1;
+										foreach ( $m->getMenus () as $menu ) {
+											$rank [$menu->getName ()] = $menu->getPopularityCounter ();
+										}
+										arsort ( $rank );
+										foreach ( $rank as $itemName => $itemQuantity ) {
+											echo "<tr> <th scope='row' >" . $i;
+											echo "</th>";
+											echo "<td>" . $itemName . "</td>";
+											echo "<td>" . $itemQuantity . "</td>";
+											echo "</tr>";
+											$i = $i + 1;
+										}
+										?>
+            </tbody>
 					</table>
 				</div>
-
-				<div class="col-sm-6" style="background-color: lightgray;">
+			</div>
+			<br>
+			<br>
+			<br>
+			<br>
+			<div class="row">
+				<div class="col-sm-5" style="background-color: lightgray;">
 					<h3 style="text-align: center;">Supply List</h3>
 					<br>
 					<table class="table ttable table-hover table-inverse">
@@ -167,23 +173,23 @@ tbody {
 							</tr>
 						</thead>
 						<tbody>
-        <?php
-								$i = 1;
-								foreach ( $m->getSupplies () as $supply ) {
-									echo "<tr> <th scope='row' >" . $i;
-									echo "</th>";
-									echo "<td>" . $supply->getName () . "</td>";
-									echo "<td>" . $supply->getQuantity () . "</td>";
-									echo "<td>" . $supply->getUnit () . "</td>";
-									echo "</tr>";
-									$i = $i + 1;
-								}
-								?>
-        </tbody>
+              <?php
+														$i = 1;
+														foreach ( $m->getSupplies () as $supply ) {
+															echo "<tr> <th scope='row' >" . $i;
+															echo "</th>";
+															echo "<td>" . $supply->getName () . "</td>";
+															echo "<td>" . $supply->getQuantity () . "</td>";
+															echo "<td>" . $supply->getUnit () . "</td>";
+															echo "</tr>";
+															$i = $i + 1;
+														}
+														?>
+            </tbody>
 					</table>
 				</div>
-
-				<div class="col-sm-6" style="background-color: lavenderblush;">
+				<div class="col-lg-2"></div>
+				<div class="col-sm-5" style="background-color: lavenderblush;">
 					<h3 style="text-align: center;">Equipment List</h3>
 					<br>
 					<table class="table table table-hover">
