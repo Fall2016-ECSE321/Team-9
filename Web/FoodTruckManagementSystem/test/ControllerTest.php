@@ -1790,8 +1790,8 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 	
 		$name = "jim";
 		$error = "";
-		$startTime = array("03:00","02:00","03:00","04:00","05:00","06:00","07:00");
-		$endTime = array("02:00","03:00","04:00","05:00","06:00","07:00","08:00");
+		$startTime = array("12:12","02:00","03:00","04:00","17:00","06:20","21:42");
+		$endTime = array("12:11","03:00","02:00","05:00","06:00","06:10","08:00");
 	
 		try{
 			$this->c->addTimeStaffMember($name, $startTime, $endTime);
