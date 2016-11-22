@@ -328,14 +328,6 @@ class Controller{
 					$tempStart .= substr($startTime[$i], $j);
 					$tempEnd .= substr($endTime[$i], $j);
 				}
-// 				$tempStart=trim($tempStart);
-// 				$tempEnd=trim($tempEnd);
-// 				$startInt=(int)$tempStart;
-// 				$endInt=(int)$tempEnd;
-// 				if($startInt > $endInt){
-// 					$error .= "End time must be greater than start time! ";
-// 					break;
-// 				}
 				for($k=0; $k<4; $k++){
 					if(substr($tempStart, $k) < substr($tempEnd, $k)){
 						break;
