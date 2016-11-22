@@ -59,7 +59,7 @@
 		$m = $pm->loadDataFromStore ();
 		
 		?>
-    <br> <br>
+    <br>
 
 		<h4 style="color: #778899">
 			<strong>Menu Item</strong>
