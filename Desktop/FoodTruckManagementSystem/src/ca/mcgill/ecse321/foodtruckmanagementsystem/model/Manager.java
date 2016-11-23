@@ -1,13 +1,12 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.24.0-2a9bef6 modeling language!*/
+/*This code was generated using the UMPLE 1.24.0-c37463a modeling language!*/
 
 package ca.mcgill.ecse321.foodtruckmanagementsystem.model;
 import java.util.*;
-import java.sql.Date;
 import java.sql.Time;
 
 // line 4 "../../../../../../../../ump/161011249430/model.ump"
-// line 41 "../../../../../../../../ump/161011249430/model.ump"
+// line 39 "../../../../../../../../ump/161011249430/model.ump"
 public class Manager
 {
 
@@ -24,8 +23,8 @@ public class Manager
   //Manager Associations
   private List<Equipment> equipments;
   private List<Supply> supplies;
-  private List<Order> orders;
   private List<StaffMember> staffmembers;
+  private List<MenuItem> menus;
 
   //------------------------
   // CONSTRUCTOR
@@ -35,8 +34,8 @@ public class Manager
   {
     equipments = new ArrayList<Equipment>();
     supplies = new ArrayList<Supply>();
-    orders = new ArrayList<Order>();
     staffmembers = new ArrayList<StaffMember>();
+    menus = new ArrayList<MenuItem>();
   }
 
   public static Manager getInstance()
@@ -112,36 +111,6 @@ public class Manager
     return index;
   }
 
-  public Order getOrder(int index)
-  {
-    Order aOrder = orders.get(index);
-    return aOrder;
-  }
-
-  public List<Order> getOrders()
-  {
-    List<Order> newOrders = Collections.unmodifiableList(orders);
-    return newOrders;
-  }
-
-  public int numberOfOrders()
-  {
-    int number = orders.size();
-    return number;
-  }
-
-  public boolean hasOrders()
-  {
-    boolean has = orders.size() > 0;
-    return has;
-  }
-
-  public int indexOfOrder(Order aOrder)
-  {
-    int index = orders.indexOf(aOrder);
-    return index;
-  }
-
   public StaffMember getStaffmember(int index)
   {
     StaffMember aStaffmember = staffmembers.get(index);
@@ -169,6 +138,36 @@ public class Manager
   public int indexOfStaffmember(StaffMember aStaffmember)
   {
     int index = staffmembers.indexOf(aStaffmember);
+    return index;
+  }
+
+  public MenuItem getMenus(int index)
+  {
+    MenuItem aMenus = menus.get(index);
+    return aMenus;
+  }
+
+  public List<MenuItem> getMenus()
+  {
+    List<MenuItem> newMenus = Collections.unmodifiableList(menus);
+    return newMenus;
+  }
+
+  public int numberOfMenus()
+  {
+    int number = menus.size();
+    return number;
+  }
+
+  public boolean hasMenus()
+  {
+    boolean has = menus.size() > 0;
+    return has;
+  }
+
+  public int indexOfMenus(MenuItem aMenus)
+  {
+    int index = menus.indexOf(aMenus);
     return index;
   }
 
@@ -286,63 +285,6 @@ public class Manager
     return wasAdded;
   }
 
-  public static int minimumNumberOfOrders()
-  {
-    return 0;
-  }
-
-  public boolean addOrder(Order aOrder)
-  {
-    boolean wasAdded = false;
-    if (orders.contains(aOrder)) { return false; }
-    orders.add(aOrder);
-    wasAdded = true;
-    return wasAdded;
-  }
-
-  public boolean removeOrder(Order aOrder)
-  {
-    boolean wasRemoved = false;
-    if (orders.contains(aOrder))
-    {
-      orders.remove(aOrder);
-      wasRemoved = true;
-    }
-    return wasRemoved;
-  }
-
-  public boolean addOrderAt(Order aOrder, int index)
-  {  
-    boolean wasAdded = false;
-    if(addOrder(aOrder))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfOrders()) { index = numberOfOrders() - 1; }
-      orders.remove(aOrder);
-      orders.add(index, aOrder);
-      wasAdded = true;
-    }
-    return wasAdded;
-  }
-
-  public boolean addOrMoveOrderAt(Order aOrder, int index)
-  {
-    boolean wasAdded = false;
-    if(orders.contains(aOrder))
-    {
-      if(index < 0 ) { index = 0; }
-      if(index > numberOfOrders()) { index = numberOfOrders() - 1; }
-      orders.remove(aOrder);
-      orders.add(index, aOrder);
-      wasAdded = true;
-    } 
-    else 
-    {
-      wasAdded = addOrderAt(aOrder, index);
-    }
-    return wasAdded;
-  }
-
   public static int minimumNumberOfStaffmembers()
   {
     return 0;
@@ -400,12 +342,69 @@ public class Manager
     return wasAdded;
   }
 
+  public static int minimumNumberOfMenus()
+  {
+    return 0;
+  }
+
+  public boolean addMenus(MenuItem aMenus)
+  {
+    boolean wasAdded = false;
+    if (menus.contains(aMenus)) { return false; }
+    menus.add(aMenus);
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public boolean removeMenus(MenuItem aMenus)
+  {
+    boolean wasRemoved = false;
+    if (menus.contains(aMenus))
+    {
+      menus.remove(aMenus);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+
+  public boolean addMenusAt(MenuItem aMenus, int index)
+  {  
+    boolean wasAdded = false;
+    if(addMenus(aMenus))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfMenus()) { index = numberOfMenus() - 1; }
+      menus.remove(aMenus);
+      menus.add(index, aMenus);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveMenusAt(MenuItem aMenus, int index)
+  {
+    boolean wasAdded = false;
+    if(menus.contains(aMenus))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfMenus()) { index = numberOfMenus() - 1; }
+      menus.remove(aMenus);
+      menus.add(index, aMenus);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addMenusAt(aMenus, index);
+    }
+    return wasAdded;
+  }
+
   public void delete()
   {
     equipments.clear();
     supplies.clear();
-    orders.clear();
     staffmembers.clear();
+    menus.clear();
   }
 
 }

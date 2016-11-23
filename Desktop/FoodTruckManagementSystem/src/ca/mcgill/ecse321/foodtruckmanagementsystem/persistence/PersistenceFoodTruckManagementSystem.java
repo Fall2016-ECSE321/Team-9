@@ -4,7 +4,7 @@ import java.util.Iterator;
 
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Equipment;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Manager;
-import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Order;
+import ca.mcgill.ecse321.foodtruckmanagementsystem.model.MenuItem;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.StaffMember;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Supply;
 
@@ -14,7 +14,7 @@ public class PersistenceFoodTruckManagementSystem {
 		PersistenceXStream.setFilename("data.xml");
 		PersistenceXStream.setAlias("equipment", Equipment.class);
 		PersistenceXStream.setAlias("supply", Supply.class);
-		PersistenceXStream.setAlias("order", Order.class);
+		PersistenceXStream.setAlias("menuitem", MenuItem.class);
 		PersistenceXStream.setAlias("staffmember",  StaffMember.class);
 		PersistenceXStream.setAlias("manager", Manager.class);
 	}
@@ -33,9 +33,9 @@ public class PersistenceFoodTruckManagementSystem {
 			Iterator<Equipment> eIt = m2.getEquipments().iterator();
 			while (eIt.hasNext())
 				m.addEquipment(eIt.next());
-			Iterator<Order> oIt = m2.getOrders().iterator();
-			while (oIt.hasNext())
-				m.addOrder(oIt.next());
+			Iterator<MenuItem> miIt = m2.getMenus().iterator();
+			while (miIt.hasNext())
+				m.addMenus(miIt.next());
 			Iterator<StaffMember> sIt = m2.getStaffmembers().iterator();
 			while(sIt.hasNext())
 				m.addStaffmember(sIt.next());

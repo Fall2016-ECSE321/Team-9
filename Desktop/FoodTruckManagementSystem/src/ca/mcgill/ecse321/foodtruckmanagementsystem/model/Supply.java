@@ -1,10 +1,10 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.24.0-2a9bef6 modeling language!*/
+/*This code was generated using the UMPLE 1.24.0-c37463a modeling language!*/
 
 package ca.mcgill.ecse321.foodtruckmanagementsystem.model;
 
-// line 19 "../../../../../../../../ump/161011249430/model.ump"
-// line 58 "../../../../../../../../ump/161011249430/model.ump"
+// line 12 "../../../../../../../../ump/161011249430/model.ump"
+// line 50 "../../../../../../../../ump/161011249430/model.ump"
 public class Supply
 {
 

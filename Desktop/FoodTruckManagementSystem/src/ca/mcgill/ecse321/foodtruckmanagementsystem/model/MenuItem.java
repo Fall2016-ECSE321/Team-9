@@ -3,27 +3,29 @@
 
 package ca.mcgill.ecse321.foodtruckmanagementsystem.model;
 
-// line 19 "../../../../../../../../ump/161011249430/model.ump"
-// line 56 "../../../../../../../../ump/161011249430/model.ump"
-public class Equipment
+// line 32 "../../../../../../../../ump/161011249430/model.ump"
+// line 66 "../../../../../../../../ump/161011249430/model.ump"
+public class MenuItem
 {
 
   //------------------------
   // MEMBER VARIABLES
   //------------------------
 
-  //Equipment Attributes
+  //MenuItem Attributes
   private String name;
-  private int quantity;
+  private double price;
+  private int popularityCounter;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Equipment(String aName, int aQuantity)
+  public MenuItem(String aName, double aPrice, int aPopularityCounter)
   {
     name = aName;
-    quantity = aQuantity;
+    price = aPrice;
+    popularityCounter = aPopularityCounter;
   }
 
   //------------------------
@@ -38,10 +40,18 @@ public class Equipment
     return wasSet;
   }
 
-  public boolean setQuantity(int aQuantity)
+  public boolean setPrice(double aPrice)
   {
     boolean wasSet = false;
-    quantity = aQuantity;
+    price = aPrice;
+    wasSet = true;
+    return wasSet;
+  }
+
+  public boolean setPopularityCounter(int aPopularityCounter)
+  {
+    boolean wasSet = false;
+    popularityCounter = aPopularityCounter;
     wasSet = true;
     return wasSet;
   }
@@ -51,9 +61,14 @@ public class Equipment
     return name;
   }
 
-  public int getQuantity()
+  public double getPrice()
   {
-    return quantity;
+    return price;
+  }
+
+  public int getPopularityCounter()
+  {
+    return popularityCounter;
   }
 
   public void delete()
@@ -65,7 +80,8 @@ public class Equipment
     String outputString = "";
     return super.toString() + "["+
             "name" + ":" + getName()+ "," +
-            "quantity" + ":" + getQuantity()+ "]"
+            "price" + ":" + getPrice()+ "," +
+            "popularityCounter" + ":" + getPopularityCounter()+ "]"
      + outputString;
   }
 }

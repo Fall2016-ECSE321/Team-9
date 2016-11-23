@@ -1,13 +1,12 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.24.0-2a9bef6 modeling language!*/
+/*This code was generated using the UMPLE 1.24.0-c37463a modeling language!*/
 
 package ca.mcgill.ecse321.foodtruckmanagementsystem.model;
-import java.sql.Date;
-import java.util.*;
 import java.sql.Time;
+import java.util.*;
 
-// line 32 "../../../../../../../../ump/161011249430/model.ump"
-// line 69 "../../../../../../../../ump/161011249430/model.ump"
+// line 25 "../../../../../../../../ump/161011249430/model.ump"
+// line 61 "../../../../../../../../ump/161011249430/model.ump"
 public class StaffMember
 {
 
@@ -18,9 +17,8 @@ public class StaffMember
   //StaffMember Attributes
   private String name;
   private String role;
-  private List<Date> schedule;
-  private List<Time> startTime;
-  private List<Time> endTime;
+  private List<Time> startTimes;
+  private List<Time> endTimes;
 
   //------------------------
   // CONSTRUCTOR
@@ -30,9 +28,8 @@ public class StaffMember
   {
     name = aName;
     role = aRole;
-    schedule = new ArrayList<Date>();
-    startTime = new ArrayList<Time>();
-    endTime = new ArrayList<Time>();
+    startTimes = new ArrayList<Time>();
+    endTimes = new ArrayList<Time>();
   }
 
   //------------------------
@@ -55,45 +52,31 @@ public class StaffMember
     return wasSet;
   }
 
-  public boolean addSchedule(Date aSchedule)
-  {
-    boolean wasAdded = false;
-    wasAdded = schedule.add(aSchedule);
-    return wasAdded;
-  }
-
-  public boolean removeSchedule(Date aSchedule)
-  {
-    boolean wasRemoved = false;
-    wasRemoved = schedule.remove(aSchedule);
-    return wasRemoved;
-  }
-
   public boolean addStartTime(Time aStartTime)
   {
     boolean wasAdded = false;
-    wasAdded = startTime.add(aStartTime);
+    wasAdded = startTimes.add(aStartTime);
     return wasAdded;
   }
 
   public boolean removeStartTime(Time aStartTime)
   {
     boolean wasRemoved = false;
-    wasRemoved = startTime.remove(aStartTime);
+    wasRemoved = startTimes.remove(aStartTime);
     return wasRemoved;
   }
 
   public boolean addEndTime(Time aEndTime)
   {
     boolean wasAdded = false;
-    wasAdded = endTime.add(aEndTime);
+    wasAdded = endTimes.add(aEndTime);
     return wasAdded;
   }
 
   public boolean removeEndTime(Time aEndTime)
   {
     boolean wasRemoved = false;
-    wasRemoved = endTime.remove(aEndTime);
+    wasRemoved = endTimes.remove(aEndTime);
     return wasRemoved;
   }
 
@@ -107,93 +90,63 @@ public class StaffMember
     return role;
   }
 
-  public Date getSchedule(int index)
-  {
-    Date aSchedule = schedule.get(index);
-    return aSchedule;
-  }
-
-  public Date[] getSchedule()
-  {
-    Date[] newSchedule = schedule.toArray(new Date[schedule.size()]);
-    return newSchedule;
-  }
-
-  public int numberOfSchedule()
-  {
-    int number = schedule.size();
-    return number;
-  }
-
-  public boolean hasSchedule()
-  {
-    boolean has = schedule.size() > 0;
-    return has;
-  }
-
-  public int indexOfSchedule(Date aSchedule)
-  {
-    int index = schedule.indexOf(aSchedule);
-    return index;
-  }
-
   public Time getStartTime(int index)
   {
-    Time aStartTime = startTime.get(index);
+    Time aStartTime = startTimes.get(index);
     return aStartTime;
   }
 
-  public Time[] getStartTime()
+  public Time[] getStartTimes()
   {
-    Time[] newStartTime = startTime.toArray(new Time[startTime.size()]);
-    return newStartTime;
+    Time[] newStartTimes = startTimes.toArray(new Time[startTimes.size()]);
+    return newStartTimes;
   }
 
-  public int numberOfStartTime()
+  public int numberOfStartTimes()
   {
-    int number = startTime.size();
+    int number = startTimes.size();
     return number;
   }
 
-  public boolean hasStartTime()
+  public boolean hasStartTimes()
   {
-    boolean has = startTime.size() > 0;
+    boolean has = startTimes.size() > 0;
     return has;
   }
 
   public int indexOfStartTime(Time aStartTime)
   {
-    int index = startTime.indexOf(aStartTime);
+    int index = startTimes.indexOf(aStartTime);
     return index;
   }
 
   public Time getEndTime(int index)
   {
-    Time aEndTime = endTime.get(index);
+    Time aEndTime = endTimes.get(index);
     return aEndTime;
   }
 
-  public Time[] getEndTime()
+  public Time[] getEndTimes()
   {
-    Time[] newEndTime = endTime.toArray(new Time[endTime.size()]);
-    return newEndTime;
+    Time[] newEndTimes = endTimes.toArray(new Time[endTimes.size()]);
+    return newEndTimes;
   }
 
-  public int numberOfEndTime()
+  public int numberOfEndTimes()
   {
-    int number = endTime.size();
+    int number = endTimes.size();
     return number;
   }
 
-  public boolean hasEndTime()
+  public boolean hasEndTimes()
   {
-    boolean has = endTime.size() > 0;
+    boolean has = endTimes.size() > 0;
     return has;
   }
 
   public int indexOfEndTime(Time aEndTime)
   {
-    int index = endTime.indexOf(aEndTime);
+    int index = endTimes.indexOf(aEndTime);
     return index;
   }
 
