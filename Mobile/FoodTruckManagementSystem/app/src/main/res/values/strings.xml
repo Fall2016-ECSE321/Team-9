@@ -14,6 +14,7 @@
     <string name="staffschedule_header">Add Staff Member</string>
     <string name="addstaff_header">Add Staff Member</string>
     <string name="addstaffmembername_hint">Staff Member Name</string>
+    <string name="addmenuitem_header"><b>Add Menu Item</b></string>
     <string-array name="roles">
         <item>Cashier</item>
         <item>Chef</item>

@@ -286,15 +286,6 @@ public class MainActivity extends AppCompatActivity {
         refreshData();
     }
 
-    public void showStartTimePickerDialog(View v){
-        TextView tf = (TextView) v;
-        Bundle args = getStartTimeFromLabel(tf.getText());
-        args.putInt("id", v.getId());
-        TimePickerFragment newFragment = new TimePickerFragment();
-        newFragment.setArguments(args);
-        newFragment.show(getSupportFragmentManager(), "timePicker");
-    }
-
     public void addStaffMember(View v) throws IOException {
         androidLocationSet();
 
@@ -372,6 +363,65 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    public void addMenuItem(View v) throws IOException{
+        androidLocationSet();
+        TextView mn = (TextView) findViewById(R.id.addmenuitem_name);
+        TextView mp = (TextView) findViewById(R.id.addmenuitem_price);
+        ItemController ic = new ItemController();
+
+        TextView error = (TextView) findViewById(R.id.menuerrorhandler);
+        error.setText("");
+
+        if(mp.getText().toString().equals("")){
+            if(mn.getText().toString().equals("")){
+                error.setText("Menu item name cannot be empty! Menu item price cannot be empty!");
+            }
+            else {
+                error.setText("Menu item price cannot be empty!");
+            }
+        }
+
+        refreshData();
+    }
+
+    public void removeMenuItem(View v) throws IOException{
+        androidLocationSet();
+
+        TextView mn = (TextView) findViewById(R.id.addmenuitem_name);
+        ItemController ic = new ItemController();
+        TextView error = (TextView) findViewById(R.id.menuerrorhandler);
+        error.setText("");
+
+        if(mn.getText().toString().equals("")){
+            error.setText("Menu item name cannot be empty!");
+        }
+
+    }
+
+    public void addOrder(View v) throws IOException{
+        androidLocationSet();
+        ItemController ic = new ItemController();
+
+        TextView error = (TextView) findViewById(R.id.menuerrorhandler);
+        error.setText("");
+
+
+        Spinner nameSpinner = (Spinner) findViewById(R.id.addorder_spinner);
+        String on = "";
+        if(nameSpinner.getSelectedItem() != null){
+            on = nameSpinner.getSelectedItem().toString();
+        }
+        TextView oq = (TextView) findViewById(R.id.addorder_quantity);
+
+        if(oq.getText().toString().equals("")){
+            if(on.equals("")){
+                error.setText("Order name cannot be empty! Order quantity cannot be empty!");
+            } else{
+                error.setText("Order quantity cannot be empty!");
+            }
+        }
+    }
+
     private Bundle getStartTimeFromLabel(CharSequence text){
         String comps[] = text.toString().split(":");
         int hour = 12;
@@ -386,6 +436,15 @@ public class MainActivity extends AppCompatActivity {
         Time newTime = new Time(hour + minute);
         startTimes.add(newTime);
         return rtnStartTime;
+    }
+
+    public void showStartTimePickerDialog(View v){
+        TextView tf = (TextView) v;
+        Bundle args = getStartTimeFromLabel(tf.getText());
+        args.putInt("id", v.getId());
+        TimePickerFragment newFragment = new TimePickerFragment();
+        newFragment.setArguments(args);
+        newFragment.show(getSupportFragmentManager(), "timePicker");
     }
 
     public void showEndTimePickerDialog(View v){
@@ -444,20 +503,4 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-
-    public void refreshSpinnerData(Spinner nameSpinner, HashMap<Integer, StaffMember> staffmembers, ArrayAdapter<String> nameAdapter, Manager m){
-        nameSpinner = (Spinner) findViewById(R.id.staffmember_spinner);
-        nameAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
-        nameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.staffmembers = new HashMap<Integer, StaffMember>();
-
-        int i = 0;
-        for (Iterator<StaffMember> staffMembers = m.getStaffmembers().iterator(); staffMembers.hasNext(); i++){
-            StaffMember sM = staffMembers.next();
-            nameAdapter.add(sM.getName());
-            this.staffmembers.put(i, sM);
-        }
-        nameSpinner.setAdapter(nameAdapter);
-
-    }
 }
