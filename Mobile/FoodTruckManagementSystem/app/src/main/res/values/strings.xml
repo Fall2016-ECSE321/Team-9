@@ -11,4 +11,13 @@
     <string name="addsupplyunit_hint">Unit</string>
     <string name="removesupply_button">Remove Supply</string>
     <string name="addsupply_button">Add Supply</string>
+    <string name="staffschedule_header">Add Staff Member</string>
+    <string name="addstaff_header">Add Staff Member</string>
+    <string name="addstaffmembername_hint">Staff Member Name</string>
+    <string-array name="roles">
+        <item>Cashier</item>
+        <item>Chef</item>
+        <item>Inventory Clerk</item>
+        <item>Manager</item>
+    </string-array>
 </resources>

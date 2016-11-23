@@ -13,6 +13,13 @@
 
 
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#E1338A"
+        android:id="@+id/errorhandler"
+        />
+
     <View
         android:id="@+id/redBarOne"
         android:layout_marginTop="20dp"
