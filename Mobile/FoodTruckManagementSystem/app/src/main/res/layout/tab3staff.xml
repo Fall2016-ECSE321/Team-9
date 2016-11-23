@@ -20,8 +20,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#E1338A"
-        android:id="@+id/stafferrorhandler"
-        />
+        android:id="@+id/stafferrorhandler"/>
 
 
     <!-- Add New Staff Section -->
@@ -65,7 +64,7 @@
         android:layout_marginTop="15dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/staffschedule_header"
+        android:text="Register Staff Schedule"
         android:textSize="18dp"
         android:gravity="center"/>
     <TextView

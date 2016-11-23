@@ -13,4 +13,126 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#E1338A"
+        android:id="@+id/menuerrorhandler"/>
+
+<!-- Add Menu Item Section -->
+    <TextView
+        android:id="@+id/addmenuitem_header"
+        android:text="@string/addmenuitem_header"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:layout_below="@id/menuerrorhandler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:id="@+id/menuitemheader_separator"
+        android:layout_below="@+id/addmenuitem_header"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#f44242"/>
+
+    <EditText
+        android:id="@+id/addmenuitem_name"
+        android:hint="Enter Item Name"
+        android:layout_below="@+id/menuitemheader_separator"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/addmenuitem_price"
+        android:hint="Enter Price"
+        android:layout_below="@+id/menuitemheader_separator"
+        android:layout_toRightOf="@+id/addmenuitem_name"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/addmenuitem_button"
+        android:onClick="addMenuItem"
+        android:text="Add Menu Item"
+        android:layout_below="@+id/addmenuitem_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/removemenuitem_button"
+        android:onClick="removeMenuItem"
+        android:text="Remove Menu Item"
+        android:layout_below="@+id/addmenuitem_price"
+        android:layout_toRightOf="@+id/addmenuitem_button"
+        android:layout_marginLeft="22dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:id="@+id/menuorder_separator"
+        android:layout_below="@+id/addmenuitem_button"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:background="#f44242"/>
+
+
+<!-- Add Order Section -->
+    <TextView
+        android:id="@+id/addorder_header"
+        android:text="Add Order"
+        android:textSize="20dp"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/menuorder_separator"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <View
+        android:id="@+id/orderheader_separator"
+        android:layout_below="@+id/addorder_header"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#f44242"/>
+
+    <TextView
+        android:id="@+id/addordername_hint"
+        android:text="Select Item to Order"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/orderheader_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <Spinner
+        android:id="@+id/addorder_spinner"
+        android:layout_below="@+id/orderheader_separator"
+        android:layout_toRightOf="@id/addordername_hint"
+        android:layout_marginTop="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/addorder_quantity"
+        android:hint="Enter Quantity"
+        android:textSize="14dp"
+        android:layout_below="@+id/orderheader_separator"
+        android:layout_toRightOf="@+id/addorder_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <Button
+        android:id="@+id/addorder_button"
+        android:text="Add Order"
+        android:onClick="addOrder"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/addorder_spinner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
 </RelativeLayout>

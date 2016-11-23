@@ -20,8 +20,18 @@
         android:id="@+id/errorhandler"
         />
 
+    <TextView
+        android:id="@+id/addequipment_header"
+        android:text="Add Equipment"
+        android:textSize="18dp"
+        android:gravity="center"
+        android:layout_below="@+id/errorhandler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <View
         android:id="@+id/redBarOne"
+        android:layout_below="@+id/addequipment_header"
         android:layout_marginTop="20dp"
         android:layout_height="2dp"
         android:background="#f44242"
@@ -67,6 +77,8 @@
             android:background="#425ff4"/>
     </LinearLayout>
 
+
+
     <View
         android:id="@+id/redBarTwo"
         android:layout_below="@+id/equipmentTextFields"
@@ -98,11 +110,21 @@
             android:layout_gravity="right"
             android:onClick="removeEquipment" />
     </LinearLayout>
-    
+
+    <TextView
+        android:id="@+id/addsupply_header"
+        android:text="Add Supply"
+        android:textSize="18dp"
+        android:gravity="center"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/equipmentButtons"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
     <View
         android:id="@+id/redBarThree"
-        android:layout_marginTop="40dp"
-        android:layout_below="@+id/equipmentButtons"
+        android:layout_marginTop="20dp"
+        android:layout_below="@+id/addsupply_header"
         android:layout_width="325dp"
         android:layout_height="2dp"
         android:background="#f44242"/>
