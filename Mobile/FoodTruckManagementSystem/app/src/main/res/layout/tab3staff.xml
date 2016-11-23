@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="ca.mcgill.ecse321.myapplication.MainActivity$PlaceholderFragment">
+    tools:context="ca.mcgill.ecse321.myapplication.MainActivity">
 
     <TextView
         android:id="@+id/section_label"
@@ -14,5 +14,336 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#E1338A"
+        android:id="@+id/stafferrorhandler"
+        />
+
+
+    <!-- Add New Staff Section -->
+    <TextView
+        android:layout_below="@+id/stafferrorhandler"
+        android:id="@+id/addstaff_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/addstaff_header"
+        android:textSize="18dp"
+        android:gravity="center"/>
+    <EditText
+        android:layout_below="@+id/addstaff_header"
+        android:layout_width="195dp"
+        android:layout_height="50dp"
+        android:id="@+id/staffmember_name"
+        android:layout_gravity="left"
+        android:textStyle="bold"
+        android:hint="@string/addstaffmembername_hint"/>
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/staffmember_name"
+        android:id="@+id/addstaff_button"
+        android:text="Add Staff"
+        android:onClick="addStaffMember"/>
+    <Spinner
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/addstaff_header"
+        android:layout_marginTop="20dp"
+        android:layout_toRightOf="@+id/staffmember_name"
+        android:id="@+id/role_spinner"/>
+
+
+    <!--Register Schedule Member Choice -->
+    <TextView
+        android:id="@+id/staffschedule_header"
+        android:layout_below="@+id/addstaff_button"
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/staffschedule_header"
+        android:textSize="18dp"
+        android:gravity="center"/>
+    <TextView
+        android:id="@+id/selectstaff_name"
+        android:layout_below="@+id/staffschedule_header"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select Staff Name"/>
+    <Spinner
+        android:id="@+id/staffmember_spinner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/staffschedule_header"
+        android:layout_toRightOf="@+id/selectstaff_name"/>
+
+    <!-- Monday -->
+    <TextView
+        android:id="@+id/monday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/selectstaff_name"
+        android:layout_marginTop="20dp"
+        android:text="Monday"/>
+    <TextView
+        android:id="@+id/mondaystarttime_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="30dp"
+        android:layout_below="@+id/selectstaff_name"
+        android:hint="Start Time"
+        android:layout_toRightOf="@+id/monday"
+        android:onClick="showStartTimePickerDialog" />
+    <TextView
+        android:id="@+id/mondayendtime_hint"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:layout_below="@+id/selectstaff_name"
+        android:hint="End Time"
+        android:layout_toRightOf="@+id/mondaystarttime_hint"
+        android:onClick = "showEndTimePickerDialog"/>
+    <View
+        android:layout_below="@+id/mondayendtime_hint"
+        android:id="@+id/mondaytuesday_separator"
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#f44242"/>
+
+    <!-- Tuesday -->
+    <TextView
+        android:text="Tuesday"
+        android:id="@+id/tuesday"
+        android:layout_below="@+id/mondaytuesday_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" />
+    <TextView
+        android:id="@+id/tuesdaystarttime_hint"
+        android:layout_below="@+id/mondaytuesday_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="30dp"
+        android:hint="Start Time"
+        android:layout_toRightOf="@+id/monday"
+        android:onClick="showStartTimePickerDialog" />
+    <TextView
+        android:id="@+id/tuesdayendtime_hint"
+        android:layout_below="@+id/mondaytuesday_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:hint="End Time"
+        android:layout_toRightOf="@+id/tuesdaystarttime_hint"
+        android:onClick="showEndTimePickerDialog"/>
+    <View
+        android:layout_below="@+id/tuesdayendtime_hint"
+        android:id="@+id/tuesdaywednesday_separator"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#f44242"
+        android:layout_marginTop="10dp"/>
+
+    <!-- Wednesday -->
+    <TextView
+        android:text="Wednesday"
+        android:id="@+id/wednesday"
+
+        android:layout_below="@+id/tuesdaywednesday_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" />
+    <TextView
+        android:id="@+id/wednesdaystarttime_hint"
+        android:layout_below="@+id/tuesdaywednesday_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="30dp"
+        android:hint="Start Time"
+        android:layout_toRightOf="@+id/monday"
+        android:onClick="showStartTimePickerDialog"/>
+    <TextView
+        android:id="@+id/wednesdayendtime_hint"
+        android:layout_below="@+id/tuesdaywednesday_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="15dp"
+        android:hint="End Time"
+        android:layout_toRightOf="@+id/wednesdaystarttime_hint"
+        android:onClick="showEndTimePickerDialog"/>
+    <View
+        android:layout_below="@+id/wednesdayendtime_hint"
+        android:id="@+id/wednesdaythursday_separator"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#f44242"
+        android:layout_marginTop="10dp"/>
+
+    <!-- Thursday -->
+    <TextView
+        android:text="Thursday"
+        android:id="@+id/thursday"
+        android:layout_below="@+id/wednesdaythursday_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" />
+    <TextView
+        android:id="@+id/thursdaystarttime_hint"
+        android:layout_below="@+id/wednesdaythursday_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="30dp"
+        android:hint="Start Time"
+        android:layout_toRightOf="@+id/monday"
+        android:onClick="showStartTimePickerDialog"/>
+    <TextView
+        android:id="@+id/thursdayendtime_hint"
+        android:layout_below="@+id/wednesdaythursday_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:hint="End Time"
+        android:layout_toRightOf="@+id/thursdaystarttime_hint"
+        android:onClick="showEndTimePickerDialog"/>
+    <View
+        android:layout_below="@+id/thursdayendtime_hint"
+        android:id="@+id/thursdayfriday_separator"
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="#f44242"
+        android:layout_marginTop="10dp"/>
+
+    <!-- Friday -->
+    <TextView
+        android:text="Friday"
+        android:id="@+id/friday"
+        android:layout_below="@+id/thursdayfriday_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp" />
+    <TextView
+        android:id="@+id/fridaystarttime_hint"
+        android:layout_below="@+id/thursdayfriday_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="30dp"
+        android:hint="Start Time"
+        android:layout_toRightOf="@+id/monday"
+        android:onClick="showStartTimePickerDialog"/>
+    <TextView
+        android:id="@+id/fridayendtime_hint"
+        android:layout_below="@+id/thursdayfriday_separator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
+        android:layout_marginLeft="20dp"
+        android:hint="End Time"
+        android:layout_toRightOf="@+id/mondaystarttime_hint"
+        android:onClick="showEndTimePickerDialog"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_below = "@+id/fridayendtime_hint"
+        android:layout_marginTop="10dp"
+        android:background="#f44242"
+        android:id="@+id/fridaysaturday_separator"/>
+
+
+    <!--
+        <TextView
+            android:text="Saturday"
+            android:id="@+id/saturday"
+            android:layout_below="@+id/fridaysaturday_separator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" />
+        <TextView
+            android:id="@+id/saturdaystarttime_hint"
+            android:layout_below="@+id/fridaysaturday_separator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="30dp"
+            android:hint="Start Time"
+            android:layout_toRightOf="@+id/monday"
+            android:onClick="showStartTimePickerDialog"/>
+        <TextView
+            android:id="@+id/saturdayendtime_hint"
+            android:layout_below="@+id/fridaysaturday_separator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp"
+            android:hint="End Time"
+            android:layout_toRightOf="@+id/mondaystarttime_hint"
+            android:onClick="showEndTimePickerDialog"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below = "@+id/saturdayendtime_hint"
+            android:layout_marginTop="10dp"
+            android:background="#f44242"
+            android:id="@+id/saturdaysunday_separator"/>
+
+
+        <TextView
+            android:text="Sunday"
+            android:id="@+id/sunday"
+            android:layout_below="@+id/saturdaysunday_separator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp" />
+        <TextView
+            android:id="@+id/sundaystarttime_hint"
+            android:layout_below="@+id/saturdaysunday_separator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="30dp"
+            android:hint="Start Time"
+            android:layout_toRightOf="@+id/monday"
+            android:onClick="showStartTimePickerDialog"/>
+        <TextView
+            android:id="@+id/sundayendtime_hint"
+            android:layout_below="@+id/saturdaysunday_separator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:layout_marginLeft="20dp"
+            android:hint="End Time"
+            android:layout_toRightOf="@+id/mondaystarttime_hint"
+            android:onClick="showEndTimePickerDialog"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_below = "@+id/sundayendtime_hint"
+            android:layout_marginTop="10dp"
+            android:background="#f44242"
+            android:id="@+id/sundaybutton_separator"/>
+    -->
+
+    <!-- Add Schedule Button -->
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/fridaysaturday_separator"
+        android:layout_centerHorizontal="true"
+        android:text="Register Schedule"
+        android:onClick="addTimeStaffMember"/>
 
 </RelativeLayout>

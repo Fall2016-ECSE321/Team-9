@@ -17,7 +17,22 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import android.widget.ArrayAdapter;
+import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.io.IOException;
+import java.sql.Time;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+
+import ca.mcgill.ecse321.foodtruckmanagementsystem.controller.InvalidInputException;
+import ca.mcgill.ecse321.foodtruckmanagementsystem.controller.ItemController;
+import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Manager;
+import ca.mcgill.ecse321.foodtruckmanagementsystem.model.StaffMember;
+import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceXStream;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -36,6 +51,12 @@ public class MainActivity extends AppCompatActivity {
      */
     private ViewPager mViewPager;
 
+    HashMap<Integer, StaffMember> staffmembers;
+    Bundle rtnStartTime = new Bundle();
+    Bundle rtnEndTime = new Bundle();
+    ArrayList<TextView> startTimeTextViews = new ArrayList<>();
+    ArrayList<TextView> endTimeTextViews = new ArrayList<>();
+    ArrayList<Time> startTimes = new ArrayList<>();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -146,5 +167,297 @@ public class MainActivity extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    public void setTime(int id, int h, int m) {
+        TextView tv = (TextView) findViewById(id);
+        tv.setText(String.format("%02d:%02d", h, m));
+    }
+
+    public void addEquipment(View v) throws IOException {
+        androidLocationSet();
+
+        TextView ev = (TextView) findViewById(R.id.addequipment_name);
+        EditText en = (EditText) findViewById(R.id.addequipment_quantity);
+        ItemController pc = new ItemController();
+        TextView error = (TextView) findViewById(R.id.errorhandler);
+        error.setText("");
+        if(en.getText().toString().equals("")){
+            if(ev.getText().toString().equals(""))
+                error.setText("Equipment name cannot be empty! Equipment quantity cannot be empty!");
+            else{
+                error.setText("Equipment quantity cannot be empty!");
+            }
+        }
+        else{
+            try {
+                pc.createEquipment(ev.getText().toString(),Integer.parseInt(en.getText().toString()));
+            }  catch (InvalidInputException e) {
+                error.setText(e.getMessage());
+            }
+        }
+        refreshData();
+    }
+
+    public void removeEquipment(View v) throws IOException {
+        androidLocationSet();
+
+        TextView en = (TextView) findViewById(R.id.addequipment_name);
+        EditText eq = (EditText) findViewById(R.id.addequipment_quantity);
+        ItemController pc = new ItemController();
+        TextView error = (TextView) findViewById(R.id.errorhandler);
+        error.setText("");
+
+        if(eq.getText().toString().equals("")){
+            if(en.getText().toString().equals(""))
+                error.setText("Equipment name cannot be empty! Equipment quantity cannot be empty!");
+            else{
+                error.setText("Equipment quantity cannot be empty!");
+            }
+        }else{
+            try {
+                pc.removeEquipment(en.getText().toString(), Integer.parseInt(eq.getText().toString()));
+            } catch (InvalidInputException e) {
+                error.setText(e.getMessage());
+            }
+        }
+
+        refreshData();
+    }
+
+    public void addSupply(View v) throws IOException{
+        androidLocationSet();
+
+        TextView sn = (TextView) findViewById(R.id.addsupply_name);
+        TextView sq = (TextView) findViewById(R.id.addsupply_quantity);
+        TextView su = (TextView) findViewById(R.id.addsupply_unit);
+        ItemController pc = new ItemController();
+
+        TextView error = (TextView) findViewById(R.id.errorhandler);
+        error.setText("");
+        if(sq.getText().toString().equals("")){
+            if(sn.getText().toString().equals("") && su.getText().toString().equals(""))
+                error.setText("Supply name cannot be empty! Supply quantity cannot be empty! Supply unit cannot be empty!");
+            else if(sn.getText().toString().equals("")) {
+                error.setText("Supply name cannot be empty! Supply quantity cannot be empty!");
+            }
+            else if(su.getText().toString().equals("")){
+                error.setText("Supply quantity cannot be empty! Supply unit cannot be empty!");
+            }
+            else{
+                error.setText("Supply quantity cannot be empty!");
+            }
+        }
+        else{
+            try{
+                pc.createSupply(sn.getText().toString(), Double.parseDouble(sq.getText().toString()), su.getText().toString());
+            } catch(InvalidInputException e){
+                error.setText(e.getMessage());
+            }
+        }
+        refreshData();
+    }
+
+    public void removeSupply(View v) throws IOException{
+        androidLocationSet();
+
+        TextView sn = (TextView) findViewById(R.id.addsupply_name);
+        TextView sq = (TextView) findViewById(R.id.addsupply_quantity);
+        ItemController pc = new ItemController();
+
+        TextView error = (TextView) findViewById(R.id.errorhandler);
+        error.setText("");
+        if(sq.getText().toString().equals("")){
+            if(sn.getText().toString().equals("")) {
+                error.setText("Supply name cannot be empty! Supply quantity cannot be empty!");
+            }
+            else{
+                error.setText("Supply name cannot be empty!");
+            }
+        }
+        else{
+            try {
+                pc.removeSupply(sn.getText().toString(), Double.parseDouble(sq.getText().toString()));
+            } catch(InvalidInputException e){
+                error.setText(e.getMessage());
+            }
+        }
+
+        refreshData();
+    }
+
+    public void showStartTimePickerDialog(View v){
+        TextView tf = (TextView) v;
+        Bundle args = getStartTimeFromLabel(tf.getText());
+        args.putInt("id", v.getId());
+        TimePickerFragment newFragment = new TimePickerFragment();
+        newFragment.setArguments(args);
+        newFragment.show(getSupportFragmentManager(), "timePicker");
+    }
+
+    public void addStaffMember(View v) throws IOException {
+        androidLocationSet();
+
+        TextView sn = (TextView) findViewById(R.id.staffmember_name);
+        Spinner spinner = (Spinner) findViewById(R.id.role_spinner);
+        String sr = "";
+        if(spinner.getSelectedItem() != null){
+            sr = spinner.getSelectedItem().toString();
+        }
+
+        ItemController pc = new ItemController();
+        TextView error = (TextView) findViewById(R.id.stafferrorhandler);
+        error.setText("");
+
+        if(sr.equals("") || sr.equals(null)){
+            if(sn.getText().toString().equals("") || sn.getText().toString().equals(null)){
+                error.setText("Staff member name cannot be empty! Staff member role cannot be empty!");
+            }
+            else{
+                System.out.println(sn.getText());
+                error.setText("Staff member role cannot be empty!");
+            }
+        }
+        else{
+            try{
+                pc.createStaffMember(sn.getText().toString(), sr);
+            } catch(InvalidInputException e){
+                error.setText(e.getMessage());
+            }
+        }
+    }
+
+    public void addTimeStaffMember(View v) throws IOException{
+        androidLocationSet();
+        setUpStartTimes();
+        setUpEndTimes();
+        ItemController ic = new ItemController();
+
+        TextView error = (TextView) findViewById(R.id.stafferrorhandler);
+        error.setText("");
+
+        Spinner spinner = (Spinner) findViewById(R.id.staffmember_spinner);
+        String sn = "";
+        if(spinner.getSelectedItem() != null){
+            sn = spinner.getSelectedItem().toString();
+        }
+
+        for(int i = 0; i < startTimeTextViews.size(); i++){
+            String startTimeString = startTimeTextViews.get(i).getText().toString();
+            String endTimeString = endTimeTextViews.get(i).getText().toString();
+            System.out.println(startTimeString);
+            if(sn.equals("") || sn.equals(null)){
+                error.setText("Staff name cannot be empty!");
+                if(startTimeString.equals(endTimeString) && !(startTimeString.equals(""))){
+                    error.setText("Start time and end time cannot be equal!");
+                }
+            }
+            else{
+                String comps[] = startTimeString.split(":");
+                String comps2[] = endTimeString.split(":");
+                Time startTime = new Time(0000);
+                Time endTime = new Time(0000);
+                if(comps.length == 2 && comps2.length == 2){
+                    startTime.setHours(Integer.parseInt(comps[0]));
+                    startTime.setMinutes(Integer.parseInt(comps[1]));
+                    endTime.setHours(Integer.parseInt(comps2[0]));
+                    endTime.setHours(Integer.parseInt(comps2[1]));
+                    try{
+                        ic.addTimeStaffMember(sn, startTime, endTime);
+                    } catch(InvalidInputException e){
+                        error.setText(e.getMessage());
+                    }
+                }
+            }
+        }
+    }
+
+    private Bundle getStartTimeFromLabel(CharSequence text){
+        String comps[] = text.toString().split(":");
+        int hour = 12;
+        int minute = 0;
+        if (comps.length == 2){
+            hour = Integer.parseInt(comps[0]);
+            minute = Integer.parseInt(comps[0]);
+        }
+        rtnStartTime.putInt("hour", hour);
+        rtnStartTime.putInt("minute", minute);
+
+        Time newTime = new Time(hour + minute);
+        startTimes.add(newTime);
+        return rtnStartTime;
+    }
+
+    public void showEndTimePickerDialog(View v){
+        TextView tf = (TextView) v;
+        Bundle args = getEndTimeFromLabel(tf.getText());
+        args.putInt("id", v.getId());
+        TimePickerFragment newFragment = new TimePickerFragment();
+        newFragment.setArguments(args);
+        newFragment.show(getSupportFragmentManager(), "timePicker");
+    }
+
+    private Bundle getEndTimeFromLabel(CharSequence text){
+        String comps[] = text.toString().split(":");
+        int hour = 12;
+        int minute = 0;
+        if (comps.length == 2){
+            hour = Integer.parseInt(comps[0]);
+            minute = Integer.parseInt(comps[0]);
+        }
+        rtnEndTime.putInt("hour", hour);
+        rtnEndTime.putInt("minute", minute);
+        return rtnEndTime;
+    }
+
+    public void androidLocationSet(){
+        PersistenceXStream.setFilename(getFilesDir().getAbsolutePath() + "main.xml");
+    }
+
+    public void setUpStartTimes(){
+        startTimeTextViews.add((TextView) findViewById(R.id.mondaystarttime_hint));
+        startTimeTextViews.add((TextView) findViewById(R.id.tuesdaystarttime_hint));
+        startTimeTextViews.add((TextView) findViewById(R.id.wednesdaystarttime_hint));
+        startTimeTextViews.add((TextView) findViewById(R.id.thursdaystarttime_hint));
+        startTimeTextViews.add((TextView) findViewById(R.id.fridaystarttime_hint));
+    }
+
+    public void setUpEndTimes(){
+        endTimeTextViews.add((TextView) findViewById(R.id.mondayendtime_hint));
+        endTimeTextViews.add((TextView) findViewById(R.id.tuesdayendtime_hint));
+        endTimeTextViews.add((TextView) findViewById(R.id.wednesdayendtime_hint));
+        endTimeTextViews.add((TextView) findViewById(R.id.thursdayendtime_hint));
+        endTimeTextViews.add((TextView) findViewById(R.id.fridayendtime_hint));
+    }
+
+    private void refreshData() {
+        TextView en = (TextView) findViewById(R.id.addequipment_name);
+        TextView eq = (TextView) findViewById(R.id.addequipment_quantity);
+        en.setText("");
+        eq.setText("");
+        TextView sn =(TextView) findViewById(R.id.addsupply_name);
+        TextView sq = (TextView) findViewById(R.id.addsupply_quantity);
+        TextView su = (TextView) findViewById(R.id.addsupply_unit);
+        sn.setText("");
+        sq.setText("");
+        su.setText("");
+
+    }
+
+
+    public void refreshSpinnerData(Spinner nameSpinner, HashMap<Integer, StaffMember> staffmembers, ArrayAdapter<String> nameAdapter, Manager m){
+        nameSpinner = (Spinner) findViewById(R.id.staffmember_spinner);
+        nameAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item);
+        nameAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        this.staffmembers = new HashMap<Integer, StaffMember>();
+
+        int i = 0;
+        for (Iterator<StaffMember> staffMembers = m.getStaffmembers().iterator(); staffMembers.hasNext(); i++){
+            StaffMember sM = staffMembers.next();
+            nameAdapter.add(sM.getName());
+            this.staffmembers.put(i, sM);
+        }
+        nameSpinner.setAdapter(nameAdapter);
+
     }
 }
