@@ -40,7 +40,7 @@ public class TestPersistence {
 										+File.separator+"data.xml");
 		PersistenceXStream.setAlias("equipment", Equipment.class);
 		PersistenceXStream.setAlias("manager", Manager.class);
-		PersistenceXStream.setAlias("menu item", MenuItem.class);
+		PersistenceXStream.setAlias("menuitem", MenuItem.class);
 		PersistenceXStream.setAlias("staffmember", StaffMember.class);
 		PersistenceXStream.setAlias("supply", Supply.class);
 		if(!PersistenceXStream.saveToXMLwithXStream(manager))

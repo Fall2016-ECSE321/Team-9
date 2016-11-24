@@ -28,7 +28,7 @@ public class TestEventRegistrationController {
 				+ "persistence" + File.separator + File.separator + "data.xml");
 		PersistenceXStream.setAlias("equipment", Equipment.class);
 		PersistenceXStream.setAlias("manager", Manager.class);
-		PersistenceXStream.setAlias("menu item", MenuItem.class);
+		PersistenceXStream.setAlias("menuitem", MenuItem.class);
 		PersistenceXStream.setAlias("staffmember", StaffMember.class);
 		PersistenceXStream.setAlias("supply", Supply.class);
 	}
@@ -1583,14 +1583,23 @@ public class TestEventRegistrationController {
 		
 		try{
 			ic.createStaffMember(name, role);
-			ic.removeStaffMember(name);
 		}catch(InvalidInputException e){
 			fail();
 		}
 		
-		checkResultRemovedStaffMember(name, role, m);
+		assertEquals(1, m.getStaffmembers().size());
+		assertEquals(name, m.getStaffmember(0).getName());
+		assertEquals(role, m.getStaffmember(0).getRole());
+		
+		try {
+			ic.removeStaffMember(name);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		
+		assertEquals(0, m.getStaffmembers().size());
 		Manager m2 = (Manager) PersistenceXStream.loadFromXMLwithXStream();
-		checkResultRemovedStaffMember(name, role, m2);
+		assertEquals(0, m2.getStaffmembers().size());
 	}
 	
 	@Test
@@ -1941,6 +1950,528 @@ public class TestEventRegistrationController {
 			error1 = e.getMessage();
 		}
 		
-		assertEquals("End time cannot be before start time!", error1);
+		assertEquals("End time must be greater than start time!", error1);
+	}
+	
+	@Test
+	public void testCreateMenuItem() {
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getMenus().size());
+
+		String name = "cheese burger";
+		double price = 3.0;
+
+		ItemController ic = new ItemController();
+		try {
+			ic.createMenuItem(name, price);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+
+		checkResultMenuItem(name, price, m);
+
+		Manager m2 = (Manager) PersistenceXStream.loadFromXMLwithXStream();
+
+		// check file contents
+		checkResultMenuItem(name, price, m2);
+	}
+	
+	@Test
+	public void testCreateMenuItemNull() {
+		Manager m = Manager.getInstance();
+		String error = "";
+		assertEquals(0, m.getMenus().size());
+		
+		String name = null;
+		double price = 3.0;
+
+		ItemController ic = new ItemController();
+		try {
+			ic.createMenuItem(name, price);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Menu Item name cannot be empty!");
+	}
+	
+	@Test
+	public void testCreateMenuItemEmpty() {
+		Manager m = Manager.getInstance();
+		String error = "";
+		assertEquals(0, m.getMenus().size());
+		
+		String name = "";
+		double price = 3.0;
+
+		ItemController ic = new ItemController();
+		try {
+			ic.createMenuItem(name, price);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Menu Item name cannot be empty!");
+	}
+	
+	@Test
+	public void testCreateMenuItemSpaces() {
+		Manager m = Manager.getInstance();
+		String error = "";
+		assertEquals(0, m.getMenus().size());
+		
+		String name = "   ";
+		double price = 3.0;
+
+		ItemController ic = new ItemController();
+		try {
+			ic.createMenuItem(name, price);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Menu Item name cannot be empty!");
+	}
+	
+	@Test
+	public void testCreateMenuItemPriceNegative() {
+		Manager m = Manager.getInstance();
+		String error = "";
+		assertEquals(0, m.getMenus().size());
+		
+		String name = "burger";
+		double price = -3.0;
+
+		ItemController ic = new ItemController();
+		try {
+			ic.createMenuItem(name, price);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Menu Item price cannot be negative!");
+	}
+	
+//	@Test
+//	public void testCreateMenuItemPriceZeroInt() {
+//		Manager m = Manager.getInstance();
+//		String error = "";
+//		assertEquals(0, m.getEquipments().size());
+//		
+//		String name = "burger";
+//		int tmp = 3;
+//		double price = tmp;
+//
+//		ItemController ic = new ItemController();
+//		try {
+//			ic.createMenuItem(name, price);
+//		} catch (InvalidInputException e) {
+//			error = e.getMessage();
+//		}
+//		
+//		assertEquals(error, "");
+//	}
+	
+//	@Test
+//	public void testCreateMenuItemPriceZeroFloat() {
+//	}
+	
+//	@Test
+//	public void testCreateMenuItemPriceNull() {
+//		
+//		
+//	}
+	
+	@Test
+	public void testCreateMenuItemPriceZero() {
+		Manager m = Manager.getInstance();
+		String error = "";
+		assertEquals(0, m.getMenus().size());
+		
+		String name = "burger";
+		double price = 0;
+
+		ItemController ic = new ItemController();
+		try {
+			ic.createMenuItem(name, price);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Menu Item price cannot be empty or zero!");
+	}
+	
+//	@Test
+//	public void testCreateMenuItemPriceEmpty() {
+//	}
+	
+//	@Test
+//	public void testCreateMenuPriceSpaces() {
+//	}
+	
+	@Test
+	public void testRemoveMenuItem() {
+		Manager m = Manager.getInstance();
+		assertEquals(0, m.getMenus().size());
+		
+		String name = "burger";
+		double price = 3.0;
+
+		ItemController ic = new ItemController();
+		try {
+			ic.createMenuItem(name, price);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		
+		assertEquals(1, m.getMenus().size());
+		
+		try {
+			ic.removeMenuItem(name);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		
+		assertEquals(0, m.getMenus().size());
+	}
+	
+	@Test
+	public void testRemoveMenuItemNull() {
+		Manager m = Manager.getInstance();
+		String error = "";
+		assertEquals(0, m.getMenus().size());
+		
+		ItemController ic = new ItemController();
+		String name = null;
+
+		try {
+			ic.removeMenuItem(name);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Menu item name cannot be empty!");
+	}
+	
+	@Test
+	public void testRemoveMenuItemEmpty() {
+		Manager m = Manager.getInstance();
+		String error = "";
+		assertEquals(0, m.getMenus().size());
+		
+		ItemController ic = new ItemController();
+		String name = "";
+
+		try {
+			ic.removeMenuItem(name);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Menu item name cannot be empty!");	
+	}
+	
+	@Test
+	public void testRemoveMenuItemSpaces() {
+		Manager m = Manager.getInstance();
+		String error = "";
+		assertEquals(0, m.getMenus().size());
+		
+		ItemController ic = new ItemController();
+		String name = "   ";
+
+		try {
+			ic.removeMenuItem(name);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Menu item name cannot be empty!");
+	}
+	
+	@Test
+	public void testRemoveMenuItemDoesNotExist() {
+		Manager m = Manager.getInstance();
+		String error = "";
+		assertEquals(0, m.getMenus().size());
+		
+		ItemController ic = new ItemController();
+		String name = "burger";
+
+		try {
+			ic.removeMenuItem(name);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Menu Item name does not exist!");
+	}
+	
+	public void checkResultMenuItem(String name, double price, Manager m2) {
+		assertEquals(1, m2.getMenus().size());
+		assertEquals(name, m2.getMenus(0).getName());
+		assertEquals(price, m2.getMenus(0).getPrice(), 0.0);
+	}
+		
+	@Test
+	public void testMenuItemOrdered() {
+		Manager m = Manager.getInstance();
+		ItemController ic = new ItemController();
+		
+		assertEquals(0, m.getMenus().size());
+		String name = "burger";
+		double price = 3.0;
+		int quantity = 24;
+		
+		try {
+			ic.createMenuItem(name, price);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		
+		assertEquals(1, m.getMenus().size());
+		
+		try {
+			ic.menuItemOrdered(name, quantity);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		
+		assertEquals(quantity, m.getMenus(0).getPopularityCounter());		
+	}
+	
+	@Test
+	public void testMenuItemOrderedAlreadyHasQuantity() {
+		Manager m = Manager.getInstance();
+		ItemController ic = new ItemController();
+		
+		assertEquals(0, m.getMenus().size());
+		String name = "burger";
+		double price = 3.0;
+		int quantity = 24;
+		int newQuantity = 4;
+		
+		try {
+			ic.createMenuItem(name, price);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		
+		assertEquals(1, m.getMenus().size());
+		
+		try {
+			ic.menuItemOrdered(name, quantity);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		
+		assertEquals(quantity, m.getMenus(0).getPopularityCounter());
+		
+		try {
+			ic.menuItemOrdered(name, newQuantity);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		
+		assertEquals(quantity+newQuantity, m.getMenus(0).getPopularityCounter());
+	}
+	
+	@Test
+	public void testMenuItemOrderedNull() {
+		Manager m = Manager.getInstance();
+		ItemController ic = new ItemController();
+		String error = "";
+		
+		assertEquals(0, m.getMenus().size());
+		String name = "burger";
+		String nameNull = null;
+		double price = 3.0;
+		int quantity = 24;
+		
+		try {
+			ic.createMenuItem(name, price);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		
+		assertEquals(1, m.getMenus().size());
+		
+		try {
+			ic.menuItemOrdered(name, quantity);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		
+		assertEquals(quantity, m.getMenus(0).getPopularityCounter());
+		
+		try {
+			ic.menuItemOrdered(nameNull, quantity);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Order name cannot be empty!");
+		
+	}
+	
+	@Test
+	public void testMenuItemOrderedEmpty() {
+		Manager m = Manager.getInstance();
+		ItemController ic = new ItemController();
+		String error = "";
+		
+		assertEquals(0, m.getMenus().size());
+		String name = "burger";
+		String nameEmpty = "";
+		double price = 3.0;
+		int quantity = 24;
+		
+		try {
+			ic.createMenuItem(name, price);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		
+		assertEquals(1, m.getMenus().size());
+		
+		try {
+			ic.menuItemOrdered(name, quantity);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		
+		assertEquals(quantity, m.getMenus(0).getPopularityCounter());
+		try {
+			ic.menuItemOrdered(nameEmpty, quantity);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Order name cannot be empty!");
+	}
+	
+	@Test
+	public void testMenuItemOrderedSpaces() {
+		Manager m = Manager.getInstance();
+		ItemController ic = new ItemController();
+		String error = "";
+		
+		assertEquals(0, m.getMenus().size());
+		String name = "burger";
+		String nameSpaces = "   ";
+		double price = 3.0;
+		int quantity = 24;
+		
+		try {
+			ic.createMenuItem(name, price);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		
+		assertEquals(1, m.getMenus().size());
+		
+		try {
+			ic.menuItemOrdered(name, quantity);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		
+		assertEquals(quantity, m.getMenus(0).getPopularityCounter());
+		try {
+			ic.menuItemOrdered(nameSpaces, quantity);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Order name cannot be empty!");
+	}
+	
+	@Test
+	public void testMenuItemOrderedDoesNotExist() {
+		Manager m = Manager.getInstance();
+		ItemController ic = new ItemController();
+		String error = "";
+		
+		assertEquals(0, m.getMenus().size());
+		String name = "burger";
+		String nameDoesNotExist = "cheese burger";
+		double price = 3.0;
+		int quantity = 24;
+		
+		try {
+			ic.createMenuItem(name, price);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		
+		assertEquals(1, m.getMenus().size());
+		
+		try {
+			ic.menuItemOrdered(name, quantity);
+		} catch (InvalidInputException e) {
+			fail();
+		}
+		
+		assertEquals(quantity, m.getMenus(0).getPopularityCounter());
+		
+		try {
+			ic.menuItemOrdered(nameDoesNotExist, quantity);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Order name does not exist!");
+	}
+	
+//	@Test
+//	public void testMenuItemOrderedQuantityNull() {
+//	}
+	
+//	@Test
+//	public void testMenuItemOrderQuantitySpaces() {
+//	}
+	
+//	@Test
+//	public void testMenuItemOrderedQuantityEmpty() {
+//	}
+	
+	@Test
+	public void testMenuItemOrderedQuantityNegative() {
+		Manager m = Manager.getInstance();
+		ItemController ic = new ItemController();
+		String error = "";
+		
+		assertEquals(0, m.getMenus().size());
+		String name = "burger";
+		int quantity = -3;
+		
+		
+		try {
+			ic.menuItemOrdered(name, quantity);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Order quantity cannot be negative!");
+	}
+	
+	@Test
+	public void testMenuItemOrderedZero() {
+		Manager m = Manager.getInstance();
+		ItemController ic = new ItemController();
+		String error = "";
+		
+		assertEquals(0, m.getMenus().size());
+		String name = "burger";
+		int quantity = 0;
+		
+		
+		try {
+			ic.menuItemOrdered(name, quantity);
+		} catch (InvalidInputException e) {
+			error = e.getMessage();
+		}
+		
+		assertEquals(error, "Order quantity cannot be empty or zero!");
 	}
 }
