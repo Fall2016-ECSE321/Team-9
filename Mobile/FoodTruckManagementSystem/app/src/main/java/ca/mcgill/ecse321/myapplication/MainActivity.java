@@ -430,7 +430,11 @@ public class MainActivity extends AppCompatActivity {
                 error.setText("Order quantity cannot be empty!");
             }
         }else{
-            ic.menuItemOrdered(on, Integer.parseInt(oq.getText().toString()));
+            /*try{
+                ic.menuItemOrdered(on, Integer.parseInt(oq.getText().toString()));
+            } catch(InvalidInputException e){
+                error.setText(e.getMessage());
+            }*/
         }
     }
 
