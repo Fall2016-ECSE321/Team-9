@@ -1,6 +1,7 @@
 package ca.mcgill.ecse321.myapplication;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,7 @@ public class Tab3Staff extends Fragment{
     Spinner nameSpinner;
     ArrayAdapter<String> nameAdapter;
     HashMap<Integer, StaffMember> staffmembers;
+    View v;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

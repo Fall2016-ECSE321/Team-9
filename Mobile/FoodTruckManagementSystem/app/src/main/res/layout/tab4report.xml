@@ -6,11 +6,100 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="ca.mcgill.ecse321.myapplication.MainActivity$PlaceholderFragment">
+    tools:context="ca.mcgill.ecse321.myapplication.MainActivity">
 
     <TextView
         android:id="@+id/section_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
+
+    <TableLayout
+        android:id="@+id/staffmember_table"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:id="@+id/staffmember_row1"
+            android:layout_width="fill_parent"
+            android:gravity="center">
+            <TextView android:text="Staff Member List" android:gravity="center" />
+        </TableRow>
+        <TableRow
+            android:id="@+id/staffmember_row2"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content">
+            <TextView android:text="Staff Member Name"/>
+            <TextView android:id="@+id/staffmemberroleentry" android:text="Staff Member Role" android:layout_marginLeft="5dp"/>
+        </TableRow>
+    </TableLayout>
+
+    <!--android:layout_below="@+id/staffmember_table">-->
+    <TableLayout
+        android:id="@+id/supply_table"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+
+        <TableRow
+            android:id="@+id/supply_row1"
+            android:layout_width="fill_parent"
+            android:gravity="center">
+            <TextView android:text="Supply List" android:gravity="center"/>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/supply_row2"
+            android:layout_width="fill_parent">
+            <TextView android:text="Supply Name"/>
+            <TextView android:text="Supply Quantity" android:layout_marginLeft="5dp"/>
+            <TextView android:text="Supply Unit" android:layout_marginLeft="5dp"/>
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout
+        android:id="@+id/equipment_table"
+        android:layout_below="@+id/supply_table"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        >
+
+        <TableRow
+            android:id="@+id/equipment_row1"
+            android:layout_width="fill_parent"
+            android:gravity="center">
+            <TextView android:text="Equipment List" android:gravity="center"/>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/equipment_row2"
+            android:layout_width="fill_parent">
+            <TextView android:text="Equipment Name"/>
+            <TextView android:text="Equipment Quantity" android:layout_marginLeft="5dp"/>
+        </TableRow>
+    </TableLayout>
+
+    <TableLayout
+        android:id="@+id/popularity_table"
+        android:layout_below="@+id/equipment_table"
+        android:layout_marginTop="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <TableRow
+            android:id="@+id/popularity_row1"
+            android:layout_width="fill_parent"
+            android:gravity="center">
+            <TextView android:text="Popularity List" android:gravity="center"/>
+        </TableRow>
+
+        <TableRow
+            android:id="@+id/popularity_row2"
+            android:layout_width="fill_parent">
+
+            <TextView android:text="Order Name"/>
+            <TextView android:text="Times Ordered" android:layout_marginLeft="5dp"/>
+        </TableRow>
+    </TableLayout>
 
 </RelativeLayout>
