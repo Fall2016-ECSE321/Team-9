@@ -379,6 +379,12 @@ public class MainActivity extends AppCompatActivity {
             else {
                 error.setText("Menu item price cannot be empty!");
             }
+        }else{
+            /*try{
+                ic.createMenuItem(mn.getText().toString(), Double.parseDouble(mp.getText().toString()));
+            } catch(InvalidInputException e){
+                error.setText(e.getMessage());
+            }*/
         }
 
         refreshData();
@@ -394,6 +400,12 @@ public class MainActivity extends AppCompatActivity {
 
         if(mn.getText().toString().equals("")){
             error.setText("Menu item name cannot be empty!");
+        }else{
+           /* try{
+                ic.removeMenuItem(mn.getText().toString());
+            } catch(InvalidInputException e){
+                error.setText(e.getMessage());
+            }*/
         }
 
     }
@@ -404,8 +416,6 @@ public class MainActivity extends AppCompatActivity {
 
         TextView error = (TextView) findViewById(R.id.menuerrorhandler);
         error.setText("");
-
-
         Spinner nameSpinner = (Spinner) findViewById(R.id.addorder_spinner);
         String on = "";
         if(nameSpinner.getSelectedItem() != null){
@@ -419,6 +429,8 @@ public class MainActivity extends AppCompatActivity {
             } else{
                 error.setText("Order quantity cannot be empty!");
             }
+        }else{
+            ic.menuItemOrdered(on, Integer.parseInt(oq.getText().toString()));
         }
     }
 
