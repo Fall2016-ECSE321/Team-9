@@ -13,7 +13,7 @@ import org.junit.Test;
 
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Equipment;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Manager;
-import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Order;
+import ca.mcgill.ecse321.foodtruckmanagementsystem.model.MenuItem;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.StaffMember;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Supply;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceXStream;
@@ -28,7 +28,7 @@ public class TestEventRegistrationController {
 				+ "persistence" + File.separator + File.separator + "data.xml");
 		PersistenceXStream.setAlias("equipment", Equipment.class);
 		PersistenceXStream.setAlias("manager", Manager.class);
-		PersistenceXStream.setAlias("order", Order.class);
+		PersistenceXStream.setAlias("menu item", MenuItem.class);
 		PersistenceXStream.setAlias("staffmember", StaffMember.class);
 		PersistenceXStream.setAlias("supply", Supply.class);
 	}

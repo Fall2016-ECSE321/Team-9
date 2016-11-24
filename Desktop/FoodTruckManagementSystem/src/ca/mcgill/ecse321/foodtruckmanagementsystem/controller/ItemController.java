@@ -292,9 +292,9 @@ public class ItemController {
 		if (menuItemName == null || menuItemName.trim().length() == 0)
 			error = error + "Menu item name cannot be empty! ";
 		if(menuItemPrice == 0)
-			error = error + "Equipment quantity cannot be empty or zero! ";
+			error = error + "Item price cannot be empty or zero! ";
 		if (menuItemPrice < 0)
-			error = error + "Equipment quantity cannot be negative!";
+			error = error + "Item price cannot be negative!";
 		
 		error = error.trim();
 		if(error.length() > 0)
