@@ -36,6 +36,7 @@ import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Equipment;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Manager;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.StaffMember;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Supply;
+import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceFoodTruckManagementSystem;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceXStream;
 
 public class MainActivity extends AppCompatActivity {
@@ -191,22 +192,23 @@ public class MainActivity extends AppCompatActivity {
         ItemController pc = new ItemController();
         TextView error = (TextView) findViewById(R.id.errorhandler);
         error.setText("");
-        if(en.getText().toString().equals("")){
-            if(ev.getText().toString().equals(""))
-                error.setText("Equipment name cannot be empty! Equipment quantity cannot be empty!");
-            else{
-                error.setText("Equipment quantity cannot be empty!");
+
+        Manager m = (Manager) PersistenceXStream.loadFromXMLwithXStream();
+
+        try {
+            if(!m.getEquipments().isEmpty()){
+                for(int i = 0; i < m.getEquipments().size(); i++){
+                    Equipment holder = m.getEquipment(i);
+                    pc.removeEquipment(holder.getName(), holder.getQuantity());
+                    pc.createEquipment(holder.getName(), holder.getQuantity());
+                }
             }
-        }
-        else{
-            try {
-                pc.createEquipment(ev.getText().toString(),Integer.parseInt(en.getText().toString()));
-            }  catch (InvalidInputException e) {
-                error.setText(e.getMessage());
-            }
+            pc.createEquipment(ev.getText().toString(),Integer.parseInt(en.getText().toString()));
+        }  catch (InvalidInputException e) {
+            error.setText(e.getMessage());
         }
         refreshEquipmentData();
-        equipmentTableSetup();
+        //equipmentTableSetup();
     }
 
     public void removeEquipment(View v) throws IOException {
@@ -218,19 +220,12 @@ public class MainActivity extends AppCompatActivity {
         TextView error = (TextView) findViewById(R.id.errorhandler);
         error.setText("");
 
-        if(eq.getText().toString().equals("")){
-            if(en.getText().toString().equals(""))
-                error.setText("Equipment name cannot be empty! Equipment quantity cannot be empty!");
-            else{
-                error.setText("Equipment quantity cannot be empty!");
-            }
-        }else{
-            try {
-                pc.removeEquipment(en.getText().toString(), Integer.parseInt(eq.getText().toString()));
-            } catch (InvalidInputException e) {
-                error.setText(e.getMessage());
-            }
+        try {
+            pc.removeEquipment(en.getText().toString(), Integer.parseInt(eq.getText().toString()));
+        } catch (InvalidInputException e) {
+            error.setText(e.getMessage());
         }
+
 
         refreshEquipmentData();
     }
@@ -245,28 +240,23 @@ public class MainActivity extends AppCompatActivity {
 
         TextView error = (TextView) findViewById(R.id.errorhandler);
         error.setText("");
-        if(sq.getText().toString().equals("")){
-            if(sn.getText().toString().equals("") && su.getText().toString().equals(""))
-                error.setText("Supply name cannot be empty! Supply quantity cannot be empty! Supply unit cannot be empty!");
-            else if(sn.getText().toString().equals("")) {
-                error.setText("Supply name cannot be empty! Supply quantity cannot be empty!");
-            }
-            else if(su.getText().toString().equals("")){
-                error.setText("Supply quantity cannot be empty! Supply unit cannot be empty!");
-            }
-            else{
-                error.setText("Supply quantity cannot be empty!");
-            }
-        }
-        else{
+
+        Manager m = (Manager) PersistenceXStream.loadFromXMLwithXStream();
+
+
             try{
+                if(!m.getSupplies().isEmpty()){
+                    for(int i = 0; i < m.getSupplies().size(); i++){
+                        pc.createSupply(m.getSupply(i).getName(), m.getSupply(i).getQuantity(), m.getSupply(i).getUnit());
+                    }
+                }
                 pc.createSupply(sn.getText().toString(), Double.parseDouble(sq.getText().toString()), su.getText().toString());
             } catch(InvalidInputException e){
                 error.setText(e.getMessage());
             }
-        }
+
         refreshSupplyData();
-        supplyTableSetup();
+        //supplyTableSetup();
     }
 
     public void removeSupply(View v) throws IOException{
@@ -278,20 +268,11 @@ public class MainActivity extends AppCompatActivity {
 
         TextView error = (TextView) findViewById(R.id.errorhandler);
         error.setText("");
-        if(sq.getText().toString().equals("")){
-            if(sn.getText().toString().equals("")) {
-                error.setText("Supply name cannot be empty! Supply quantity cannot be empty!");
-            }
-            else{
-                error.setText("Supply name cannot be empty!");
-            }
-        }
-        else{
-            try {
-                pc.removeSupply(sn.getText().toString(), Double.parseDouble(sq.getText().toString()));
-            } catch(InvalidInputException e){
-                error.setText(e.getMessage());
-            }
+
+        try {
+            pc.removeSupply(sn.getText().toString(), Double.parseDouble(sq.getText().toString()));
+        } catch(InvalidInputException e){
+            error.setText(e.getMessage());
         }
 
         refreshSupplyData();
@@ -311,21 +292,17 @@ public class MainActivity extends AppCompatActivity {
         TextView error = (TextView) findViewById(R.id.stafferrorhandler);
         error.setText("");
 
-        if(sr.equals("") || sr.equals(null)){
-            if(sn.getText().toString().equals("") || sn.getText().toString().equals(null)){
-                error.setText("Staff member name cannot be empty! Staff member role cannot be empty!");
-            }
-            else{
-                System.out.println(sn.getText());
-                error.setText("Staff member role cannot be empty!");
-            }
-        }
-        else{
-            try{
-                pc.createStaffMember(sn.getText().toString(), sr);
-            } catch(InvalidInputException e){
-                error.setText(e.getMessage());
-            }
+        Manager m = (Manager) PersistenceXStream.loadFromXMLwithXStream();
+
+        try{
+/*            if(!m.getStaffmembers().isEmpty()){
+                for(int i = 0; i < m.getStaffmembers().size(); i++){
+                    pc.createStaffMember(m.getStaffmember(i).getName(), m.getStaffmember(i).getRole());
+                }
+            }*/
+            pc.createStaffMember(sn.getText().toString(), sr);
+        } catch(InvalidInputException e){
+            error.setText(e.getMessage());
         }
 
         refreshStaffData();
@@ -386,21 +363,18 @@ public class MainActivity extends AppCompatActivity {
         TextView error = (TextView) findViewById(R.id.menuerrorhandler);
         error.setText("");
 
-        if(mp.getText().toString().equals("")){
-            if(mn.getText().toString().equals("")){
-                error.setText("Menu item name cannot be empty! Menu item price cannot be empty!");
-            }
-            else {
-                error.setText("Menu item price cannot be empty!");
-            }
-        }else{
-            try{
-                ic.createMenuItem(mn.getText().toString(), Double.parseDouble(mp.getText().toString()));
-            } catch(InvalidInputException e){
-                error.setText(e.getMessage());
-            }
-        }
+        Manager m = (Manager) PersistenceXStream.loadFromXMLwithXStream();
 
+        try{
+            if(!m.getMenus().isEmpty()){
+                for(int i =0; i < m.getMenus().size(); i++){
+                    ic.createMenuItem(m.getMenus(i).getName(), m.getMenus(i).getPrice());
+                }
+            }
+            ic.createMenuItem(mn.getText().toString(), Double.parseDouble(mp.getText().toString()));
+        } catch(InvalidInputException e){
+            error.setText(e.getMessage());
+        }
         refreshOrderData();
     }
 
@@ -412,18 +386,13 @@ public class MainActivity extends AppCompatActivity {
         TextView error = (TextView) findViewById(R.id.menuerrorhandler);
         error.setText("");
 
-        if(mn.getText().toString().equals("")){
-            error.setText("Menu item name cannot be empty!");
-        }else{
-            try{
-                ic.removeMenuItem(mn.getText().toString());
-            } catch(InvalidInputException e){
-                error.setText(e.getMessage());
-            }
+        try{
+            ic.removeMenuItem(mn.getText().toString());
+        } catch(InvalidInputException e){
+            error.setText(e.getMessage());
         }
 
         refreshOrderData();
-
     }
 
     public void addOrder(View v) throws IOException{
@@ -452,7 +421,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
-       popularityTableSetup();
+       //popularityTableSetup();
 
     }
 
@@ -686,6 +655,12 @@ public class MainActivity extends AppCompatActivity {
             tr.addView(c2);
             popularityTable.addView(tr);
         }
+    }
+
+    public Manager getManager(){
+        androidLocationSet();
+        Manager m = (Manager) PersistenceXStream.loadFromXMLwithXStream();
+        return m;
     }
 }
 
