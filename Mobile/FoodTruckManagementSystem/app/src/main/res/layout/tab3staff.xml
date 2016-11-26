@@ -1,5 +1,5 @@
 <ScrollView android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="ca.mcgill.ecse321.foodtruckmanagementsystem.MainActivity">
@@ -58,7 +58,7 @@
             android:layout_centerHorizontal="true"
             android:layout_below="@id/staffmember_name"
             android:id="@+id/addstaff_button"
-            android:text="Add Staff"
+            android:text="Add Staff Member"
             android:onClick="addStaffMember"/>
         <Spinner
             android:layout_width="wrap_content"
@@ -90,17 +90,25 @@
             android:id="@+id/staffmember_spinner"
             android:layout_marginTop="5dp"
             android:gravity="right"
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/staffschedule_header"
             android:layout_toRightOf="@+id/selectstaff_name"/>
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Remove Staff Member"
+            android:onClick="removeStaffMember"
+            android:id="@+id/removestaffmember_button"
+            android:layout_below="@+id/staffmember_spinner"
+            />
 
         <!-- Monday -->
         <TextView
             android:id="@+id/monday"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/selectstaff_name"
+            android:layout_below="@+id/removestaffmember_button"
             android:layout_marginTop="20dp"
             android:text="Monday"/>
         <TextView
@@ -109,7 +117,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="30dp"
-            android:layout_below="@+id/selectstaff_name"
+            android:layout_below="@+id/removestaffmember_button"
             android:hint="Start Time"
             android:layout_toRightOf="@+id/monday"
             android:onClick="showStartTimePickerDialog" />
@@ -119,7 +127,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:layout_marginLeft="20dp"
-            android:layout_below="@+id/selectstaff_name"
+            android:layout_below="@+id/removestaffmember_button"
             android:hint="End Time"
             android:layout_toRightOf="@+id/mondaystarttime_hint"
             android:onClick = "showEndTimePickerDialog"/>
@@ -277,7 +285,7 @@
             android:id="@+id/fridaysaturday_separator"/>
 
 
-        <!-- Saturday -->
+<!-- Saturday -->
         <TextView
             android:text="Saturday"
             android:id="@+id/saturday"
@@ -311,9 +319,9 @@
             android:layout_below = "@+id/saturdayendtime_hint"
             android:layout_marginTop="10dp"
             android:background="#f44242"
-            android:id="@+id/saturdaysunday_separator"/>
+            android:id="@+id/saturdaysunday_separator"/>-->
 
-        <!-- Sunday -->
+
         <TextView
             android:text="Sunday"
             android:id="@+id/sunday"
@@ -347,7 +355,7 @@
             android:layout_below = "@+id/sundayendtime_hint"
             android:layout_marginTop="10dp"
             android:background="#f44242"
-            android:id="@+id/sundaybutton_separator"/>
+            android:id="@+id/sundaybutton_separator"/>-->
 
 
         <!-- Add Schedule Button -->
@@ -357,7 +365,13 @@
             android:layout_below="@+id/sundaybutton_separator"
             android:layout_centerHorizontal="true"
             android:text="Register Schedule"
-            android:onClick="addTimeStaffMember"/>
+            android:onClick="addTimeStaffMember"
+            android:id="@+id/registerschedule_button"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@+id/registerschedule_button"/>
 
     </RelativeLayout>
 

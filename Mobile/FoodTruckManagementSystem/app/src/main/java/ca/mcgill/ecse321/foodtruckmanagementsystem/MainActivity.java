@@ -352,6 +352,35 @@ public class MainActivity extends AppCompatActivity {
         refreshStaffData();
     }
 
+    public void removeStaffMember(View v) throws IOException{
+        androidLocationSet();
+
+
+        Spinner spinner = (Spinner) findViewById(R.id.staffmember_spinner);
+        String sr = "";
+        if(spinner.getSelectedItem() != null){
+            sr = spinner.getSelectedItem().toString();
+        }
+
+        ItemController pc = new ItemController();
+        TextView success = (TextView) findViewById(R.id.staffsuccess_handler);
+        TextView error = (TextView) findViewById(R.id.stafferrorhandler);
+        error.setText("");
+
+        try{
+            pc.removeStaffMember(sr);
+        } catch(InvalidInputException e){
+            error.setText(e.getMessage());
+        }
+
+        if(error.getText().equals("")){
+            success.setText("Staff member was successfully removed!");
+        }else{
+            success.setText("");
+        }
+
+    }
+
     public void addTimeStaffMember(View v) throws IOException{
         androidLocationSet();
         setUpStartTimes();
@@ -411,6 +440,13 @@ public class MainActivity extends AppCompatActivity {
         TextView error = (TextView) findViewById(R.id.menuerrorhandler);
         error.setText("");
 
+        String priceString = mp.getText().toString();
+        Double price = 0.0;
+
+        if(!priceString.matches("")){
+            price = Double.parseDouble(priceString);
+        }
+
         Manager m = (Manager) PersistenceXStream.loadFromXMLwithXStream();
 
         try{
@@ -419,7 +455,7 @@ public class MainActivity extends AppCompatActivity {
                     ic.createMenuItem(m.getMenus(i).getName(), m.getMenus(i).getPrice());
                 }
             }*/
-            ic.createMenuItem(mn.getText().toString(), Double.parseDouble(mp.getText().toString()));
+            ic.createMenuItem(mn.getText().toString(), price);
         } catch(InvalidInputException e){
             error.setText(e.getMessage());
         }
@@ -429,8 +465,7 @@ public class MainActivity extends AppCompatActivity {
         }else{
             success.setText("");
         }
-
-        refreshOrderData();
+        refreshMenuData();
     }
 
     public void removeMenuItem(View v) throws IOException{
@@ -454,7 +489,7 @@ public class MainActivity extends AppCompatActivity {
             success.setText("");
         }
 
-        refreshOrderData();
+        refreshMenuData();
     }
 
     public void addOrder(View v) throws IOException{
@@ -468,10 +503,18 @@ public class MainActivity extends AppCompatActivity {
         if(nameSpinner.getSelectedItem() != null){
             on = nameSpinner.getSelectedItem().toString();
         }
+
+
         TextView oq = (TextView) findViewById(R.id.addorder_quantity);
 
-            try{
-                ic.menuItemOrdered(on, Integer.parseInt(oq.getText().toString()));
+        int quantity = 0;
+        String iQuantity = oq.getText().toString();
+        if(!iQuantity.matches("")){
+            quantity = Integer.parseInt(oq.getText().toString());
+        }
+
+        try{
+                ic.menuItemOrdered(on, quantity);
             } catch(InvalidInputException e){
                 error.setText(e.getMessage());
             }
@@ -481,7 +524,7 @@ public class MainActivity extends AppCompatActivity {
         }else{
             success.setText("");
         }
-
+        refreshOrderData();
     }
 
     private Bundle getStartTimeFromLabel(CharSequence text){
@@ -541,8 +584,8 @@ public class MainActivity extends AppCompatActivity {
         startTimeTextViews.add((TextView) findViewById(R.id.wednesdaystarttime_hint));
         startTimeTextViews.add((TextView) findViewById(R.id.thursdaystarttime_hint));
         startTimeTextViews.add((TextView) findViewById(R.id.fridaystarttime_hint));
-        startTimeTextViews.add((TextView) findViewById(R.id.saturdaystarttime_hint));
-        startTimeTextViews.add((TextView) findViewById(R.id.sundaystarttime_hint));
+        //startTimeTextViews.add((TextView) findViewById(R.id.saturdaystarttime_hint));
+        //startTimeTextViews.add((TextView) findViewById(R.id.sundaystarttime_hint));
     }
 
     public void setUpEndTimes(){
@@ -551,8 +594,8 @@ public class MainActivity extends AppCompatActivity {
         endTimeTextViews.add((TextView) findViewById(R.id.wednesdayendtime_hint));
         endTimeTextViews.add((TextView) findViewById(R.id.thursdayendtime_hint));
         endTimeTextViews.add((TextView) findViewById(R.id.fridayendtime_hint));
-        endTimeTextViews.add((TextView) findViewById(R.id.saturdayendtime_hint));
-        endTimeTextViews.add((TextView) findViewById(R.id.sundayendtime_hint));
+        //endTimeTextViews.add((TextView) findViewById(R.id.saturdayendtime_hint));
+        //endTimeTextViews.add((TextView) findViewById(R.id.sundayendtime_hint));
     }
 
     private void refreshEquipmentData(){
@@ -611,6 +654,16 @@ public class MainActivity extends AppCompatActivity {
             this.menuItems.put(i, sM);
         }
         orderSpinner.setAdapter(orderAdapter);
+        TextView on = (TextView) findViewById(R.id.addorder_quantity);
+        on.setText("");
+    }
+
+    private void refreshMenuData(){
+        TextView mn = (TextView) findViewById(R.id.addmenuitem_name);
+        TextView mp = (TextView) findViewById(R.id.addmenuitem_price);
+
+        mn.setText("");
+        mp.setText("");
     }
 
     private void refreshTimesData(){

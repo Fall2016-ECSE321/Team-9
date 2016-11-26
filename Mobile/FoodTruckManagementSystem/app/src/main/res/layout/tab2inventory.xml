@@ -82,8 +82,6 @@
             android:background="#425ff4"/>
     </LinearLayout>
 
-
-
     <View
         android:id="@+id/redBarTwo"
         android:layout_below="@+id/equipmentTextFields"
@@ -223,7 +221,5 @@
             android:onClick="removeSupply"
             android:layout_weight="0.46" />
     </LinearLayout>
-
-
 
 </RelativeLayout>
