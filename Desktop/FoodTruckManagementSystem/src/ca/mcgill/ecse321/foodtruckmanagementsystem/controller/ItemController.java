@@ -9,6 +9,9 @@ import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceXStrea
 
 import java.sql.Date;
 import java.sql.Time;
+import java.text.DateFormat;
+import java.text.DecimalFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ItemController {
@@ -236,31 +239,49 @@ public class ItemController {
 		PersistenceXStream.saveToXMLwithXStream(m);	
 	}	
 
-	public void addTimeStaffMember(String name, Time startTime, Time endTime) throws InvalidInputException {
+	public void addTimeStaffMember(String name, Time[] startTime, Time[] endTime) throws InvalidInputException {
 		String error = "";
-		Time defaultTime = new Time(0000);	
+		StaffMember sm = new StaffMember("", "");
+		Calendar cal = Calendar.getInstance();
+		cal.set(0, 0, 0, 0, 0, 0);
+		Time defaultTime = new Time(cal.getTime().getTime());
+		int equalTimeCounter = 0;
+		int endTimeBeforeCounter = 0;
+		int startTimeNullCounter = 0;
+		int endTimeNullCounter = 0;
+		int modifiedTimeCounter = 0;
 
 		Manager m = Manager.getInstance();
 		
 		if(name == null || name.trim().length() == 0)
 			error = error + "Staff member name cannot be empty! ";
-		if(startTime == null)
+		
+		DateFormat df = new SimpleDateFormat("HH:mm");
+		for(int i = 0; i < startTime.length; i++) {
+			if(startTime[i] == null)
+				startTimeNullCounter++;
+			if(endTime[i] == null)
+				endTimeNullCounter++;
+			if(startTime[i] != null && endTime[i] != null) {
+				if(!startTime[i].toString().equals(defaultTime.toString()) || !endTime[i].toString().equals(defaultTime.toString()))
+					modifiedTimeCounter++;
+				if(!startTime[i].toString().equals(defaultTime.toString()) && !endTime[i].toString().equals(defaultTime.toString()) && startTime[i].toString().equals(endTime[i].toString()))
+					equalTimeCounter++;
+				if (endTime[i].before(startTime[i]))
+					endTimeBeforeCounter++;
+			}
+		}
+		
+		if(modifiedTimeCounter != 0) {
+			if(equalTimeCounter != 0 && modifiedTimeCounter != 0)
+				error = error + "End time cannot equal to start time! ";
+			if(endTimeBeforeCounter != 0)
+				error = error + "End time must be greater than start time!";
+		}
+		if(startTimeNullCounter != 0)
 			error = error + "Start time cannot be empty! ";
-		if(endTime == null)
-			error = error + "End time cannot be empty! ";
-		
-		if(startTime != null && endTime != null) {
-			if(!startTime.equals(defaultTime) && !endTime.equals(defaultTime) && startTime.equals(endTime)) {
-				error = error + "End time cannot be equal to start time! ";
-			}
-		}
-		
-		
-		if(startTime != null && endTime != null) {
-			if (endTime.before(startTime)) {
-				error = error + "End time cannot be before start time!";
-			}
-		}
+		if(endTimeNullCounter != 0)
+			error = error + "End time cannot be empty! ";		
 		
 		if(error.length() > 0)
 			throw new InvalidInputException(error);
@@ -269,32 +290,36 @@ public class ItemController {
 		
 		for(StaffMember staffmember: m.getStaffmembers()) {
 			if(name.equals(staffmember.getName())) {
-				if(startTime.equals(defaultTime) && endTime.equals(defaultTime)) {
-					staffmember.addStartTime(null);
-					staffmember.addEndTime(null);
-					break;
-				}
-				else {
-					staffmember.addStartTime(startTime);
-					staffmember.addEndTime(endTime);
-					break;
-				}
+				sm = staffmember;
+				break;
+			}
+		}		
+		
+		if(!sm.getName().equals("")) {
+			Time[] startTimes = sm.getStartTimes();
+			Time[] endTimes= sm.getEndTimes();
+			for(int i = 0; i < startTimes.length; i++) {
+				sm.removeStartTime(startTimes[i]);
+				sm.removeEndTime(endTimes[i]);
+			}
+			for(int i = 0; i < startTime.length; i++) {
+				sm.addStartTime(startTime[i]);
+				sm.addEndTime(endTime[i]);
 			}
 		}
-			
+		
 		PersistenceXStream.saveToXMLwithXStream(m);
 	}
 	
-	// how to handle decimal?
 	public void createMenuItem(String menuItemName, double menuItemPrice) throws InvalidInputException {
 		String error = "";
 		
 		if (menuItemName == null || menuItemName.trim().length() == 0)
-			error = error + "Menu item name cannot be empty! ";
+			error = error + "Menu Item name cannot be empty! ";
 		if(menuItemPrice == 0)
-			error = error + "Item price cannot be empty or zero! ";
+			error = error + "Menu Item price cannot be empty or zero! ";
 		if (menuItemPrice < 0)
-			error = error + "Item price cannot be negative!";
+			error = error + "Menu Item price cannot be negative!";
 		
 		error = error.trim();
 		if(error.length() > 0)
@@ -309,7 +334,7 @@ public class ItemController {
 		for(MenuItem menuItem : m.getMenus()) {
 			if(menuItemName.equals(menuItem.getName())) {
 				if(menuItemPrice == menuItem.getPrice()) {
-					error = "Menu already exists at price: " + menuItemPrice;
+					error = "Menu Item already exists at price: $" + new DecimalFormat("#.##").format(menuItemPrice);
 					throw new InvalidInputException(error);
 				}
 				else {
@@ -349,7 +374,7 @@ public class ItemController {
 		}	
 		
 		if(!isUpdated)
-			throw new InvalidInputException("Menu item does not exist!");		
+			throw new InvalidInputException("Menu Item name does not exist!");		
 			
 		PersistenceXStream.saveToXMLwithXStream(m);		
 	}
@@ -383,9 +408,8 @@ public class ItemController {
 		}	
 		
 		if(!isUpdated)
-			throw new InvalidInputException("Order item does not exist!");		
+			throw new InvalidInputException("Order name does not exist!");		
 			
 		PersistenceXStream.saveToXMLwithXStream(m);		
-	}
-	
+	}	
 }
