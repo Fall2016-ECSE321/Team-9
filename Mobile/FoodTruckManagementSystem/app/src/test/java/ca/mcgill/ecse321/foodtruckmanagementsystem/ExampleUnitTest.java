@@ -1,4 +1,4 @@
-package ca.mcgill.ecse321.myapplication;
+package ca.mcgill.ecse321.foodtruckmanagementsystem;
 
 import org.junit.Test;
 

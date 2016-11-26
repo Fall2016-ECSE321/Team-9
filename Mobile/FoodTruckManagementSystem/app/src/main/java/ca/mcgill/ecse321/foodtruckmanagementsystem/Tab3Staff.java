@@ -1,6 +1,7 @@
-package ca.mcgill.ecse321.myapplication;
+package ca.mcgill.ecse321.foodtruckmanagementsystem;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import java.util.Iterator;
 
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Manager;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.StaffMember;
+import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceXStream;
 
 /**
  * Created by Evan on 20/11/2016.
@@ -27,6 +29,7 @@ public class Tab3Staff extends Fragment{
     Spinner nameSpinner;
     ArrayAdapter<String> nameAdapter;
     HashMap<Integer, StaffMember> staffmembers;
+    View v;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -36,6 +39,7 @@ public class Tab3Staff extends Fragment{
         adapter = ArrayAdapter.createFromResource(this.getContext(), R.array.roles, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         roleSpinner.setAdapter(adapter);
+
 
         nameSpinner = (Spinner) rootView.findViewById(R.id.staffmember_spinner);
         nameAdapter = new ArrayAdapter<String>(this.getContext(), android.R.layout.simple_spinner_item);

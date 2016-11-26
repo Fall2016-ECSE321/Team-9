@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="ca.mcgill.ecse321.myapplication.MainActivity">
+    tools:context="ca.mcgill.ecse321.foodtruckmanagementsystem.MainActivity">
 
     <TextView
         android:id="@+id/section_label"
@@ -18,6 +18,12 @@
         android:layout_height="wrap_content"
         android:textColor="#E1338A"
         android:id="@+id/menuerrorhandler"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#008000"
+        android:id="@+id/mainsuccess_handler"/>
 
 <!-- Add Menu Item Section -->
     <TextView
@@ -113,16 +119,15 @@
         android:id="@+id/addorder_spinner"
         android:layout_below="@+id/orderheader_separator"
         android:layout_toRightOf="@id/addordername_hint"
-        android:layout_marginTop="20dp"
-        android:layout_width="wrap_content"
+        android:layout_marginTop="6dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
     <EditText
         android:id="@+id/addorder_quantity"
         android:hint="Enter Quantity"
         android:textSize="14dp"
-        android:layout_below="@+id/orderheader_separator"
-        android:layout_toRightOf="@+id/addorder_spinner"
+        android:layout_below="@+id/addordername_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
@@ -131,7 +136,7 @@
         android:text="Add Order"
         android:onClick="addOrder"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/addorder_spinner"
+        android:layout_below="@+id/addorder_quantity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="ca.mcgill.ecse321.myapplication.MainActivity">
+    tools:context="ca.mcgill.ecse321.foodtruckmanagementsystem.MainActivity">
 
 
 
@@ -17,8 +17,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#E1338A"
-        android:id="@+id/errorhandler"
-        />
+        android:id="@+id/errorhandler" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#008000"
+        android:id="@+id/inventorysuccess_handler"/>
 
     <TextView
         android:id="@+id/addequipment_header"
@@ -76,8 +81,6 @@
             android:layout_height="50dp"
             android:background="#425ff4"/>
     </LinearLayout>
-
-
 
     <View
         android:id="@+id/redBarTwo"
@@ -218,7 +221,5 @@
             android:onClick="removeSupply"
             android:layout_weight="0.46" />
     </LinearLayout>
-
-
 
 </RelativeLayout>
