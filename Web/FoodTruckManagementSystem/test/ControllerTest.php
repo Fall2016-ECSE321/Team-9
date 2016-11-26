@@ -2050,7 +2050,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
 		
 		try {
-			$this->c->createMenuItem ( $menuItemName, $menuItemPrice1 );
+			$this->c->createMenuItem ( $menuItemName, 14.32922234 );
 		} catch ( Exception $e ) {
 			// check that no error occurred
 			$error = $e->getMessage ();
