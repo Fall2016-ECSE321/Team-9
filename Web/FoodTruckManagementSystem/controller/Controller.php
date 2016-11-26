@@ -381,7 +381,7 @@ class Controller{
 			for($i = 0; $i < $m->numberOfMenus(); $i++){
 				if($name == $m->getMenus_index($i)->getName()){
 					if(floatval($price)== floatval($m->getMenus_index($i)->getPrice())){
-						$error="Menu Item already exists at price: ".floatval($m->getMenus_index($i)->getPrice());
+						$error="Menu Item already exists at price: $".floatval($m->getMenus_index($i)->getPrice());
 						throw new Exception($error);
 					}
 					else{
