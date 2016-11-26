@@ -63,7 +63,8 @@ public class MainActivity extends AppCompatActivity {
     Bundle rtnEndTime = new Bundle();
     ArrayList<TextView> startTimeTextViews = new ArrayList<>();
     ArrayList<TextView> endTimeTextViews = new ArrayList<>();
-    ArrayList<Time> startTimes = new ArrayList<>();
+    Time[] startTimes = new Time[7];
+    Time[] endTimes = new Time[7];
     Spinner orderSpinner;
     ArrayAdapter<String> orderAdapter;
     HashMap<Integer, ca.mcgill.ecse321.foodtruckmanagementsystem.model.MenuItem> menuItems;
@@ -333,11 +334,6 @@ public class MainActivity extends AppCompatActivity {
         Manager m = (Manager) PersistenceXStream.loadFromXMLwithXStream();
 
         try{
-/*            if(!m.getStaffmembers().isEmpty()){
-                for(int i = 0; i < m.getStaffmembers().size(); i++){
-                    pc.createStaffMember(m.getStaffmember(i).getName(), m.getStaffmember(i).getRole());
-                }
-            }*/
             pc.createStaffMember(sn.getText().toString(), sr);
         } catch(InvalidInputException e){
             error.setText(e.getMessage());
@@ -399,30 +395,32 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i < startTimeTextViews.size(); i++){
             String startTimeString = startTimeTextViews.get(i).getText().toString();
             String endTimeString = endTimeTextViews.get(i).getText().toString();
-            System.out.println("Start Time:" + startTimeString);
-            System.out.println("End Time:" + endTimeString);
-
 
             String comps[] = startTimeString.split(":");
             String secondComps[] = endTimeString.split(":");
-            System.out.println("End Time Hours:" + secondComps[0]);
-            System.out.println(comps.length);
-            System.out.println(secondComps.length);
-            //System.out.println("End Time Minutes" + secondComps[1]);
             Time startTime = new Time(0000);
             Time endTime = new Time(0000);
+
             if(comps.length == 2 && secondComps.length == 2){
                 startTime.setHours(Integer.parseInt(comps[0]));
                 startTime.setMinutes(Integer.parseInt(comps[1]));
                 endTime.setHours(Integer.parseInt(secondComps[0]));
                 endTime.setHours(Integer.parseInt(secondComps[1]));
-                try{
-                    ic.addTimeStaffMember(sn, startTime, endTime);
-                } catch(InvalidInputException e){
-                    error.setText(e.getMessage());
-                }
+
+                startTimes[i] = startTime;
+                endTimes[i] = endTime;
+
             }
         }
+        try{
+            ic.addTimeStaffMember(sn, startTimes, endTimes);
+        } catch(InvalidInputException e){
+            error.setText(e.getMessage());
+        }
+
+        startTimes = new Time[7];
+        endTimes = new Time[7];
+
         if(error.getText().equals("")){
             success.setText("Staff member schedule was successfully added!");
         }else{
@@ -539,7 +537,6 @@ public class MainActivity extends AppCompatActivity {
         rtnStartTime.putInt("minute", minute);
 
         Time newTime = new Time(hour + minute);
-        startTimes.add(newTime);
         return rtnStartTime;
     }
 
@@ -584,8 +581,8 @@ public class MainActivity extends AppCompatActivity {
         startTimeTextViews.add((TextView) findViewById(R.id.wednesdaystarttime_hint));
         startTimeTextViews.add((TextView) findViewById(R.id.thursdaystarttime_hint));
         startTimeTextViews.add((TextView) findViewById(R.id.fridaystarttime_hint));
-        //startTimeTextViews.add((TextView) findViewById(R.id.saturdaystarttime_hint));
-        //startTimeTextViews.add((TextView) findViewById(R.id.sundaystarttime_hint));
+        startTimeTextViews.add((TextView) findViewById(R.id.saturdaystarttime_hint));
+        startTimeTextViews.add((TextView) findViewById(R.id.sundaystarttime_hint));
     }
 
     public void setUpEndTimes(){
@@ -594,8 +591,8 @@ public class MainActivity extends AppCompatActivity {
         endTimeTextViews.add((TextView) findViewById(R.id.wednesdayendtime_hint));
         endTimeTextViews.add((TextView) findViewById(R.id.thursdayendtime_hint));
         endTimeTextViews.add((TextView) findViewById(R.id.fridayendtime_hint));
-        //endTimeTextViews.add((TextView) findViewById(R.id.saturdayendtime_hint));
-        //endTimeTextViews.add((TextView) findViewById(R.id.sundayendtime_hint));
+        endTimeTextViews.add((TextView) findViewById(R.id.saturdayendtime_hint));
+        endTimeTextViews.add((TextView) findViewById(R.id.sundayendtime_hint));
     }
 
     private void refreshEquipmentData(){
