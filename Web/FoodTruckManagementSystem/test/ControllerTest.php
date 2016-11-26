@@ -2021,6 +2021,26 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
 		$this->assertEquals ( "Menu Item name cannot be empty!", $error );
 	}
+	
+	public function testCreateMenuItemPriceNotNumeric() {
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+	
+		$menuItemName = "burger";
+		$menuItemPrice = "3.45-";
+	
+		try {
+			$this->c->createMenuItem ( $menuItemName, $menuItemPrice );
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$error = $e->getMessage ();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->assertEquals ( "Menu Item price must be a number!", $error );
+	}
+	
 	public function testCreateMenuItemPriceNegative() {
 		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
 		
@@ -2039,6 +2059,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
 		$this->assertEquals ( "Menu Item price cannot be negative!", $error );
 	}
+	
 	public function testCreateMenuItemUpdatePrice() {
 		$menuItemName = "burger";
 		$menuItemPrice0 = 3.45;
@@ -2050,10 +2071,11 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
 		
 		try {
-			$this->c->createMenuItem ( $menuItemName, 14.32922234 );
+			$this->c->createMenuItem ( $menuItemName, $menuItemPrice1 );
 		} catch ( Exception $e ) {
 			// check that no error occurred
-			$error = $e->getMessage ();
+			//$error = $e->getMessage ();
+			$this->fail();
 		}
 		
 		// check file contents
@@ -2061,6 +2083,7 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
 		$this->assertEquals ( $menuItemPrice1, $this->m->getMenus_index ( 0 )->getPrice () );
 	}
+	
 	public function testCreateMenuItemUpdateSamePrice() {
 		$menuItemName = "burger";
 		$menuItemPrice = 3.45;
@@ -2082,6 +2105,52 @@ class ControllerTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
 		$this->assertEquals ( "Menu Item already exists at price: $" . $menuItemPrice, $error );
 	}
+	
+	public function testCreateMenuItemRoundDownDecimal() {
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		
+		$menuItemName = "burger";
+		$menuItemPrice = 3.4582372732;
+		
+		try {
+			$this->c->createMenuItem ( $menuItemName, $menuItemPrice );
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$this->fail ();
+		}
+		
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+		$this->assertEquals ( $menuItemName, $this->m->getMenus_index ( 0 )->getName () );
+		$this->assertEquals ( 3.45, $this->m->getMenus_index ( 0 )->getPrice () );
+	}
+	
+	
+	public function testCreateMenuItemSamePriceRoundDownDecimal() {
+		$menuItemName = "burger";
+		$menuItemPrice0 = 14.32;
+		$menuItemPrice1 = 14.32862324;
+	
+		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
+		$this->c->createMenuItem ( $menuItemName, $menuItemPrice0 );
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+	
+		try {
+			$this->c->createMenuItem ( $menuItemName, $menuItemPrice1 );
+		} catch ( Exception $e ) {
+			// check that no error occurred
+			$error = $e->getMessage ();
+		}
+	
+		// check file contents
+		$this->m = $this->pm->loadDataFromStore ();
+		$this->assertEquals ( 1, count ( $this->m->getMenus () ) );
+		$this->assertEquals ( "Menu Item already exists at price: $" . $menuItemPrice0, $error );
+		$this->assertEquals ( $menuItemPrice0, $this->m->getMenus_index ( 0 )->getPrice () );
+	}
+	
 	public function testCreateMenuItemPriceZeroInt() {
 		$this->assertEquals ( 0, count ( $this->m->getMenus () ) );
 		
