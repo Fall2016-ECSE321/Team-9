@@ -29,17 +29,12 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Time;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import java.awt.event.ActionEvent;
 import javax.swing.JSpinner;
 import java.awt.Toolkit;
@@ -66,6 +61,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 	private HashMap<Integer, StaffMember> staffMembers;
 	private HashMap<Integer, MenuItem> menuItems;
 	private JPanel staffPanel, supplyPanel, equipmentPanel, popularityPanel;
+	private JTextField menuItemName;
 	
 	private ArrayList<JLabel> staffNamesReport = new ArrayList<JLabel>();
 	private ArrayList<JLabel> staffRolesReport = new ArrayList<JLabel>();
@@ -80,7 +76,6 @@ public class FoodTruckManagementSystemPage extends JFrame {
 	private ArrayList<JLabel> popularityQuantitiesReport = new ArrayList<JLabel>();
 	private ArrayList<JLabel> popularityNumbers = new ArrayList<JLabel>();
 
-	private ArrayList<StaffMember> staffList = new ArrayList<StaffMember>();	
 	private ArrayList<JLabel> supplyNumbers = new ArrayList<JLabel>();
 	private JSpinner[] startTimes = new JSpinner[7];
 	private JSpinner[] endTimes = new JSpinner[7];	
@@ -94,8 +89,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 	private String menuItemMessage = "";
 	private String orderMessage = "";
 	private Integer selectedStaffMember = -1;	
-	private Integer selectedMenuItem = -1;
-	private JTextField menuItemName;
+	private Integer selectedMenuItem = -1;	
 
 	public FoodTruckManagementSystemPage() {
 		initComponents();
@@ -332,12 +326,15 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		JLabel lblSelectStaffName = new JLabel("Select Staff Name:");
 		tab3.add(lblSelectStaffName, "cell 1 6,alignx trailing");
 		
+		Calendar cal = Calendar.getInstance();
+		cal.set(0, 0, 0, 0, 0, 0);
+		
 		JSpinner.DateEditor[] startTimeEditors = new JSpinner.DateEditor[7];
 		for(int i = 0; i < startTimes.length; i++) {
 			startTimes[i] = new JSpinner(new SpinnerDateModel());
 			startTimeEditors[i] = new JSpinner.DateEditor(startTimes[i], "HH:mm");
 			startTimes[i].setEditor(startTimeEditors[i]);
-			startTimes[i].setValue(new Date(0,0,0,0,0,0));
+			startTimes[i].setValue(cal.getTime());
 			tab3.add(startTimes[i], "cell 2 " + (8+(2*i)) +",alignx left");
 		}
 		
@@ -346,7 +343,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 			endTimes[i] = new JSpinner(new SpinnerDateModel());
 			endTimeEditors[i] = new JSpinner.DateEditor(endTimes[i], "HH:mm");
 			endTimes[i].setEditor(endTimeEditors[i]);
-			endTimes[i].setValue(new Date(0,0,0,0,0,0));
+			endTimes[i].setValue(cal.getTime());
 			tab3.add(endTimes[i], "cell 3 " +(8+(2*i)) + ",aligny center");
 		}
 		
@@ -404,6 +401,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		tab4.add(staffPane, "1, 1, 2, 2, fill, fill");
 		
 		staffPanel = new JPanel();
+		staffPanel.setBackground(new Color(0xBCB7C1));
 		staffPane.setViewportView(staffPanel);
 		staffPanel.setLayout(new MigLayout("", "[][][][][]", "[][][][][]"));
 		
@@ -424,6 +422,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		tab4.add(popularityPane, "3, 1, 2, 2, fill, fill");
 		
 		popularityPanel = new JPanel();
+		popularityPanel.setBackground(new Color(0xE0FFFF));
 		popularityPane.setViewportView(popularityPanel);
 		popularityPanel.setLayout(new MigLayout("", "[][][][][]", "[][][][]"));
 		
@@ -444,6 +443,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		tab4.add(supplyPane, "1, 3, 2, 2, fill, fill");
 		
 		supplyPanel = new JPanel();
+		supplyPanel.setBackground(new Color(0xD3D3D3));
 		supplyPane.setViewportView(supplyPanel);
 		supplyPanel.setLayout(new MigLayout("", "[][][][][][][]", "[][][][]"));
 		
@@ -467,6 +467,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		tab4.add(equipmentPane, "3, 3, 2, 2, fill, fill");
 		
 		equipmentPanel = new JPanel();
+		equipmentPanel.setBackground(new Color(0xFFF0F5));
 		equipmentPane.setViewportView(equipmentPanel);
 		equipmentPanel.setLayout(new MigLayout("", "[][][][][]", "[][][]"));
 		
@@ -549,6 +550,19 @@ public class FoodTruckManagementSystemPage extends JFrame {
 	private void resetMenuItemData() {
 		menuItemName.setText("");
 		menuPriceModel.setValue(0.0);
+	}
+	
+	private void resetScheduleData() {
+		Calendar cal = Calendar.getInstance();
+		cal.set(0,0,0,0,0,0);
+		for(int i = 0; i < startTimes.length; i++) {
+			startTimes[i].setValue(cal.getTime());
+			endTimes[i].setValue(cal.getTime());
+		}
+	}
+	
+	private void resetOrderData() {
+		
 	}
 	
 	private void loadStaffMemberReport() {
@@ -793,8 +807,8 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		
 		if(smMessage.contains("Staff Member name")) 
 			staffName.setText("");		
-		//if(smMessage.contains("Staff Member role"))
-			//TODO: reset role			
+//		if(smMessage.contains("Staff Member role")) {
+//		}			
 		if(smMessage.equals("")) {
 			lblStaffMemberMessage.setForeground(Color.GREEN);
 			smMessage = "Staff Member was successfully added!";
@@ -807,6 +821,8 @@ public class FoodTruckManagementSystemPage extends JFrame {
 	private void saveScheduleActionPerformed(java.awt.event.ActionEvent evt) {
 		StaffMember staffMember = new StaffMember("","");
 		ItemController c = new ItemController();
+		Time[] startTimeArray = new Time[7];
+		Time[] endTimeArray = new Time[7];
 		schedMessage = "";
 		
 		if(selectedStaffMember != -1)
@@ -816,29 +832,25 @@ public class FoodTruckManagementSystemPage extends JFrame {
 			Calendar cal = Calendar.getInstance();
 			cal.setTime((Date) startTimes[i].getValue());
 			Time startTime = new Time(cal.getTime().getTime());
-			cal.setTime((Date) startTimes[i].getValue());
-			Time endTime = new Time(cal.getTime().getTime());
-			try {
-				c.addTimeStaffMember(staffMember.getName(), startTime, endTime);
-			} catch (InvalidInputException e) {
-				schedMessage += e.getMessage();
-			}
+			startTimeArray[i] = startTime;
+			cal.setTime((Date) endTimes[i].getValue());
+			Time endTime = new Time(cal.getTime().getTime());			
+			endTimeArray[i] = endTime;
 		}
 				
+		try {
+			c.addTimeStaffMember(staffMember.getName(), startTimeArray, endTimeArray);
+		} catch (InvalidInputException e) {
+			lblscheduleMessage.setForeground(Color.RED);
+			schedMessage = e.getMessage();
+		}
+		
 		if(schedMessage.equals("")) {
 			lblscheduleMessage.setForeground(Color.GREEN);
 			schedMessage = "Staff Member Schdule was successfully updated!";
+			resetScheduleData();
 		}
-		else {
-			lblscheduleMessage.setForeground(Color.RED);
-			String[] split = schedMessage.split("! ");
-			Set<String> stringSet = new HashSet<>(Arrays.asList(split));
-			String[] filteredArray = stringSet.toArray(new String[0]);
-			schedMessage = "";
-			for(int i = 0; i < filteredArray.length; i++)
-				schedMessage += filteredArray[i] + "! ";
-		}
-		
+
 		refreshData();
 	}
 	
@@ -937,7 +949,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		if(orderMessage.equals("")) {
 			lblOrderMessage.setForeground(Color.GREEN);
 			orderMessage = "Order was successfully placed!";
-			//resetOrderData();
+			resetOrderData();
 		}
 		
 		refreshData();

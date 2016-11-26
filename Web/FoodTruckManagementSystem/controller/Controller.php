@@ -377,15 +377,22 @@ class Controller{
 			$m  = $pm->loadDataFromStore();
 			$flag = false;
 			
+			if (!is_numeric($price)){
+				$error = "Menu Item price must be a number!";
+				throw new Exception($error);
+			}
+			
 			// if trying to make menu item that already exists, update its price to new price
 			for($i = 0; $i < $m->numberOfMenus(); $i++){
 				if($name == $m->getMenus_index($i)->getName()){
 					if(floatval($price)== floatval($m->getMenus_index($i)->getPrice())){
-						$error="Menu Item already exists at price: ".floatval($m->getMenus_index($i)->getPrice());
+						$error="Menu Item already exists at price: $".floatval($m->getMenus_index($i)->getPrice());
 						throw new Exception($error);
 					}
 					else{
-						$m->getMenus_index($i)->setPrice(floatval($price));
+						$tempPrice1 = ($price);//store as string
+						settype($tempPrice1, "string");
+						$m->getMenus_index($i)->setPrice($tempPrice1);
 						$flag = true; //flag indicates the menu name already exists.
 						break;
 					}
@@ -394,7 +401,9 @@ class Controller{
 			if (! $flag){ //if menu name does not exist, create a new menu item.
 				//2. Add the new menu item
 				$counter = 0; //when creating a new menu item, it has zero popularity
-				$menuItem = new MenuItem($name, $price, $counter);
+				$tempPrice2 = $price;//store as string
+				settype($tempPrice2, "string");
+				$menuItem = new MenuItem($name, $tempPrice2, $counter);
 				$m->addMenus($menuItem);
 			}
 			//3. Write all of the data

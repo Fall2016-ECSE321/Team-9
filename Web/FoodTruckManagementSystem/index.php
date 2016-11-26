@@ -96,7 +96,7 @@
 				<div class="form-group">
 
 					<input class="form-control input-sm" style="width: 110px"
-						type="number" name="menuItem_price" placeholder="Enter Price($)" />
+						type="double" name="menuItem_price" placeholder="Enter Price($)" />
 
 				</div>
 				<br> <br>&nbsp&nbsp
