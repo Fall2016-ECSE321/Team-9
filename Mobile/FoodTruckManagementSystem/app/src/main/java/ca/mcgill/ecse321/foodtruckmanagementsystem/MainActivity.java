@@ -1,4 +1,4 @@
-package ca.mcgill.ecse321.myapplication;
+package ca.mcgill.ecse321.foodtruckmanagementsystem;
 
 import android.support.design.widget.TabLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -23,6 +23,8 @@ import android.widget.Spinner;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
+
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.sql.Time;
@@ -62,7 +64,6 @@ public class MainActivity extends AppCompatActivity {
     ArrayList<TextView> startTimeTextViews = new ArrayList<>();
     ArrayList<TextView> endTimeTextViews = new ArrayList<>();
     ArrayList<Time> startTimes = new ArrayList<>();
-
     Spinner orderSpinner;
     ArrayAdapter<String> orderAdapter;
     HashMap<Integer, ca.mcgill.ecse321.foodtruckmanagementsystem.model.MenuItem> menuItems;
@@ -93,7 +94,6 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
-
     }
 
 
@@ -189,26 +189,29 @@ public class MainActivity extends AppCompatActivity {
 
         TextView ev = (TextView) findViewById(R.id.addequipment_name);
         EditText en = (EditText) findViewById(R.id.addequipment_quantity);
+        String eqString = en.getText().toString();
         ItemController pc = new ItemController();
+        TextView success = (TextView) findViewById(R.id.inventorysuccess_handler);
         TextView error = (TextView) findViewById(R.id.errorhandler);
         error.setText("");
-
-        Manager m = (Manager) PersistenceXStream.loadFromXMLwithXStream();
+        int quantity = 0;
+        System.out.println(en.getText().toString());
+        if(!eqString.matches("")){
+            quantity = Integer.parseInt(eqString);
+        }
 
         try {
-            if(!m.getEquipments().isEmpty()){
-                for(int i = 0; i < m.getEquipments().size(); i++){
-                    Equipment holder = m.getEquipment(i);
-                    pc.removeEquipment(holder.getName(), holder.getQuantity());
-                    pc.createEquipment(holder.getName(), holder.getQuantity());
-                }
-            }
-            pc.createEquipment(ev.getText().toString(),Integer.parseInt(en.getText().toString()));
+            pc.createEquipment(ev.getText().toString(),quantity);
         }  catch (InvalidInputException e) {
             error.setText(e.getMessage());
         }
+
+        if(error.getText().equals("")){
+            success.setText("Equipment was successfully added!");
+        }else{
+            success.setText("");
+        }
         refreshEquipmentData();
-        //equipmentTableSetup();
     }
 
     public void removeEquipment(View v) throws IOException {
@@ -216,16 +219,27 @@ public class MainActivity extends AppCompatActivity {
 
         TextView en = (TextView) findViewById(R.id.addequipment_name);
         EditText eq = (EditText) findViewById(R.id.addequipment_quantity);
+        String eqString = eq.getText().toString();
         ItemController pc = new ItemController();
+        TextView success = (TextView) findViewById(R.id.inventorysuccess_handler);
         TextView error = (TextView) findViewById(R.id.errorhandler);
         error.setText("");
+        int quantity = 0;
+        if(!eqString.matches("")){
+            quantity = Integer.parseInt(eqString);
+        }
 
         try {
-            pc.removeEquipment(en.getText().toString(), Integer.parseInt(eq.getText().toString()));
+            pc.removeEquipment(en.getText().toString(), quantity);
         } catch (InvalidInputException e) {
             error.setText(e.getMessage());
         }
 
+        if(error.getText().equals("")){
+            success.setText("Equipment was successfully removed!");
+        }else{
+            success.setText("");
+        }
 
         refreshEquipmentData();
     }
@@ -237,9 +251,16 @@ public class MainActivity extends AppCompatActivity {
         TextView sq = (TextView) findViewById(R.id.addsupply_quantity);
         TextView su = (TextView) findViewById(R.id.addsupply_unit);
         ItemController pc = new ItemController();
-
+        TextView success = (TextView) findViewById(R.id.inventorysuccess_handler);
         TextView error = (TextView) findViewById(R.id.errorhandler);
         error.setText("");
+
+        Double quantity = 0.0;
+        String sqString = sq.getText().toString();
+
+        if(!sqString.matches("")){
+            quantity = (Double.parseDouble(sqString));
+        }
 
         Manager m = (Manager) PersistenceXStream.loadFromXMLwithXStream();
 
@@ -250,13 +271,18 @@ public class MainActivity extends AppCompatActivity {
                         pc.createSupply(m.getSupply(i).getName(), m.getSupply(i).getQuantity(), m.getSupply(i).getUnit());
                     }
                 }
-                pc.createSupply(sn.getText().toString(), Double.parseDouble(sq.getText().toString()), su.getText().toString());
+                pc.createSupply(sn.getText().toString(), quantity, su.getText().toString());
             } catch(InvalidInputException e){
                 error.setText(e.getMessage());
             }
 
+        if(error.getText().equals("")){
+            success.setText("Supply was successfully added!");
+        }else{
+            success.setText("");
+        }
+
         refreshSupplyData();
-        //supplyTableSetup();
     }
 
     public void removeSupply(View v) throws IOException{
@@ -265,14 +291,25 @@ public class MainActivity extends AppCompatActivity {
         TextView sn = (TextView) findViewById(R.id.addsupply_name);
         TextView sq = (TextView) findViewById(R.id.addsupply_quantity);
         ItemController pc = new ItemController();
-
+        TextView success = (TextView) findViewById(R.id.inventorysuccess_handler);
         TextView error = (TextView) findViewById(R.id.errorhandler);
         error.setText("");
 
+        Double quantity = 0.0;
+        String sqString = sq.getText().toString();
+
+        if(!sqString.matches("")){
+            quantity = (Double.parseDouble(sqString));
+        }
+
         try {
-            pc.removeSupply(sn.getText().toString(), Double.parseDouble(sq.getText().toString()));
+            pc.removeSupply(sn.getText().toString(), quantity);
         } catch(InvalidInputException e){
             error.setText(e.getMessage());
+        }
+
+        if(error.getText().equals("")){
+            success.setText("Supply was successfully removed!");
         }
 
         refreshSupplyData();
@@ -289,6 +326,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         ItemController pc = new ItemController();
+        TextView success = (TextView) findViewById(R.id.staffsuccess_handler);
         TextView error = (TextView) findViewById(R.id.stafferrorhandler);
         error.setText("");
 
@@ -305,8 +343,13 @@ public class MainActivity extends AppCompatActivity {
             error.setText(e.getMessage());
         }
 
+        if(error.getText().equals("")){
+            success.setText("Staff member was successfully added!");
+        }else{
+            success.setText("");
+        }
+
         refreshStaffData();
-        staffTableSetup();
     }
 
     public void addTimeStaffMember(View v) throws IOException{
@@ -314,7 +357,7 @@ public class MainActivity extends AppCompatActivity {
         setUpStartTimes();
         setUpEndTimes();
         ItemController ic = new ItemController();
-
+        TextView success = (TextView) findViewById(R.id.staffsuccess_handler);
         TextView error = (TextView) findViewById(R.id.stafferrorhandler);
         error.setText("");
 
@@ -327,31 +370,36 @@ public class MainActivity extends AppCompatActivity {
         for(int i = 0; i < startTimeTextViews.size(); i++){
             String startTimeString = startTimeTextViews.get(i).getText().toString();
             String endTimeString = endTimeTextViews.get(i).getText().toString();
-            System.out.println(startTimeString);
-            if(sn.equals("") || sn.equals(null)){
-                error.setText("Staff name cannot be empty!");
-                if(startTimeString.equals(endTimeString) && !(startTimeString.equals(""))){
-                    error.setText("Start time and end time cannot be equal!");
-                }
-            }
-            else{
-                String comps[] = startTimeString.split(":");
-                String comps2[] = endTimeString.split(":");
-                Time startTime = new Time(0000);
-                Time endTime = new Time(0000);
-                if(comps.length == 2 && comps2.length == 2){
-                    startTime.setHours(Integer.parseInt(comps[0]));
-                    startTime.setMinutes(Integer.parseInt(comps[1]));
-                    endTime.setHours(Integer.parseInt(comps2[0]));
-                    endTime.setHours(Integer.parseInt(comps2[1]));
-                    try{
-                        ic.addTimeStaffMember(sn, startTime, endTime);
-                    } catch(InvalidInputException e){
-                        error.setText(e.getMessage());
-                    }
+            System.out.println("Start Time:" + startTimeString);
+            System.out.println("End Time:" + endTimeString);
+
+
+            String comps[] = startTimeString.split(":");
+            String secondComps[] = endTimeString.split(":");
+            System.out.println("End Time Hours:" + secondComps[0]);
+            System.out.println(comps.length);
+            System.out.println(secondComps.length);
+            //System.out.println("End Time Minutes" + secondComps[1]);
+            Time startTime = new Time(0000);
+            Time endTime = new Time(0000);
+            if(comps.length == 2 && secondComps.length == 2){
+                startTime.setHours(Integer.parseInt(comps[0]));
+                startTime.setMinutes(Integer.parseInt(comps[1]));
+                endTime.setHours(Integer.parseInt(secondComps[0]));
+                endTime.setHours(Integer.parseInt(secondComps[1]));
+                try{
+                    ic.addTimeStaffMember(sn, startTime, endTime);
+                } catch(InvalidInputException e){
+                    error.setText(e.getMessage());
                 }
             }
         }
+        if(error.getText().equals("")){
+            success.setText("Staff member schedule was successfully added!");
+        }else{
+            success.setText("");
+        }
+        refreshTimesData();
     }
 
     public void addMenuItem(View v) throws IOException{
@@ -359,22 +407,29 @@ public class MainActivity extends AppCompatActivity {
         TextView mn = (TextView) findViewById(R.id.addmenuitem_name);
         TextView mp = (TextView) findViewById(R.id.addmenuitem_price);
         ItemController ic = new ItemController();
-
+        TextView success = (TextView) findViewById(R.id.mainsuccess_handler);
         TextView error = (TextView) findViewById(R.id.menuerrorhandler);
         error.setText("");
 
         Manager m = (Manager) PersistenceXStream.loadFromXMLwithXStream();
 
         try{
-            if(!m.getMenus().isEmpty()){
+            /*if(!m.getMenus().isEmpty()){
                 for(int i =0; i < m.getMenus().size(); i++){
                     ic.createMenuItem(m.getMenus(i).getName(), m.getMenus(i).getPrice());
                 }
-            }
+            }*/
             ic.createMenuItem(mn.getText().toString(), Double.parseDouble(mp.getText().toString()));
         } catch(InvalidInputException e){
             error.setText(e.getMessage());
         }
+
+        if(error.getText().equals("")){
+            success.setText("Menu item was successfully added!");
+        }else{
+            success.setText("");
+        }
+
         refreshOrderData();
     }
 
@@ -383,6 +438,7 @@ public class MainActivity extends AppCompatActivity {
 
         TextView mn = (TextView) findViewById(R.id.addmenuitem_name);
         ItemController ic = new ItemController();
+        TextView success = (TextView) findViewById(R.id.mainsuccess_handler);
         TextView error = (TextView) findViewById(R.id.menuerrorhandler);
         error.setText("");
 
@@ -392,12 +448,19 @@ public class MainActivity extends AppCompatActivity {
             error.setText(e.getMessage());
         }
 
+        if(error.getText().equals("")){
+            success.setText("Menu item was successfully removed!");
+        }else{
+            success.setText("");
+        }
+
         refreshOrderData();
     }
 
     public void addOrder(View v) throws IOException{
         androidLocationSet();
         ItemController ic = new ItemController();
+        TextView success = (TextView) findViewById(R.id.mainsuccess_handler);
         TextView error = (TextView) findViewById(R.id.menuerrorhandler);
         error.setText("");
         Spinner nameSpinner = (Spinner) findViewById(R.id.addorder_spinner);
@@ -407,21 +470,17 @@ public class MainActivity extends AppCompatActivity {
         }
         TextView oq = (TextView) findViewById(R.id.addorder_quantity);
 
-        if(oq.getText().toString().equals("")){
-            if(on.equals("")){
-                error.setText("Order name cannot be empty! Order quantity cannot be empty!");
-            } else{
-                error.setText("Order quantity cannot be empty!");
-            }
-        }else{
             try{
                 ic.menuItemOrdered(on, Integer.parseInt(oq.getText().toString()));
             } catch(InvalidInputException e){
                 error.setText(e.getMessage());
             }
-        }
 
-       //popularityTableSetup();
+        if(error.getText().equals("")){
+            success.setText("Order was successfully created!");
+        }else{
+            success.setText("");
+        }
 
     }
 
@@ -431,7 +490,7 @@ public class MainActivity extends AppCompatActivity {
         int minute = 0;
         if (comps.length == 2){
             hour = Integer.parseInt(comps[0]);
-            minute = Integer.parseInt(comps[0]);
+            minute = Integer.parseInt(comps[1]);
         }
         rtnStartTime.putInt("hour", hour);
         rtnStartTime.putInt("minute", minute);
@@ -465,7 +524,7 @@ public class MainActivity extends AppCompatActivity {
         int minute = 0;
         if (comps.length == 2){
             hour = Integer.parseInt(comps[0]);
-            minute = Integer.parseInt(comps[0]);
+            minute = Integer.parseInt(comps[1]);
         }
         rtnEndTime.putInt("hour", hour);
         rtnEndTime.putInt("minute", minute);
@@ -482,6 +541,8 @@ public class MainActivity extends AppCompatActivity {
         startTimeTextViews.add((TextView) findViewById(R.id.wednesdaystarttime_hint));
         startTimeTextViews.add((TextView) findViewById(R.id.thursdaystarttime_hint));
         startTimeTextViews.add((TextView) findViewById(R.id.fridaystarttime_hint));
+        startTimeTextViews.add((TextView) findViewById(R.id.saturdaystarttime_hint));
+        startTimeTextViews.add((TextView) findViewById(R.id.sundaystarttime_hint));
     }
 
     public void setUpEndTimes(){
@@ -490,6 +551,8 @@ public class MainActivity extends AppCompatActivity {
         endTimeTextViews.add((TextView) findViewById(R.id.wednesdayendtime_hint));
         endTimeTextViews.add((TextView) findViewById(R.id.thursdayendtime_hint));
         endTimeTextViews.add((TextView) findViewById(R.id.fridayendtime_hint));
+        endTimeTextViews.add((TextView) findViewById(R.id.saturdayendtime_hint));
+        endTimeTextViews.add((TextView) findViewById(R.id.sundayendtime_hint));
     }
 
     private void refreshEquipmentData(){
@@ -550,117 +613,14 @@ public class MainActivity extends AppCompatActivity {
         orderSpinner.setAdapter(orderAdapter);
     }
 
-    private void staffTableSetup(){
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        View v = tabLayout.getChildAt(0).getRootView();
-
-        Manager m = Manager.getInstance();
-
-        TextView staffRoleEntry = (TextView) findViewById(R.id.staffmemberroleentry);
-        TableLayout staffmembers = (TableLayout) findViewById(R.id.staffmember_table);
-        staffmembers.setStretchAllColumns(true);
-        staffmembers.bringToFront();
-        int i =0;
-        for(Iterator<StaffMember> staffMembers = m.getStaffmembers().iterator(); staffMembers.hasNext(); i++){
-            StaffMember sM = staffMembers.next();
-            TableRow tr = new TableRow(this);
-            TextView c1 = new TextView(this);
-            c1.setText(sM.getName());
-            TextView c2 = new TextView(this);
-            c2.setText(sM.getRole());
-            c2.setLayoutParams(staffRoleEntry.getLayoutParams());
-            tr.addView(c1);
-            tr.addView(c2);
-            staffmembers.addView(tr);
+    private void refreshTimesData(){
+        setUpStartTimes();
+        setUpEndTimes();
+        for(int i = 0; i < startTimeTextViews.size(); i++){
+            startTimeTextViews.get(i).setText("");
+            endTimeTextViews.get(i).setText("");
         }
     }
 
-    private void equipmentTableSetup(){
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        View v = tabLayout.getChildAt(0).getRootView();
-
-        Manager m = Manager.getInstance();
-
-        TextView staffRoleEntry = (TextView) (v.findViewById(R.id.staffmemberroleentry));
-        TableLayout equipmentTable = (TableLayout) v.findViewById(R.id.equipment_table);
-        equipmentTable.setStretchAllColumns(true);
-        equipmentTable.bringToFront();
-        int i =0;
-        for(Iterator<Equipment> equipments = m.getEquipments().iterator(); equipments.hasNext(); i++){
-            Equipment e = equipments.next();
-            TableRow tr = new TableRow(this);
-            TextView c1 = new TextView(this);
-            c1.setText(e.getName());
-            TextView c2 = new TextView(this);
-            c2.setText(Integer.toString(e.getQuantity()));
-            tr.addView(c1);
-            tr.addView(c2);
-            equipmentTable.addView(tr);
-        }
-    }
-
-    private void supplyTableSetup(){
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        View v = tabLayout.getChildAt(0).getRootView();
-        View vx = tabLayout.getChildAt(0).getRootView().getRootView();
-
-        Manager m = Manager.getInstance();
-
-       // TextView staffRoleEntry = (TextView) findViewById(R.id.staffmemberroleentry;
-        TableLayout suppliesTable = (TableLayout) findViewById(R.id.supply_table);
-        suppliesTable.setStretchAllColumns(true);
-        suppliesTable.bringToFront();
-        int i = 0;
-        for(Iterator<Supply> supplies = m.getSupplies().iterator(); supplies.hasNext(); i++){
-            Supply s = supplies.next();
-            TableRow tr = new TableRow(this);
-            TextView c1 = new TextView(this);
-            c1.setText(s.getName());
-            TextView c2 = new TextView(this);
-            c2.setText(s.getName());
-
-//            c2.setText(Double.toString(s.getQuantity()));
-            //c2.setLayoutParams(staffRoleEntry.getLayoutParams());
-            TextView c3 = new TextView(this);
-            c3.setText(s.getUnit());
-            tr.addView(c1);
-            tr.addView(c2);
-            tr.addView(c3);
-            suppliesTable.addView(tr);
-
-        }
-
-    }
-
-    private void popularityTableSetup(){
-        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
-        View v = tabLayout.getChildAt(0).getRootView();
-
-        Manager m = Manager.getInstance();
-
-        TextView staffRoleEntry = (TextView) (v.findViewById(R.id.staffmemberroleentry));
-        TableLayout popularityTable = (TableLayout) v.findViewById(R.id.popularity_table);
-        popularityTable.setStretchAllColumns(true);
-        popularityTable.bringToFront();
-        int i =0;
-        for(Iterator<ca.mcgill.ecse321.foodtruckmanagementsystem.model.MenuItem> menuItems = m.getMenus().iterator(); menuItems.hasNext(); i++){
-            ca.mcgill.ecse321.foodtruckmanagementsystem.model.MenuItem mI = menuItems.next();
-            TableRow tr = new TableRow(this);
-            TextView c1 = new TextView(this);
-            c1.setText(mI.getName());
-            TextView c2 = new TextView(this);
-            c2.setText(mI.getPopularityCounter());
-            c2.setLayoutParams(staffRoleEntry.getLayoutParams());
-            tr.addView(c1);
-            tr.addView(c2);
-            popularityTable.addView(tr);
-        }
-    }
-
-    public Manager getManager(){
-        androidLocationSet();
-        Manager m = (Manager) PersistenceXStream.loadFromXMLwithXStream();
-        return m;
-    }
 }
 

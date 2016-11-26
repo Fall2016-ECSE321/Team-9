@@ -6,7 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="ca.mcgill.ecse321.myapplication.MainActivity">
+    tools:context="ca.mcgill.ecse321.foodtruckmanagementsystem.MainActivity">
 
     <TextView
         android:id="@+id/section_label"
@@ -18,6 +18,12 @@
         android:layout_height="wrap_content"
         android:textColor="#E1338A"
         android:id="@+id/menuerrorhandler"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#008000"
+        android:id="@+id/mainsuccess_handler"/>
 
 <!-- Add Menu Item Section -->
     <TextView

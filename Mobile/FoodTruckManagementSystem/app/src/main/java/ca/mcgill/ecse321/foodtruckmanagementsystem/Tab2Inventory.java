@@ -1,4 +1,4 @@
-package ca.mcgill.ecse321.myapplication;
+package ca.mcgill.ecse321.foodtruckmanagementsystem;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

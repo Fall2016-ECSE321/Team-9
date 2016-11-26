@@ -1,4 +1,4 @@
-package ca.mcgill.ecse321.myapplication;
+package ca.mcgill.ecse321.foodtruckmanagementsystem;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("ca.mcgill.ecse321.myapplication", appContext.getPackageName());
+        assertEquals("ca.mcgill.ecse321.foodtruckmanagementsystem", appContext.getPackageName());
     }
 }

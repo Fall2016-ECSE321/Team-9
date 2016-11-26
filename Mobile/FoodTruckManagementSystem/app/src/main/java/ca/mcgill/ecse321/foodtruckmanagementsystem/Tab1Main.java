@@ -1,4 +1,4 @@
-package ca.mcgill.ecse321.myapplication;
+package ca.mcgill.ecse321.foodtruckmanagementsystem;
 
 /**
  * Created by Evan on 20/11/2016.
