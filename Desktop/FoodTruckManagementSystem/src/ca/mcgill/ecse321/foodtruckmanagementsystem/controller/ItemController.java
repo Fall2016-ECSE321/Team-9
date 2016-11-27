@@ -273,15 +273,15 @@ public class ItemController {
 		}
 		
 		if(modifiedTimeCounter != 0) {
-			if(equalTimeCounter != 0 && modifiedTimeCounter != 0)
+			if(equalTimeCounter != 0)
 				error = error + "End time cannot equal to start time! ";
 			if(endTimeBeforeCounter != 0)
 				error = error + "End time must be greater than start time!";
+			if(startTimeNullCounter > endTimeNullCounter)
+				error = error + "Start time cannot be empty! ";
+			if(endTimeNullCounter > startTimeNullCounter)
+				error = error + "End time cannot be empty! ";
 		}
-		if(startTimeNullCounter != 0)
-			error = error + "Start time cannot be empty! ";
-		if(endTimeNullCounter != 0)
-			error = error + "End time cannot be empty! ";		
 		
 		if(error.length() > 0)
 			throw new InvalidInputException(error);

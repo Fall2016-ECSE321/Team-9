@@ -99,22 +99,23 @@ public class FoodTruckManagementSystemPage extends JFrame {
 	public void initComponents() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(FoodTruckManagementSystemPage.class.getResource("/ca/mcgill/ecse321/foodtruckmanagementsystem/view/foodtruck.png")));
 		setTitle("Food Truck Management System");
-		setResizable(false);
+		setResizable(true);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1500, 980);
+		setBounds(100, 100, 1600, 980);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
 		JTabbedPane tabbedPane = new JTabbedPane();
+		tabbedPane.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addComponent(tabbedPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 1338, Short.MAX_VALUE)
+				.addComponent(tabbedPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 1600, Short.MAX_VALUE)
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
-				.addComponent(tabbedPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 757, Short.MAX_VALUE)
+				.addComponent(tabbedPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
 		);
 		
 		JPanel tab1 = new JPanel();
@@ -126,36 +127,42 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		orderPanel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][][][][][][][][][][][][][][]", "[][][][][][][][][][][][][][][]"));
 		
 		JLabel lblMenuItem = new JLabel("Menu Item:");
-		lblMenuItem.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		lblMenuItem.setFont(new Font("Tahoma", Font.PLAIN, 44));
 		orderPanel.add(lblMenuItem, "cell 0 0");
 		
 		lblMenuItemMessage = new JLabel("New label");
+		lblMenuItemMessage.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		orderPanel.add(lblMenuItemMessage, "cell 0 1 27 1,alignx left");
 		
 		JLabel lblItemName = new JLabel("Item Name:");
+		lblItemName.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		orderPanel.add(lblItemName, "cell 1 2");
 		
-		JLabel lblPrice = new JLabel("Price:");
-		orderPanel.add(lblPrice, "cell 3 2");
-		
-		menuItemName = new JTextField();
-		orderPanel.add(menuItemName, "cell 1 4,alignx left");
-		menuItemName.setColumns(10);
-		
 		JButton btnAddToMenu = new JButton("Add to Menu List");
+		btnAddToMenu.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		btnAddToMenu.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				createMenuItemActionPerformed(evt);
 			}
-		});
-		
+		});		
 		
 		menuPriceModel = new SpinnerNumberModel(0.0, 0.0, 1.0E8, 0.0);
+		
+		menuItemName = new JTextField();
+		menuItemName.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		orderPanel.add(menuItemName, "cell 3 2,grow");
+		menuItemName.setColumns(10);
+		
+		JLabel lblPrice = new JLabel("Price:");
+		lblPrice.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		orderPanel.add(lblPrice, "cell 1 4");
 		JSpinner menuItemPrice = new JSpinner(menuPriceModel);
-		orderPanel.add(menuItemPrice, "cell 3 4,growx");
+		menuItemPrice.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		orderPanel.add(menuItemPrice, "cell 3 4,grow");
 		orderPanel.add(btnAddToMenu, "cell 1 6");
 		
 		JButton btnRemoveItem = new JButton("Remove Item");
+		btnRemoveItem.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		btnRemoveItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				removeMenuItemActionPerformed(e);
@@ -164,29 +171,33 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		orderPanel.add(btnRemoveItem, "cell 3 6,alignx left");
 		
 		JLabel lblAddOrder = new JLabel("Add Order:");
-		lblAddOrder.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		lblAddOrder.setFont(new Font("Tahoma", Font.PLAIN, 44));
 		orderPanel.add(lblAddOrder, "cell 0 8");
 		
 		lblOrderMessage = new JLabel("");
+		lblOrderMessage.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		orderPanel.add(lblOrderMessage, "cell 0 9 27 1");
 		
 		JLabel lblSelectItemTo = new JLabel("Select Item to Order:");
-		orderPanel.add(lblSelectItemTo, "cell 1 10");
-				
+		lblSelectItemTo.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		orderPanel.add(lblSelectItemTo, "cell 1 10");				
 		
 		menuItemList = new JComboBox<String>(new String[0]);
+		menuItemList.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		menuItemList.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt){
 				JComboBox<String> cb = (JComboBox<String>)evt.getSource();
 				selectedMenuItem = cb.getSelectedIndex();
 			}
 		});
-		orderPanel.add(menuItemList, "cell 3 10,growx");	
+		orderPanel.add(menuItemList, "cell 3 10,grow");	
 		
 		JLabel lblQuantity_2 = new JLabel("Quantity:");
+		lblQuantity_2.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		orderPanel.add(lblQuantity_2, "cell 1 12");
 		
 		JButton btnOrder = new JButton("Order");
+		btnOrder.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		btnOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				createOrderActionPerformed(e);
@@ -195,7 +206,8 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		
 		orderModel = new SpinnerNumberModel(0, -100000000, 100000000, 1);
 		JSpinner orderQuantity = new JSpinner(orderModel);
-		orderPanel.add(orderQuantity, "cell 3 12,growx");
+		orderQuantity.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		orderPanel.add(orderQuantity, "cell 3 12,alignx left,growy");
 		orderPanel.add(btnOrder, "cell 1 14");
 		
 		JPanel tab2 = new JPanel();
@@ -204,24 +216,29 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		tab2.setLayout(layout);
 		
 		JLabel lblAddEquipment = new JLabel("Add Equipment");
-		lblAddEquipment.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		lblAddEquipment.setFont(new Font("Tahoma", Font.PLAIN, 44));
 		tab2.add(lblAddEquipment, "cell 0 0");
 		
 		lblEquipmentMessage = new JLabel("");
+		lblEquipmentMessage.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab2.add(lblEquipmentMessage, "cell 0 1 4 1");
 		
 		JLabel lblEquipmentName = new JLabel("Equipment name:");
+		lblEquipmentName.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab2.add(lblEquipmentName, "cell 0 2 2 1,alignx left");
 		
 		equipmentName = new JTextField();
-		tab2.add(equipmentName, "flowx,cell 2 2,growx");
+		equipmentName.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		tab2.add(equipmentName, "flowx,cell 2 2,grow");
 		equipmentName.setColumns(10);
 		
 		JLabel lblEquipmentQuantity = new JLabel("Equipment Quantity:");
+		lblEquipmentQuantity.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab2.add(lblEquipmentQuantity, "cell 0 4");
 		
 		
 		JButton btnAddEquipment = new JButton("Add Equipment");
+		btnAddEquipment.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		btnAddEquipment.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				addEquipmentActionPerformed(e);
@@ -229,10 +246,12 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		});
 		equipmentModel = new SpinnerNumberModel(0, -100000000, 100000000, 1);
 		JSpinner equipmentQuantity = new JSpinner(equipmentModel);
-		tab2.add(equipmentQuantity, "cell 2 4,growx");
+		equipmentQuantity.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		tab2.add(equipmentQuantity, "cell 2 4,grow");
 		tab2.add(btnAddEquipment, "cell 0 6,alignx right");
 		
 		JButton btnRemoveEquipment = new JButton("Remove Equipment");
+		btnRemoveEquipment.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		btnRemoveEquipment.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				removeEquipmentActionPerformed(e);
@@ -241,30 +260,37 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		tab2.add(btnRemoveEquipment, "cell 2 6");
 		
 		JLabel lblAddSupply = new JLabel("Add Supply");
-		lblAddSupply.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		lblAddSupply.setFont(new Font("Tahoma", Font.PLAIN, 44));
 		tab2.add(lblAddSupply, "cell 0 8");
 		
 		lblSupplyMessage = new JLabel("");
+		lblSupplyMessage.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab2.add(lblSupplyMessage, "cell 0 9 4 1");
 		
 		JLabel lblSupplyName = new JLabel("Supply Name:");
+		lblSupplyName.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab2.add(lblSupplyName, "cell 0 10");
 		
 		supplyName = new JTextField();
-		tab2.add(supplyName, "cell 2 10,growx");
+		supplyName.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		tab2.add(supplyName, "cell 2 10,grow");
 		supplyName.setColumns(10);
 		
 		JLabel lblSupplyQuantity = new JLabel("Supply Quantity:");
+		lblSupplyQuantity.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab2.add(lblSupplyQuantity, "cell 0 12");
 		
 		supplyModel = new SpinnerNumberModel(0.0, -1.0E8, 1.0E8, 0.1);
 		JSpinner supplyQuantity = new JSpinner(supplyModel);
-		tab2.add(supplyQuantity, "cell 2 12,growx");
+		supplyQuantity.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		tab2.add(supplyQuantity, "cell 2 12,grow");
 		
 		JLabel lblSupplyUnit = new JLabel("Supply Unit:");
+		lblSupplyUnit.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab2.add(lblSupplyUnit, "cell 0 14");
 		
 		JButton btnAddSupply = new JButton("Add Supply");
+		btnAddSupply.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		btnAddSupply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				addSupplyActionPerformed(e);
@@ -272,11 +298,13 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		});
 		
 		supplyUnit = new JTextField();
-		tab2.add(supplyUnit, "cell 2 14,growx");
+		supplyUnit.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		tab2.add(supplyUnit, "cell 2 14,grow");
 		supplyUnit.setColumns(10);
 		tab2.add(btnAddSupply, "cell 0 16,alignx right");
 		
 		JButton btnRemoveSupply = new JButton("Remove Supply");
+		btnRemoveSupply.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		btnRemoveSupply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				removeSupplyActionPerformed(e);
@@ -289,16 +317,19 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		tab3.setLayout(new MigLayout("", "[][][][][][][][grow]", "[][][][][][][][][][][][][][][][][][][][][][][]"));
 		
 		JLabel lblAddStaff = new JLabel("Add New Staff");
-		lblAddStaff.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		lblAddStaff.setFont(new Font("Tahoma", Font.PLAIN, 44));
 		tab3.add(lblAddStaff, "cell 0 0");
 		
 		lblStaffMemberMessage = new JLabel("");
+		lblStaffMemberMessage.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab3.add(lblStaffMemberMessage, "cell 0 1 8 1");
 		
 		JLabel lblStaffName = new JLabel("Staff Name:");
+		lblStaffName.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab3.add(lblStaffName, "flowx,cell 0 2,alignx trailing");
 		
 		JButton btnAddStaff = new JButton("Add");
+		btnAddStaff.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		btnAddStaff.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				addStaffMemberActionPerformed(e);
@@ -306,24 +337,29 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		});
 		
 		staffName = new JTextField();
-		tab3.add(staffName, "cell 1 2,alignx left");
+		staffName.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		tab3.add(staffName, "cell 1 2,grow");
 		staffName.setColumns(10);
 		
 		JLabel lblSelectRole = new JLabel("Select Role:");
+		lblSelectRole.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab3.add(lblSelectRole, "cell 2 2");
 		
 		staffroleComboBox = new JComboBox(staffRoles);
-		tab3.add(staffroleComboBox, "cell 3 2");
+		staffroleComboBox.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		tab3.add(staffroleComboBox, "cell 3 2,grow");
 		tab3.add(btnAddStaff, "cell 5 2,alignx left");
 		
 		JLabel lblRegisterStaffsWeekly = new JLabel("Register Staff's Weekly Schedule");
-		lblRegisterStaffsWeekly.setFont(new Font("Tahoma", Font.PLAIN, 34));
-		tab3.add(lblRegisterStaffsWeekly, "cell 0 4 2 1");
+		lblRegisterStaffsWeekly.setFont(new Font("Tahoma", Font.PLAIN, 44));
+		tab3.add(lblRegisterStaffsWeekly, "cell 0 4 3 1");
 		
 		lblscheduleMessage = new JLabel("");
+		lblscheduleMessage.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab3.add(lblscheduleMessage, "cell 0 5 8 1");
 		
 		JLabel lblSelectStaffName = new JLabel("Select Staff Name:");
+		lblSelectStaffName.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab3.add(lblSelectStaffName, "cell 1 6,alignx trailing");
 		
 		Calendar cal = Calendar.getInstance();
@@ -334,6 +370,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 			startTimes[i] = new JSpinner(new SpinnerDateModel());
 			startTimeEditors[i] = new JSpinner.DateEditor(startTimes[i], "HH:mm");
 			startTimes[i].setEditor(startTimeEditors[i]);
+			startTimes[i].setFont(new Font("Tahoma", Font.PLAIN, 34));
 			startTimes[i].setValue(cal.getTime());
 			tab3.add(startTimes[i], "cell 2 " + (8+(2*i)) +",alignx left");
 		}
@@ -343,11 +380,13 @@ public class FoodTruckManagementSystemPage extends JFrame {
 			endTimes[i] = new JSpinner(new SpinnerDateModel());
 			endTimeEditors[i] = new JSpinner.DateEditor(endTimes[i], "HH:mm");
 			endTimes[i].setEditor(endTimeEditors[i]);
+			endTimes[i].setFont(new Font("Tahoma", Font.PLAIN, 34));
 			endTimes[i].setValue(cal.getTime());
 			tab3.add(endTimes[i], "cell 3 " +(8+(2*i)) + ",aligny center");
 		}
 		
 		staffMemberList = new JComboBox<String>(new String[0]);
+		staffMemberList.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		staffMemberList.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt){
 				JComboBox<String> cb = (JComboBox<String>)evt.getSource();
@@ -358,10 +397,12 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		
 		for(int i = 0; i < daysOfTheWeek.length; i++) {
 			lbldaysOfTheWeek[i] = new JLabel(daysOfTheWeek[i] + ":");
+			lbldaysOfTheWeek[i].setFont(new Font("Tahoma", Font.PLAIN, 34));
 			tab3.add(lbldaysOfTheWeek[i], "flowx,cell 1 " + (8+(2*i)) + ",alignx left");
 		}
 		
 		JButton btnRemoveStaff = new JButton("Remove Staff");
+		btnRemoveStaff.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		btnRemoveStaff.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				deleteStaffMemberActionPerformed(e);
@@ -370,12 +411,15 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		tab3.add(btnRemoveStaff, "cell 4 6 2 1");
 		
 		JLabel lblStartTime = new JLabel("Start Time");
+		lblStartTime.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab3.add(lblStartTime, "cell 2 7,alignx left");
 		
 		JLabel lblEndTime = new JLabel("End Time");
+		lblEndTime.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab3.add(lblEndTime, "cell 3 7");
 		
 		JButton btnSaveSchedule = new JButton("Save");
+		btnSaveSchedule.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		btnSaveSchedule.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
 				saveScheduleActionPerformed(evt);
@@ -403,19 +447,23 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		staffPanel = new JPanel();
 		staffPanel.setBackground(new Color(0xBCB7C1));
 		staffPane.setViewportView(staffPanel);
-		staffPanel.setLayout(new MigLayout("", "[][][][][]", "[][][][][]"));
+		staffPanel.setLayout(new MigLayout("", "[][][grow][][]", "[][][][][][][]"));
 		
-		JLabel lblStaffList = new JLabel("Staff List:");
+		JLabel lblStaffList = new JLabel("Staff List: ");
+		lblStaffList.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		staffPanel.add(lblStaffList, "cell 0 0");
 		
 		JLabel lblStaffNumber = new JLabel("#");
+		lblStaffNumber.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		staffPanel.add(lblStaffNumber, "cell 0 2,alignx right");
 		
-		JLabel lblStaffName_1 = new JLabel("Staff Name:");
+		JLabel lblStaffName_1 = new JLabel("Staff Name: ");
+		lblStaffName_1.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		staffPanel.add(lblStaffName_1, "cell 2 2");
 		
-		JLabel lblStaffRole = new JLabel("Staff Role:");
-		staffPanel.add(lblStaffRole, "cell 4 2");		
+		JLabel lblStaffRole = new JLabel("Staff Role: ");
+		lblStaffRole.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		staffPanel.add(lblStaffRole, "cell 4 2");
 		
 		JScrollPane popularityPane = new JScrollPane();
 		popularityPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
@@ -427,15 +475,19 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		popularityPanel.setLayout(new MigLayout("", "[][][][][]", "[][][][]"));
 		
 		JLabel lblPopularityList = new JLabel("Popluarity List:");
+		lblPopularityList.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		popularityPanel.add(lblPopularityList, "cell 0 0");
 		
 		JLabel lblPopularityRank = new JLabel("Rank");
+		lblPopularityRank.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		popularityPanel.add(lblPopularityRank, "cell 0 2,alignx right");
 		
-		JLabel lblName = new JLabel("Name");
+		JLabel lblName = new JLabel("Name: ");
+		lblName.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		popularityPanel.add(lblName, "cell 2 2");
 		
-		JLabel lblOrderQuantity = new JLabel("Order Quantity");
+		JLabel lblOrderQuantity = new JLabel("Order Quantity: ");
+		lblOrderQuantity.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		popularityPanel.add(lblOrderQuantity, "cell 4 2");
 		
 		JScrollPane supplyPane = new JScrollPane();
@@ -448,18 +500,23 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		supplyPanel.setLayout(new MigLayout("", "[][][][][][][]", "[][][][]"));
 		
 		JLabel lblSupplyList = new JLabel("Supply List:");
+		lblSupplyList.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		supplyPanel.add(lblSupplyList, "cell 0 0");
 		
 		JLabel lblNumber = new JLabel("#");
+		lblNumber.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		supplyPanel.add(lblNumber, "cell 0 2,alignx right");
 		
-		JLabel lblName_1 = new JLabel("Name:");
+		JLabel lblName_1 = new JLabel("Name: ");
+		lblName_1.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		supplyPanel.add(lblName_1, "cell 2 2");
 		
-		JLabel lblQuantity = new JLabel("Quantity");
+		JLabel lblQuantity = new JLabel("Quantity: ");
+		lblQuantity.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		supplyPanel.add(lblQuantity, "cell 4 2");
 		
-		JLabel lblUnit = new JLabel("Unit");
+		JLabel lblUnit = new JLabel("Unit: ");
+		lblUnit.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		supplyPanel.add(lblUnit, "cell 6 2");
 		
 		JScrollPane equipmentPane = new JScrollPane();
@@ -472,15 +529,19 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		equipmentPanel.setLayout(new MigLayout("", "[][][][][]", "[][][]"));
 		
 		JLabel lblEquipmentList = new JLabel("Equipment List:");
+		lblEquipmentList.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		equipmentPanel.add(lblEquipmentList, "cell 0 0");
 		
 		JLabel lblNewLabel = new JLabel("#");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		equipmentPanel.add(lblNewLabel, "cell 0 2,alignx right");
 		
 		JLabel lblName_2 = new JLabel("Name:");
+		lblName_2.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		equipmentPanel.add(lblName_2, "cell 2 2");
 		
 		JLabel lblQuantity_1 = new JLabel("Quantity:");
+		lblQuantity_1.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		equipmentPanel.add(lblQuantity_1, "cell 4 2");
 		
 		contentPane.setLayout(gl_contentPane);
@@ -562,7 +623,8 @@ public class FoodTruckManagementSystemPage extends JFrame {
 	}
 	
 	private void resetOrderData() {
-		
+		menuItemList.setSelectedIndex(-1);
+		orderModel.setValue(0);
 	}
 	
 	private void loadStaffMemberReport() {
@@ -579,16 +641,24 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		staffMemberNumbers.clear();
 		int index = 0;
 		for(StaffMember sm : m.getStaffmembers()) {
-			staffNamesReport.add(new JLabel(sm.getName()));
-			staffRolesReport.add(new JLabel(sm.getRole()));
+			JLabel name = new JLabel(sm.getName());
+			name.setFont(new Font("Tahoma", Font.PLAIN, 34));
+			staffNamesReport.add(name);
+			JLabel role = new JLabel(sm.getRole());
+			role.setFont(new Font("Tahoma", Font.PLAIN, 34));
+			staffRolesReport.add(role);
 			staffPanel.add(staffNamesReport.get(index), "cell 2 " + (3+index));
 			staffPanel.add(staffRolesReport.get(index), "cell 4 " + (3+index));
 			if(index < 9) {
-				staffMemberNumbers.add(new JLabel("0" + (index+1)));
+				JLabel num = new JLabel("0" + (index+1));
+				num.setFont(new Font("Tahoma", Font.PLAIN, 34));
+				staffMemberNumbers.add(num);
 				staffPanel.add(staffMemberNumbers.get(index), "cell 0 " + (3+index) + ",alignx right");
 			}
 			else {
-				staffMemberNumbers.add(new JLabel("" + index));
+				JLabel num = new JLabel("" + index);
+				num.setFont(new Font("Tahoma", Font.PLAIN, 34));
+				staffMemberNumbers.add(num);
 				staffPanel.add(staffMemberNumbers.get(index), "cell 0 " + (3+index) + ",alignx right");
 			}	
 			index++;
@@ -611,18 +681,28 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		supplyNumbers.clear();
 		int index = 0;
 		for(Supply s : m.getSupplies()) {
-			supplyNamesReport.add(new JLabel(s.getName()));
-			supplyQuantitiesReport.add(new JLabel("" + s.getQuantity()));
-			supplyUnitReport.add(new JLabel(s.getUnit()));
+			JLabel name = new JLabel(s.getName());
+			name.setFont(new Font("Tahoma", Font.PLAIN, 34));
+			supplyNamesReport.add(name);
+			JLabel quantity = new JLabel("" + s.getQuantity());
+			quantity.setFont(new Font("Tahoma", Font.PLAIN, 34));
+			supplyQuantitiesReport.add(quantity);
+			JLabel unit = new JLabel(s.getUnit());
+			unit.setFont(new Font("Tahoma", Font.PLAIN, 34));
+			supplyUnitReport.add(unit);
 			supplyPanel.add(supplyNamesReport.get(index), "cell 2 " + (3+index));
 			supplyPanel.add(supplyQuantitiesReport.get(index), "cell 4 " + (3+index));
 			supplyPanel.add(supplyUnitReport.get(index), "cell 6 " + (3+index));
 			if(index < 9) {
-				supplyNumbers.add(new JLabel("0" + (index+1)));
+				JLabel num = new JLabel("0" + (index+1));
+				num.setFont(new Font("Tahoma", Font.PLAIN, 34));
+				supplyNumbers.add(num);
 				supplyPanel.add(supplyNumbers.get(index), "cell 0 " + (3+index) + ",alignx right");
 			}
 			else {
-				supplyNumbers.add(new JLabel("" + index));
+				JLabel num = new JLabel("" + index);
+				num.setFont(new Font("Tahoma", Font.PLAIN, 34));
+				supplyNumbers.add(num);
 				supplyPanel.add(supplyNumbers.get(index), "cell 0 " + (3+index) + ",alignx right");
 			}	
 			index++;
@@ -643,16 +723,24 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		equipmentNumbers.clear();
 		int index = 0;
 		for(Equipment e : m.getEquipments()) {
-			equipmentNamesReport.add(new JLabel(e.getName()));
-			equipmentQuantitiesReport.add(new JLabel("" + e.getQuantity()));
+			JLabel name = new JLabel(e.getName());
+			name.setFont(new Font("Tahoma", Font.PLAIN, 34));
+			equipmentNamesReport.add(name);
+			JLabel quantity = new JLabel("" + e.getQuantity());
+			quantity.setFont(new Font("Tahoma", Font.PLAIN, 34));
+			equipmentQuantitiesReport.add(quantity);
 			equipmentPanel.add(equipmentNamesReport.get(index), "cell 2 " + (3+index));
 			equipmentPanel.add(equipmentQuantitiesReport.get(index), "cell 4 " + (3+index));
 			if(index < 9) {
-				equipmentNumbers.add(new JLabel("0" + (index+1)));
+				JLabel num = new JLabel("0" + (index+1));
+				num.setFont(new Font("Tahoma", Font.PLAIN, 34));
+				equipmentNumbers.add(num);
 				equipmentPanel.add(equipmentNumbers.get(index), "cell 0 " + (3+index) + ",alignx right");
 			}
 			else {
-				equipmentNumbers.add(new JLabel("" + index));
+				JLabel num = new JLabel("" + index);
+				num.setFont(new Font("Tahoma", Font.PLAIN, 34));
+				equipmentNumbers.add(num);
 				equipmentPanel.add(equipmentNumbers.get(index), "cell 0 " + (3+index) + ",alignx right");
 			}	
 			index++;
@@ -679,17 +767,25 @@ public class FoodTruckManagementSystemPage extends JFrame {
 			}
 		});
 		
-		for(int i = 0; i < 5; i++) {
-			popularityNamesReport.add(new JLabel(mi.get(i).getName()));
-			popularityQuantitiesReport.add(new JLabel("" + mi.get(i).getPopularityCounter()));
-			popularityPanel.add(popularityNamesReport.get(i), "cell 2 " + (3+i));
+		for(int i = 0; i < mi.size(); i++) {
+			JLabel name = new JLabel(mi.get(i).getName());
+			JLabel quantity = new JLabel("" + mi.get(i).getPopularityCounter());
+			name.setFont(new Font("Tahoma", Font.PLAIN, 34));
+			quantity.setFont(new Font("Tahoma", Font.PLAIN, 34));
+			popularityNamesReport.add(name);
+			popularityQuantitiesReport.add(quantity);
+			popularityPanel.add(popularityNamesReport.get(i), "cell 2 " + (3+i) + ",grow");
 			popularityPanel.add(popularityQuantitiesReport.get(i), "cell 4 " + (3+i));
 			if(i < 9) {
-				popularityNumbers.add(new JLabel("0" + (i+1)));
+				JLabel num = new JLabel("0" + (i+1));
+				num.setFont(new Font("Tahoma", Font.PLAIN, 34));
+				popularityNumbers.add(num);
 				popularityPanel.add(popularityNumbers.get(i), "cell 0 " + (3+i) + ",alignx right");
 			}
 			else {
-				popularityNumbers.add(new JLabel("" + i));
+				JLabel num = new JLabel("" + i);
+				num.setFont(new Font("Tahoma", Font.PLAIN, 34));
+				popularityNumbers.add(num);
 				popularityPanel.add(popularityNumbers.get(i), "cell 0 " + (3+i) + ",alignx right");
 			}	
 		}	
@@ -794,7 +890,6 @@ public class FoodTruckManagementSystemPage extends JFrame {
 	}
 	
 	private void addStaffMemberActionPerformed(java.awt.event.ActionEvent evt) {
-		// add error handling for staff member's name
 		ItemController c = new ItemController();
 		smMessage = "";
 		
@@ -807,8 +902,9 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		
 		if(smMessage.contains("Staff Member name")) 
 			staffName.setText("");		
-//		if(smMessage.contains("Staff Member role")) {
-//		}			
+		if(smMessage.contains("Staff Member role"))
+			staffroleComboBox.setSelectedIndex(-1);
+		
 		if(smMessage.equals("")) {
 			lblStaffMemberMessage.setForeground(Color.GREEN);
 			smMessage = "Staff Member was successfully added!";
