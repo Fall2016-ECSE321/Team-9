@@ -63,8 +63,6 @@ public class MainActivity extends AppCompatActivity {
     Bundle rtnEndTime = new Bundle();
     ArrayList<TextView> startTimeTextViews = new ArrayList<>();
     ArrayList<TextView> endTimeTextViews = new ArrayList<>();
-    Time[] startTimes = new Time[7];
-    Time[] endTimes = new Time[7];
     Spinner orderSpinner;
     ArrayAdapter<String> orderAdapter;
     HashMap<Integer, ca.mcgill.ecse321.foodtruckmanagementsystem.model.MenuItem> menuItems;
@@ -388,16 +386,28 @@ public class MainActivity extends AppCompatActivity {
 
         Spinner spinner = (Spinner) findViewById(R.id.staffmember_spinner);
         String sn = "";
+
+        Time[] startTimes = new Time[7];
+        Time[] endTimes = new Time[7];
+
         if(spinner.getSelectedItem() != null){
             sn = spinner.getSelectedItem().toString();
         }
 
-        for(int i = 0; i < startTimeTextViews.size(); i++){
+        for(int i = 0; i < 7; i++){
             String startTimeString = startTimeTextViews.get(i).getText().toString();
             String endTimeString = endTimeTextViews.get(i).getText().toString();
 
             String comps[] = startTimeString.split(":");
             String secondComps[] = endTimeString.split(":");
+            System.out.println(startTimeString);
+            System.out.println(endTimeString);
+
+            System.out.println(comps[0]);
+            if(comps.length > 1){
+                System.out.println(comps[1]);
+            }
+
             Time startTime = new Time(0000);
             Time endTime = new Time(0000);
 
@@ -405,21 +415,23 @@ public class MainActivity extends AppCompatActivity {
                 startTime.setHours(Integer.parseInt(comps[0]));
                 startTime.setMinutes(Integer.parseInt(comps[1]));
                 endTime.setHours(Integer.parseInt(secondComps[0]));
-                endTime.setHours(Integer.parseInt(secondComps[1]));
+                endTime.setMinutes(Integer.parseInt(secondComps[1]));
 
                 startTimes[i] = startTime;
                 endTimes[i] = endTime;
 
+                System.out.println(startTimes[i]);
+                System.out.println(endTimes[i]);
+
             }
         }
+
         try{
             ic.addTimeStaffMember(sn, startTimes, endTimes);
         } catch(InvalidInputException e){
             error.setText(e.getMessage());
         }
 
-        startTimes = new Time[7];
-        endTimes = new Time[7];
 
         if(error.getText().equals("")){
             success.setText("Staff member schedule was successfully added!");
