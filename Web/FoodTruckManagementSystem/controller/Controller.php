@@ -496,7 +496,7 @@ class Controller{
 		$quantity = InputValidator::validate_input($menuItemQuantity);
 		
 		if (($name != null || strlen($name)!=0)&&($quantity != null || $quantity !=0) &&($quantity>0)){
-			//1. Load all of the data
+			//if inputs are valid, Load all of the data
 			$pm = new PersistenceFoodTruckManagementSystem();
 			$m  = $pm->loadDataFromStore();
 			$flag = false;
@@ -514,11 +514,11 @@ class Controller{
 				$error = "Order name does not exist!";
 				throw new Exception($error);
 			}
-			//3. Write all of the data
+			//Write all of the data
 			$pm->writeDataToStore($m);
 		}
 		else{
-			// 4. Validate all the innputs
+			//since inputs are invalid, throw appropriate erros
 			if ($name == null || strlen($name)==0){
 				$error .="Order name cannot be empty!";
 			}
