@@ -15,13 +15,13 @@
 
 <style>
 .btn-default {
-	background: #000;
+	background: #444344;
 	color: #fff;
 }
 
 .btn-default:hover {
 	background: #fff;
-	color: #000;
+	color: #444344;
 }
 
 .error {
@@ -31,19 +31,23 @@
 .success {
 	color: #4F8A10;
 }
+
+.tab-color{
+  color:  #099595;
+}
 </style>
 </head>
-<body>
+<body >
 	<div class="container">
-		<h3>
+		<h2>
 			<strong style="color: #808080">Food Truck Management System</strong><img
-				style="width: 10%; height: auto;" src="img/logo.png">
-		</h3>
-		<ul class="nav nav-tabs">
-			<li class="active"><a href="index.php">Home</a></li>
-			<li><a href="inventoryTab.php">Inventory</a></li>
-			<li><a href="staffTab.php">Staff</a></li>
-			<li><a href="reportTab.php">Report</a></li>
+				style="width: 15%; height: auto;" src="img/logo.png">
+		</h2>
+		<ul class="nav nav-tabs ">
+			<li class="active"><a href="index.php"><h4 class="tab-color">Home</h4></a></li>
+      <li><a href="inventoryTab.php"><h4 class="tab-color">Inventory</h4></a></li>
+      <li><a href="staffTab.php"><h4 class="tab-color">Staff</h4></a></li>
+      <li><a href="reportTab.php"><h4 class="tab-color">Report</h4></a></li>
 		</ul>
 		<br>
   
@@ -61,9 +65,9 @@
 		?>
     <br>
 
-		<h4 style="color: #778899">
+		<h3 style="color: #778899">
 			<strong>Menu Item</strong>
-		</h4>
+		</h3>
 		<!-- #c0c0c0 -->
 		<div style="background-color: #BCB7C1; color: black; padding: 20px;"">
 			<!-- <h4> <strong>Equipment Item</strong></h4> -->
@@ -71,14 +75,14 @@
 			<form class="form-inline" action="addRemoveMenuItem.php"
 				method="post">
 
-				<span class="error input-sm">
+				<span class="error input-lg">
           <?php
 										if (isset ( $_SESSION ['errorItem'] ) && ! empty ( $_SESSION ['errorItem'] )) {
 											echo " * " . $_SESSION ["errorItem"];
 											session_unset ( $_SESSION ["errorItem"] );
 										}
 										?>
-        <span class="success input-md">
+        <span class="success input-lg">
           <?php
 										
 										if (isset ( $_SESSION ['successItem'] ) && ! empty ( $_SESSION ['successItem'] )) {
@@ -87,42 +91,42 @@
 										}
 										?>
         </span>
-				</span> <br>
+				</span><br>
 				<div class="form-group">
-					&nbsp&nbsp <input class="form-control input-sm" type="text"
+					&nbsp&nbsp <input class="form-control input-lg" type="text"
 						name="menuItem_name" placeholder="Enter Item Name" />
 				</div>
 				&nbsp&nbsp
 				<div class="form-group">
 
-					<input class="form-control input-sm" style="width: 110px"
-						type="double" name="menuItem_price" placeholder="Enter Price($)" />
+					<input class="form-control input-lg" style="width: 110px"
+						type="double" name="menuItem_price" placeholder="Price($)" />
 
 				</div>
 				<br> <br>&nbsp&nbsp
-				<button type="submit" name="addMenuItem" class="btn btn-default">Add
+				<button type="submit" name="addMenuItem" class="btn btn-default btn-lg">Add
 					To Menu List</button>
-				<button type="submit" name="removeMenuItem" class="btn btn-default">Remove
+				<button type="submit" name="removeMenuItem" class="btn btn-default btn-lg">Remove
 					Item</button>
 			</form>
 		</div>
 
-		<br>
+		<br><br>
 
-		<h4 style="color: #778899">
+		<h3 style="color: #778899">
 			<strong>Add Order</strong>
-		</h4>
+		</h3>
 		<div style="background-color: #BCB7C1; color: black; padding: 20px;"">
 			<form class="form-inline" action="addOrder.php" method="post">
 
-				<span class="error input-sm">
+				<span class="error input-lg">
           <?php
 										if (isset ( $_SESSION ['errorOrder'] ) && ! empty ( $_SESSION ['errorOrder'] )) {
 											echo " * " . $_SESSION ["errorOrder"];
 											session_unset ( $_SESSION ["errorOrder"] );
 										}
 										?>
-        <span class="success input-md">
+        <span class="success input-lg">
           <?php
 										
 										if (isset ( $_SESSION ['successOrder'] ) && ! empty ( $_SESSION ['successOrder'] )) {
@@ -135,16 +139,16 @@
 				<div class="form-group">
 					<!-- Change equipment to staff name later on, this is just a place holder fo -->
         <?php
-								echo "<p><strong>&nbsp&nbsp&nbsp Select Item to Order: </strong><select class='form-control input-md' name='itemSpinner'>";
+								echo "<p><strong><h4>&nbsp&nbsp&nbsp Select Item to Order: </strong><select class='form-control input-lg' name='itemSpinner'>";
 								foreach ( $m->getMenus () as $order ) {
-									echo "<option>" . $order->getName () . "</option>";
+									echo "<option>" . ucfirst($order->getName ()) . "</option>";
 								}
 								echo "</select>";
-								echo "&nbsp&nbsp <input class='form-control input-md' name='order_quantity' style='width: 120px' placeholder='Enter quantity'>";
+								echo "&nbsp&nbsp <input class='form-control input-lg' name='order_quantity' type='number' style='width: 130px' placeholder='Quantity'>";
 								?>
 
         <br> <br>&nbsp&nbsp
-					<button type="submit" name="menuItemOrder" class="btn btn-default">Order</button>
+					<button type="submit" name="menuItemOrder" class="btn btn-default btn-lg">Order</button>
 			
 			</form>
 		</div>
