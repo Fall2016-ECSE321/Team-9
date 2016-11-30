@@ -32,12 +32,12 @@
 	color: #4F8A10;
 }
 
-.tab-color{
-  color:  #099595;
+.tab-color {
+	color: #099595;
 }
 </style>
 </head>
-<body >
+<body>
 	<div class="container">
 		<h2>
 			<strong style="color: #808080">Food Truck Management System</strong><img
@@ -45,9 +45,9 @@
 		</h2>
 		<ul class="nav nav-tabs ">
 			<li class="active"><a href="index.php"><h4 class="tab-color">Home</h4></a></li>
-      <li><a href="inventoryTab.php"><h4 class="tab-color">Inventory</h4></a></li>
-      <li><a href="staffTab.php"><h4 class="tab-color">Staff</h4></a></li>
-      <li><a href="reportTab.php"><h4 class="tab-color">Report</h4></a></li>
+			<li><a href="inventoryTab.php"><h4 class="tab-color">Inventory</h4></a></li>
+			<li><a href="staffTab.php"><h4 class="tab-color">Staff</h4></a></li>
+			<li><a href="reportTab.php"><h4 class="tab-color">Report</h4></a></li>
 		</ul>
 		<br>
   
@@ -104,14 +104,14 @@
 
 				</div>
 				<br> <br>&nbsp&nbsp
-				<button type="submit" name="addMenuItem" class="btn btn-default btn-lg">Add
-					To Menu List</button>
-				<button type="submit" name="removeMenuItem" class="btn btn-default btn-lg">Remove
-					Item</button>
+				<button type="submit" name="addMenuItem"
+					class="btn btn-default btn-lg">Add To Menu List</button>
+				<button type="submit" name="removeMenuItem"
+					class="btn btn-default btn-lg">Remove Item</button>
 			</form>
 		</div>
 
-		<br><br>
+		<br> <br>
 
 		<h3 style="color: #778899">
 			<strong>Add Order</strong>
@@ -141,14 +141,15 @@
         <?php
 								echo "<p><strong><h4>&nbsp&nbsp&nbsp Select Item to Order: </strong><select class='form-control input-lg' name='itemSpinner'>";
 								foreach ( $m->getMenus () as $order ) {
-									echo "<option>" . ucfirst($order->getName ()) . "</option>";
+									echo "<option>" . ucfirst ( $order->getName () ) . "</option>";
 								}
 								echo "</select>";
 								echo "&nbsp&nbsp <input class='form-control input-lg' name='order_quantity' type='number' style='width: 130px' placeholder='Quantity'>";
 								?>
 
         <br> <br>&nbsp&nbsp
-					<button type="submit" name="menuItemOrder" class="btn btn-default btn-lg">Order</button>
+					<button type="submit" name="menuItemOrder"
+						class="btn btn-default btn-lg">Order</button>
 			
 			</form>
 		</div>
