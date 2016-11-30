@@ -1,12 +1,12 @@
 /*PLEASE DO NOT EDIT THIS CODE*/
-/*This code was generated using the UMPLE 1.24.0-d348116 modeling language!*/
+/*This code was generated using the UMPLE 1.24.0-c37463a modeling language!*/
 
 package ca.mcgill.ecse321.foodtruckmanagementsystem.model;
-import java.sql.Date;
+import java.sql.Time;
 import java.util.*;
 
-// line 32 "../../../../../../../../ump/161011249430/model.ump"
-// line 67 "../../../../../../../../ump/161011249430/model.ump"
+// line 25 "../../../../../../../../ump/161011249430/model.ump"
+// line 61 "../../../../../../../../ump/161011249430/model.ump"
 public class StaffMember
 {
 
@@ -17,7 +17,8 @@ public class StaffMember
   //StaffMember Attributes
   private String name;
   private String role;
-  private List<Date> schedule;
+  private List<Time> startTimes;
+  private List<Time> endTimes;
 
   //------------------------
   // CONSTRUCTOR
@@ -27,7 +28,8 @@ public class StaffMember
   {
     name = aName;
     role = aRole;
-    schedule = new ArrayList<Date>();
+    startTimes = new ArrayList<Time>();
+    endTimes = new ArrayList<Time>();
   }
 
   //------------------------
@@ -50,17 +52,31 @@ public class StaffMember
     return wasSet;
   }
 
-  public boolean addSchedule(Date aSchedule)
+  public boolean addStartTime(Time aStartTime)
   {
     boolean wasAdded = false;
-    wasAdded = schedule.add(aSchedule);
+    wasAdded = startTimes.add(aStartTime);
     return wasAdded;
   }
 
-  public boolean removeSchedule(Date aSchedule)
+  public boolean removeStartTime(Time aStartTime)
   {
     boolean wasRemoved = false;
-    wasRemoved = schedule.remove(aSchedule);
+    wasRemoved = startTimes.remove(aStartTime);
+    return wasRemoved;
+  }
+
+  public boolean addEndTime(Time aEndTime)
+  {
+    boolean wasAdded = false;
+    wasAdded = endTimes.add(aEndTime);
+    return wasAdded;
+  }
+
+  public boolean removeEndTime(Time aEndTime)
+  {
+    boolean wasRemoved = false;
+    wasRemoved = endTimes.remove(aEndTime);
     return wasRemoved;
   }
 
@@ -74,33 +90,63 @@ public class StaffMember
     return role;
   }
 
-  public Date getSchedule(int index)
+  public Time getStartTime(int index)
   {
-    Date aSchedule = schedule.get(index);
-    return aSchedule;
+    Time aStartTime = startTimes.get(index);
+    return aStartTime;
   }
 
-  public Date[] getSchedule()
+  public Time[] getStartTimes()
   {
-    Date[] newSchedule = schedule.toArray(new Date[schedule.size()]);
-    return newSchedule;
+    Time[] newStartTimes = startTimes.toArray(new Time[startTimes.size()]);
+    return newStartTimes;
   }
 
-  public int numberOfSchedule()
+  public int numberOfStartTimes()
   {
-    int number = schedule.size();
+    int number = startTimes.size();
     return number;
   }
 
-  public boolean hasSchedule()
+  public boolean hasStartTimes()
   {
-    boolean has = schedule.size() > 0;
+    boolean has = startTimes.size() > 0;
     return has;
   }
 
-  public int indexOfSchedule(Date aSchedule)
+  public int indexOfStartTime(Time aStartTime)
   {
-    int index = schedule.indexOf(aSchedule);
+    int index = startTimes.indexOf(aStartTime);
+    return index;
+  }
+
+  public Time getEndTime(int index)
+  {
+    Time aEndTime = endTimes.get(index);
+    return aEndTime;
+  }
+
+  public Time[] getEndTimes()
+  {
+    Time[] newEndTimes = endTimes.toArray(new Time[endTimes.size()]);
+    return newEndTimes;
+  }
+
+  public int numberOfEndTimes()
+  {
+    int number = endTimes.size();
+    return number;
+  }
+
+  public boolean hasEndTimes()
+  {
+    boolean has = endTimes.size() > 0;
+    return has;
+  }
+
+  public int indexOfEndTime(Time aEndTime)
+  {
+    int index = endTimes.indexOf(aEndTime);
     return index;
   }
 

@@ -1,13 +1,9 @@
 <resources>
-    <string name="app_name">dfgdgdgdgdsg</string>
+    <string name="app_name">FoodTruckManagementSystem</string>
     <string name="action_settings">Settings</string>
-    <string name="addequipmentname_hint">Equipment Name</string>
-    <string name="addequipmentquantity_hint"><i>Quantity</i></string>
-    <string name="addequipment_button">Add Equipment</string>
-    <string name="removeequipment_button">Remove Equipment</string>
-    <string name="addsupplyname_hint">Supply Name</string>
-    <string name="addsupplyquantity_hint">Quantity</string>
-    <string name="addsupplyunit_hint">Unit</string>
-    <string name="removesupply_button">Remove Supply</string>
-    <string name="addsupply_button">Add Supply</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="staffmembertable_header"><u><b>Staff Member List</b></u></string>
+    <string name="supplytable_header"><u><b>Supply List</b></u></string>
+    <string name="equipmenttable_header"><u><b>Equipment List</b></u></string>
+    <string name="popularitytable_header"><u><b>Order List</b></u></string>
 </resources>

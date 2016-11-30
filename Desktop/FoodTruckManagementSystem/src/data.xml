@@ -1,15 +1,35 @@
 <manager id="1">
-  <equipments id="2">
-    <equipment id="3">
-      <name>forks</name>
-      <quantity>9</quantity>
-    </equipment>
-    <equipment id="4">
-      <name>spoons</name>
-      <quantity>10</quantity>
-    </equipment>
-  </equipments>
-  <supplies id="6"/>
-  <orders id="7"/>
-  <staffmembers id="8"/>
+	<equipments id="2" />
+	<supplies id="3" />
+	<staffmembers id="4">
+		<staffmember id="5">
+			<name>john</name>
+			<role>cashier</role>
+			<startTimes id="6">
+				<sql-time id="7">00:00:00</sql-time>
+				<sql-time id="8">00:00:00</sql-time>
+				<sql-time id="9">00:00:00</sql-time>
+				<sql-time id="10">00:00:00</sql-time>
+				<sql-time id="11">00:00:00</sql-time>
+				<sql-time id="12">00:00:00</sql-time>
+				<sql-time id="13">00:00:00</sql-time>
+			</startTimes>
+			<endTimes id="14">
+				<sql-time id="15">02:00:00</sql-time>
+				<sql-time id="16">02:00:00</sql-time>
+				<sql-time id="17">03:00:00</sql-time>
+				<sql-time id="18">03:00:00</sql-time>
+				<sql-time id="19">03:00:00</sql-time>
+				<sql-time id="20">05:00:00</sql-time>
+				<sql-time id="21">04:00:00</sql-time>
+			</endTimes>
+		</staffmember>
+	</staffmembers>
+	<menus id="22">
+		<menuitem id="23">
+			<name>test</name>
+			<price>1.0</price>
+			<popularityCounter>1</popularityCounter>
+		</menuitem>
+	</menus>
 </manager>
