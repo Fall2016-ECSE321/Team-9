@@ -68,12 +68,12 @@ try {
 	
 	if (isset ( $_POST ['editStaffSchedule'] )) {
 		$c->addTimeStaffMember ( $staffName, $staffStartTime, $staffEndTime );
-		$_SESSION ["successSchedule"] = "Successfully save " . $staffName . "'s' new weekly schedule!";
+		$_SESSION ["successSchedule"] = "Successfully Saved " . ucfirst($staffName) . "'s' new weekly schedule!";
 		
 		$_SESSION ["errorSchedule"] = "";
 	} elseif (isset ( $_POST ['removeStaff'] )) {
 		$c->removeStaffMember ( $staffName );
-		$_SESSION ["successSchedule"] = "Successfully remove " . $staffName . " from staff list!";
+		$_SESSION ["successSchedule"] = "Successfully Removed " . ucfirst($staffName) . " from staff list!";
 	}
 	$_SESSION ["errorSchedule"] = "";
 } catch ( Exception $e ) {
