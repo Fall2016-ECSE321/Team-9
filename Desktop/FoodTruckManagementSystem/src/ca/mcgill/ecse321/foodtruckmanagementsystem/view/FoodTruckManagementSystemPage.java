@@ -246,7 +246,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		MigLayout layout = new MigLayout("", "[][][][grow]", "[][][][][][][][][][][][][][][][][]");
 		tab2.setLayout(layout);
 		
-		JLabel lblAddEquipment = new JLabel("Add Equipment");
+		JLabel lblAddEquipment = new JLabel("Add Equipment:");
 		lblAddEquipment.setFont(new Font("Tahoma", Font.PLAIN, 44));
 		tab2.add(lblAddEquipment, "cell 0 0");
 		
@@ -298,7 +298,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		});
 		tab2.add(btnRemoveEquipment, "cell 2 6");
 		
-		JLabel lblAddSupply = new JLabel("Add Supply");
+		JLabel lblAddSupply = new JLabel("Add Supply:");
 		lblAddSupply.setFont(new Font("Tahoma", Font.PLAIN, 44));
 		tab2.add(lblAddSupply, "cell 0 8");
 		
@@ -365,7 +365,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		tabbedPane.addTab("Staff", null, tab3, null);
 		tab3.setLayout(new MigLayout("", "[][][][][][][][grow]", "[][][][][][][][][][][][][][][][][][][][][][][]"));
 		
-		JLabel lblAddStaff = new JLabel("Add New Staff");
+		JLabel lblAddStaff = new JLabel("Add New Staff:");
 		lblAddStaff.setFont(new Font("Tahoma", Font.PLAIN, 44));
 		tab3.add(lblAddStaff, "cell 0 0");
 		
@@ -404,7 +404,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		});
 		tab3.add(btnAddStaff, "cell 5 2,alignx left");		
 		
-		JLabel lblRegisterStaffsWeekly = new JLabel("Register Staff's Weekly Schedule");
+		JLabel lblRegisterStaffsWeekly = new JLabel("Register Staff's Weekly Schedule:");
 		lblRegisterStaffsWeekly.setFont(new Font("Tahoma", Font.PLAIN, 44));
 		tab3.add(lblRegisterStaffsWeekly, "cell 0 4 3 1");
 		
@@ -514,7 +514,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		staffPanel = new JPanel();
 		staffPanel.setBackground(new Color(0xBCB7C1));
 		staffPane.setViewportView(staffPanel);
-		staffPanel.setLayout(new MigLayout("", "[][][grow][][]", "[][][][][][][]"));
+		staffPanel.setLayout(new MigLayout("", "[][][][][]", "[][][][][][][]"));
 		
 		JLabel lblStaffList = new JLabel("Staff List: ");
 		lblStaffList.setFont(new Font("Tahoma", Font.PLAIN, 34));
