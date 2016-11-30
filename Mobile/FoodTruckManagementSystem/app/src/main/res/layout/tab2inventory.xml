@@ -12,19 +12,20 @@
     tools:context="ca.mcgill.ecse321.foodtruckmanagementsystem.MainActivity">
 
 
-
+    <!-- Success and Error messages -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#E1338A"
         android:id="@+id/errorhandler" />
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#008000"
         android:id="@+id/inventorysuccess_handler"/>
 
+
+    <!-- Add/Remove Equipment Section -->
     <TextView
         android:id="@+id/addequipment_header"
         android:text="Add Equipment"
@@ -33,7 +34,6 @@
         android:layout_below="@+id/errorhandler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
     <View
         android:id="@+id/redBarOne"
         android:layout_below="@+id/addequipment_header"
@@ -41,7 +41,6 @@
         android:layout_height="2dp"
         android:background="#f44242"
         android:layout_width="325dp" />
-
     <LinearLayout
         android:id="@+id/equipmentTextFields"
         android:layout_below="@+id/redBarOne"
@@ -81,14 +80,12 @@
             android:layout_height="50dp"
             android:background="#425ff4"/>
     </LinearLayout>
-
     <View
         android:id="@+id/redBarTwo"
         android:layout_below="@+id/equipmentTextFields"
         android:layout_height="2dp"
         android:background="#f44242"
         android:layout_width="325dp" />
-
     <LinearLayout
         android:id="@+id/equipmentButtons"
         android:layout_below="@+id/equipmentTextFields"
@@ -114,6 +111,8 @@
             android:onClick="removeEquipment" />
     </LinearLayout>
 
+
+    <!-- Add/Remove Supply Section -->
     <TextView
         android:id="@+id/addsupply_header"
         android:text="Add Supply"
@@ -123,7 +122,6 @@
         android:layout_below="@+id/equipmentButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
     <View
         android:id="@+id/redBarThree"
         android:layout_marginTop="20dp"
@@ -131,7 +129,6 @@
         android:layout_width="325dp"
         android:layout_height="2dp"
         android:background="#f44242"/>
-
     <LinearLayout
         android:id="@+id/supplyTextFields"
         android:layout_below="@+id/redBarThree"
@@ -186,14 +183,12 @@
 
 
     </LinearLayout>
-
     <View
         android:id="@+id/redBarFour"
         android:layout_below="@+id/supplyTextFields"
         android:layout_width="325dp"
         android:layout_height="2dp"
         android:background="#f44242"/>
-
     <LinearLayout
         android:id="@+id/supplyButtons"
         android:layout_below="@+id/redBarFour"
