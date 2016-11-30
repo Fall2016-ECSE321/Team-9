@@ -32,6 +32,9 @@
 	color: #4F8A10;
 }
 
+.tab-color {
+  color: #099595;
+}
 tr {
 	width: 100%;
 	display: inline-table;
@@ -59,23 +62,24 @@ table {
 
 tbody {
 	overflow-y: scroll;
-	height: 180px; // <-- Select the height of the body width : 100%;
+	height: 160px; // <-- Select the height of the body width : 100%;
 	position: absolute;
 }
+
 </style>
 
 </head>
 <body>
 	<div class="container">
-		<h3>
+		<h2>
 			<strong style="color: #808080">Food Truck Management System</strong><img
-				style="width: 10%; height: auto;" src="img/logo.png">
-		</h3>
+				style="width: 15%; height: auto;" src="img/logo.png">
+		</h2>
 		<ul class="nav nav-tabs">
-			<li><a href="index.php">Home</a></li>
-			<li><a href="inventoryTab.php">Inventory</a></li>
-			<li><a href="staffTab.php">Staff</a></li>
-			<li class="active"><a href="reportTab.php">Report</a></li>
+			<li><a href="index.php"><h4 class="tab-color">Home</h4></a></li>
+			<li><a href="inventoryTab.php"><h4 class="tab-color">Inventory</h4></a></li>
+			<li><a href="staffTab.php"><h4 class="tab-color">Staff</h4></a></li>
+			<li class="active"><a href="reportTab.php"><h4 class="tab-color">Report</h4></a></li>
 		</ul>
 		<br> <br>
 
@@ -96,8 +100,8 @@ tbody {
     <br>
 		<div class="form-group">
 			<div class="row">
-				<div class="col-sm-5 " style="background-color: #BCB7C1;">
-					<h3 style="text-align: center;">Staff List</h3>
+				<div class="col-lg-5 " style="background-color: #BCB7C1;">
+					<h2 style="text-align: center;">Staff List</h2>
 					<br>
 					<table class="table table-hover">
 						<thead>
@@ -113,8 +117,8 @@ tbody {
 								foreach ( $m->getStaffMembers () as $staff ) {
 									echo "<tr> <th scope='row' >" . $i;
 									echo "</th>";
-									echo "<td>" . $staff->getName () . "</td>";
-									echo "<td>" . $staff->getRole () . "</td>";
+									echo "<td>" . ucfirst($staff->getName ()) . "</td>";
+									echo "<td>" . ucfirst($staff->getRole ()) . "</td>";
 									echo "</tr>";
 									$i = $i + 1;
 								}
@@ -122,9 +126,9 @@ tbody {
         </tbody>
 					</table>
 				</div>
-				<div class="col-sm-2"></div>
-				<div class="col-sm-5" style="background-color: lightcyan;">
-					<h3 style="text-align: center;">Popularity List</h3>
+				<div class="col-lg-2"></div>
+				<div class="col-lg-5" style="background-color: lightcyan;">
+					<h2 style="text-align: center;">Popularity List</h2>
 					<br>
 					<table class="table table table-hover">
 						<thead>
@@ -145,7 +149,7 @@ tbody {
 										foreach ( $rank as $itemName => $itemQuantity ) {
 											echo "<tr> <th scope='row' >" . $i;
 											echo "</th>";
-											echo "<td>" . $itemName . "</td>";
+											echo "<td>" . ucfirst($itemName) . "</td>";
 											echo "<td>" . $itemQuantity . "</td>";
 											echo "</tr>";
 											$i = $i + 1;
@@ -155,15 +159,17 @@ tbody {
 					</table>
 				</div>
 			</div>
+      </div>
 			<br>
 			<br>
 			<br>
 			<br>
+      <div class = "form-group">
 			<div class="row">
-				<div class="col-sm-5" style="background-color: lightgray;">
-					<h3 style="text-align: center;">Supply List</h3>
+				<div class="col-lg-5" style="background-color: lightgray;">
+					<h2 style="text-align: center;">Supply List</h2>
 					<br>
-					<table class="table ttable table-hover table-inverse">
+					<table class="table ttable table-hover table-inverse ">
 						<thead>
 							<tr>
 								<th>#</th>
@@ -178,9 +184,9 @@ tbody {
 														foreach ( $m->getSupplies () as $supply ) {
 															echo "<tr> <th scope='row' >" . $i;
 															echo "</th>";
-															echo "<td>" . $supply->getName () . "</td>";
+															echo "<td>" . ucfirst($supply->getName ()). "</td>";
 															echo "<td>" . $supply->getQuantity () . "</td>";
-															echo "<td>" . $supply->getUnit () . "</td>";
+															echo "<td>" . ucfirst($supply->getUnit ()). "</td>";
 															echo "</tr>";
 															$i = $i + 1;
 														}
@@ -188,9 +194,10 @@ tbody {
             </tbody>
 					</table>
 				</div>
-				<div class="col-lg-2"></div>
-				<div class="col-sm-5" style="background-color: lavenderblush;">
-					<h3 style="text-align: center;">Equipment List</h3>
+
+				<div class="col-lg-2"> </div>
+				<div class="col-lg-5" style="background-color: lavenderblush;">
+					<h2 style="text-align: center;">Equipment List</h2>
 					<br>
 					<table class="table table table-hover">
 						<thead>
@@ -206,7 +213,7 @@ tbody {
 											foreach ( $m->getEquipments () as $equipment ) {
 												echo "<tr> <th scope='row' >" . $i;
 												echo "</th>";
-												echo "<td>" . $equipment->getName () . "</td>";
+												echo "<td>" . ucfirst($equipment->getName ()) . "</td>";
 												echo "<td>" . $equipment->getQuantity () . "</td>";
 												echo "</tr>";
 												$i = $i + 1;

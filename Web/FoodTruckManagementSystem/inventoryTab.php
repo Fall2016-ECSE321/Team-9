@@ -18,13 +18,13 @@ session_start ();
 
 <style>
 .btn-default {
-	background: #000;
+	background: #444344;
 	color: #fff;
 }
 
 .btn-default:hover {
 	background: #fff;
-	color: #000;
+	color: #444344;
 }
 
 .error {
@@ -34,19 +34,22 @@ session_start ();
 .success {
 	color: #4F8A10;
 }
+.tab-color{
+  color:  #099595;
+}
 </style>
 </head>
 <body>
 	<div class="container">
-		<h3>
+		<h2>
 			<strong style="color: #808080">Food Truck Management System</strong><img
-				style="width: 10%; height: auto;" src="img/logo.png">
-		</h3>
-		<ul class="nav nav-tabs">
-			<li><a href="index.php">Home</a></li>
-			<li class="active"><a href="inventoryTab.php">Inventory</a></li>
-			<li><a href="staffTab.php">Staff</a></li>
-			<li><a href="reportTab.php">Report</a></li>
+				style="width: 15%; height: auto;" src="img/logo.png">
+		</h2>
+		<ul class="nav nav-tabs ">
+			<li><a href="index.php"><h4 class="tab-color">Home</h4></a></li>
+	      	<li class="active"><a href="inventoryTab.php"><h4 class="tab-color">Inventory</h4></a></li>
+	      	<li><a href="staffTab.php"><h4 class="tab-color">Staff</h4></a></li>
+	      	<li><a href="reportTab.php"><h4 class="tab-color">Report</h4></a></li>
 		</ul>
 
 		  
@@ -60,9 +63,9 @@ session_start ();
 		<br>
 		<br>
 
-		<h4 style="color: #778899">
+		<h3 style="color: #778899">
 			<strong>Equipment Item</strong>
-		</h4>
+		</h3>
 		<!-- #c0c0c0 -->
 		<div style="background-color: #BCB7C1; color: black; padding: 20px;"">
 			<!-- <h4> <strong>Equipment Item</strong></h4> -->
@@ -70,14 +73,14 @@ session_start ();
 			<form class="form-inline" action="addRemoveEquipment.php"
 				method="post">
 
-				<span class="error input-sm">
+				<span class="error input-lg">
 					<?php
 					if (isset ( $_SESSION ['errorEquipment'] ) && ! empty ( $_SESSION ['errorEquipment'] )) {
 						echo " * " . $_SESSION ["errorEquipment"];
 						session_unset ( $_SESSION ["errorEquipment"] );
 					}
 					?>
-				<span class="success input-md">
+				<span class="success input-lg">
 					<?php
 					
 					if (isset ( $_SESSION ['successEquipment'] ) && ! empty ( $_SESSION ['successEquipment'] )) {
@@ -88,33 +91,33 @@ session_start ();
 				</span>
 				</span> <br>
 				<div class="form-group">
-					&nbsp&nbsp <input class="form-control input-sm" type="text"
-						name="equipment_name" placeholder="Enter Equipment Name" />
+					&nbsp&nbsp <input class="form-control input-lg" type="text"
+						name="equipment_name" placeholder="Enter Item Name" />
 				</div>
 				&nbsp&nbsp
 				<div class="form-group">
 
-					<input class="form-control input-sm" style="width: 100px"
+					<input class="form-control input-lg" style="width: 80px"
 						type="number" name="equipment_quantity" placeholder="0" />
 
 				</div>
 				<br>
 				<br>&nbsp&nbsp
-				<button type="submit" name="addEquipment" class="btn btn-default">Add</button>
-				<button type="submit" name="removeEquipment" class="btn btn-default">Remove</button>
+				<button type="submit" name="addEquipment" class="btn btn-default btn-lg">Add</button>
+				<button type="submit" name="removeEquipment" class="btn btn-default btn-lg">Remove</button>
 			</form>
 		</div>
 
 		<br>
 		<br>
 
-		<h4 style="color: #778899">
+		<h3 style="color: #778899">
 			<strong>Supply Item</strong>
-		</h4>
+		</h3>
 		<div style="background-color: #BCB7C1; color: black; padding: 20px;"">
 
 			<form class="form-inline" action="addRemoveSupply.php" method="post">
-				<span class="error input-sm">
+				<span class="error input-lg">
 					<?php
 					if (isset ( $_SESSION ['errorSupply'] ) && ! empty ( $_SESSION ['errorSupply'] )) {
 						echo " * " . $_SESSION ["errorSupply"];
@@ -122,7 +125,7 @@ session_start ();
 					}
 					?>
 				 
-				<span class="success input-md">
+				<span class="success input-lg">
 					<?php
 					
 					if (isset ( $_SESSION ['successSupply'] ) && ! empty ( $_SESSION ['successSupply'] )) {
@@ -133,26 +136,26 @@ session_start ();
 				</span>
 				</span> <br>
 				<div class="form-group">
-					&nbsp&nbsp <input class="form-control input-sm" type="text"
-						name="supply_name" placeholder=" Enter Supply Name" />
+					&nbsp&nbsp <input class="form-control input-lg" type="text"
+						name="supply_name" placeholder=" Enter Item Name" />
 				</div>
 				&nbsp&nbsp
 				<div class="form-group">
 
-					<input class="form-control input-sm " style="width: 100px"
+					<input class="form-control input-lg " style="width: 80px"
 						type="number" name="supply_quantity" placeholder="0" />
 				</div>
 				&nbsp&nbsp
 				<div class="form-group">
 
-					<input class="form-control input-sm " style="width: 100px"
-						type="text" name="supply_unit" placeholder="kg" />
+					<input class="form-control input-lg " style="width: 80px"
+						type="text" name="supply_unit" placeholder=" Unit" />
 				</div>
 
 				<br>
 				<br>&nbsp&nbsp
-				<button type="submit" name="addSupply" class="btn btn-default">Add</button>
-				<button type="submit" name="removeSupply" class="btn btn-default">Remove</button>
+				<button type="submit" name="addSupply" class="btn btn-default btn-lg">Add</button>
+				<button type="submit" name="removeSupply" class="btn btn-default btn-lg">Remove</button>
 			</form>
 		</div>
 	</div>

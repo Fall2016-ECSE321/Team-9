@@ -390,6 +390,42 @@ class Controller{
 		$pm->writeDataToStore($m);
 	}
 	
+	public function viewStaffStartTime($staffMemberName){
+		
+		if($staffName == null || strlen($staffName) == 0){
+			$error .= "Staff Member name cannot be empty! ";
+			throw new Exception($error);
+		}
+		$pm = new PersistenceFoodTruckManagementSystem();
+		$m  = $pm->loadDataFromStore();
+		$staffFound=false;
+		$foundStaffMember;
+		for ($i = 0; $i < $m->numberOfStaffmembers(); $i++){
+			if($staffMemberName == $m->getStaffmember_index($i)->getName()){
+				$staffFound=true;
+				$foundStaffMember = $m->getStaffmember_index($i);
+			}
+		}
+		if(!$staffFound){
+			$error = "Staff Member does not exist!";
+			throw new Exception ($error);
+		}
+		$startTimes = $foundStaffMember->getStartTimes();
+		$startTimesFixed = array("","","","","","","");
+		for($i=0; $i<$numberOfDaysInWeek; $i++){
+			$dailyStartTime = $startTimes[$i];
+			for($j=0; $j<5; $j++){
+				if($j==2){
+					$j++; //skip the ':'
+				}
+				$tempStartTime .= substr($dailyStartTime, $j);
+			}
+			$dailyStartTime[$i]=$tempStartTime;
+		}
+		
+			
+	}
+	
 	public function createMenuItem($menuItemName, $menuItemPrice){
 	
 		$error = "";
