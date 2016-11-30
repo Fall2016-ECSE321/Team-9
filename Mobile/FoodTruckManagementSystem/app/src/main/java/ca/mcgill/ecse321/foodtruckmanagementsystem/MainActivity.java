@@ -194,7 +194,6 @@ public class MainActivity extends AppCompatActivity {
         TextView error = (TextView) findViewById(R.id.errorhandler);
         error.setText("");
         int quantity = 0;
-        System.out.println(en.getText().toString());
         if(!eqString.matches("")){
             quantity = Integer.parseInt(eqString);
         }
@@ -206,7 +205,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(error.getText().equals("")){
-            success.setText("Equipment was successfully added!");
+            success.setText(ev.getText().toString() + " was successfully added!");
         }else{
             success.setText("");
         }
@@ -235,7 +234,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(error.getText().equals("")){
-            success.setText("Equipment was successfully removed!");
+            success.setText(en.getText().toString() + " was successfully removed!");
         }else{
             success.setText("");
         }
@@ -263,7 +262,6 @@ public class MainActivity extends AppCompatActivity {
 
         Manager m = (Manager) PersistenceXStream.loadFromXMLwithXStream();
 
-
             try{
                 if(!m.getSupplies().isEmpty()){
                     for(int i = 0; i < m.getSupplies().size(); i++){
@@ -276,7 +274,7 @@ public class MainActivity extends AppCompatActivity {
             }
 
         if(error.getText().equals("")){
-            success.setText("Supply was successfully added!");
+            success.setText(sn.getText().toString() + " was successfully added!");
         }else{
             success.setText("");
         }
@@ -308,7 +306,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(error.getText().equals("")){
-            success.setText("Supply was successfully removed!");
+            success.setText(sn.getText().toString() + " was successfully removed!");
         }
 
         refreshSupplyData();
@@ -338,7 +336,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(error.getText().equals("")){
-            success.setText("Staff member was successfully added!");
+            success.setText(sn.getText().toString() + " was successfully added!");
         }else{
             success.setText("");
         }
@@ -368,7 +366,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(error.getText().equals("")){
-            success.setText("Staff member was successfully removed!");
+            success.setText(sr + " was successfully removed!");
         }else{
             success.setText("");
         }
@@ -400,10 +398,7 @@ public class MainActivity extends AppCompatActivity {
 
             String comps[] = startTimeString.split(":");
             String secondComps[] = endTimeString.split(":");
-            System.out.println(startTimeString);
-            System.out.println(endTimeString);
 
-            System.out.println(comps[0]);
             if(comps.length > 1){
                 System.out.println(comps[1]);
             }
@@ -419,10 +414,6 @@ public class MainActivity extends AppCompatActivity {
 
                 startTimes[i] = startTime;
                 endTimes[i] = endTime;
-
-                System.out.println(startTimes[i]);
-                System.out.println(endTimes[i]);
-
             }
         }
 
@@ -434,7 +425,7 @@ public class MainActivity extends AppCompatActivity {
 
 
         if(error.getText().equals("")){
-            success.setText("Staff member schedule was successfully added!");
+            success.setText(sn + "'s" + " schedule was successfully added!");
         }else{
             success.setText("");
         }
@@ -460,18 +451,13 @@ public class MainActivity extends AppCompatActivity {
         Manager m = (Manager) PersistenceXStream.loadFromXMLwithXStream();
 
         try{
-            /*if(!m.getMenus().isEmpty()){
-                for(int i =0; i < m.getMenus().size(); i++){
-                    ic.createMenuItem(m.getMenus(i).getName(), m.getMenus(i).getPrice());
-                }
-            }*/
             ic.createMenuItem(mn.getText().toString(), price);
         } catch(InvalidInputException e){
             error.setText(e.getMessage());
         }
 
         if(error.getText().equals("")){
-            success.setText("Menu item was successfully added!");
+            success.setText(mn.getText().toString() + " was successfully added!");
         }else{
             success.setText("");
         }
@@ -494,7 +480,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if(error.getText().equals("")){
-            success.setText("Menu item was successfully removed!");
+            success.setText(mn.getText().toString() + " was successfully removed!");
         }else{
             success.setText("");
         }
@@ -514,7 +500,6 @@ public class MainActivity extends AppCompatActivity {
             on = nameSpinner.getSelectedItem().toString();
         }
 
-
         TextView oq = (TextView) findViewById(R.id.addorder_quantity);
 
         int quantity = 0;
@@ -524,13 +509,13 @@ public class MainActivity extends AppCompatActivity {
         }
 
         try{
-                ic.menuItemOrdered(on, quantity);
-            } catch(InvalidInputException e){
-                error.setText(e.getMessage());
-            }
+            ic.menuItemOrdered(on, quantity);
+        } catch(InvalidInputException e){
+            error.setText(e.getMessage());
+        }
 
         if(error.getText().equals("")){
-            success.setText("Order was successfully created!");
+            success.setText(on + " order was successfully added!");
         }else{
             success.setText("");
         }

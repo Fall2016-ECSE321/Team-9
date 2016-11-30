@@ -34,8 +34,9 @@ session_start ();
 .success {
 	color: #4F8A10;
 }
-.tab-color{
-  color:  #099595;
+
+.tab-color {
+	color: #099595;
 }
 </style>
 </head>
@@ -47,9 +48,9 @@ session_start ();
 		</h2>
 		<ul class="nav nav-tabs ">
 			<li><a href="index.php"><h4 class="tab-color">Home</h4></a></li>
-	      	<li class="active"><a href="inventoryTab.php"><h4 class="tab-color">Inventory</h4></a></li>
-	      	<li><a href="staffTab.php"><h4 class="tab-color">Staff</h4></a></li>
-	      	<li><a href="reportTab.php"><h4 class="tab-color">Report</h4></a></li>
+			<li class="active"><a href="inventoryTab.php"><h4 class="tab-color">Inventory</h4></a></li>
+			<li><a href="staffTab.php"><h4 class="tab-color">Staff</h4></a></li>
+			<li><a href="reportTab.php"><h4 class="tab-color">Report</h4></a></li>
 		</ul>
 
 		  
@@ -60,8 +61,7 @@ session_start ();
 		$pm = new PersistenceFoodTruckManagementSystem ();
 		$m = $pm->loadDataFromStore ();
 		?>
-		<br>
-		<br>
+		<br> <br>
 
 		<h3 style="color: #778899">
 			<strong>Equipment Item</strong>
@@ -101,15 +101,15 @@ session_start ();
 						type="number" name="equipment_quantity" placeholder="0" />
 
 				</div>
-				<br>
-				<br>&nbsp&nbsp
-				<button type="submit" name="addEquipment" class="btn btn-default btn-lg">Add</button>
-				<button type="submit" name="removeEquipment" class="btn btn-default btn-lg">Remove</button>
+				<br> <br>&nbsp&nbsp
+				<button type="submit" name="addEquipment"
+					class="btn btn-default btn-lg">Add</button>
+				<button type="submit" name="removeEquipment"
+					class="btn btn-default btn-lg">Remove</button>
 			</form>
 		</div>
 
-		<br>
-		<br>
+		<br> <br>
 
 		<h3 style="color: #778899">
 			<strong>Supply Item</strong>
@@ -152,10 +152,11 @@ session_start ();
 						type="text" name="supply_unit" placeholder=" Unit" />
 				</div>
 
-				<br>
-				<br>&nbsp&nbsp
-				<button type="submit" name="addSupply" class="btn btn-default btn-lg">Add</button>
-				<button type="submit" name="removeSupply" class="btn btn-default btn-lg">Remove</button>
+				<br> <br>&nbsp&nbsp
+				<button type="submit" name="addSupply"
+					class="btn btn-default btn-lg">Add</button>
+				<button type="submit" name="removeSupply"
+					class="btn btn-default btn-lg">Remove</button>
 			</form>
 		</div>
 	</div>

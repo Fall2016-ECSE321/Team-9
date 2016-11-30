@@ -8,24 +8,19 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="ca.mcgill.ecse321.foodtruckmanagementsystem.MainActivity">
 
-    <TextView
-        android:id="@+id/section_label"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-
+    <!-- Success and error messages -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#E1338A"
         android:id="@+id/menuerrorhandler"/>
-
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="#008000"
         android:id="@+id/mainsuccess_handler"/>
 
-<!-- Add Menu Item Section -->
+    <!-- Add Menu Item Section -->
     <TextView
         android:id="@+id/addmenuitem_header"
         android:text="@string/addmenuitem_header"
@@ -34,7 +29,6 @@
         android:layout_below="@id/menuerrorhandler"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
     <View
         android:id="@+id/menuitemheader_separator"
         android:layout_below="@+id/addmenuitem_header"
@@ -42,7 +36,6 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="#f44242"/>
-
     <EditText
         android:id="@+id/addmenuitem_name"
         android:hint="Enter Item Name"
@@ -50,7 +43,6 @@
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
     <EditText
         android:id="@+id/addmenuitem_price"
         android:hint="Enter Price"
@@ -60,7 +52,6 @@
         android:layout_marginTop="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
     <Button
         android:id="@+id/addmenuitem_button"
         android:onClick="addMenuItem"
@@ -68,7 +59,6 @@
         android:layout_below="@+id/addmenuitem_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
     <Button
         android:id="@+id/removemenuitem_button"
         android:onClick="removeMenuItem"
@@ -78,7 +68,6 @@
         android:layout_marginLeft="22dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
     <View
         android:id="@+id/menuorder_separator"
         android:layout_below="@+id/addmenuitem_button"
@@ -87,8 +76,7 @@
         android:layout_height="5dp"
         android:background="#f44242"/>
 
-
-<!-- Add Order Section -->
+    <!-- Add Order Section -->
     <TextView
         android:id="@+id/addorder_header"
         android:text="Add Order"
@@ -98,7 +86,6 @@
         android:layout_below="@+id/menuorder_separator"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
     <View
         android:id="@+id/orderheader_separator"
         android:layout_below="@+id/addorder_header"
@@ -106,7 +93,6 @@
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:background="#f44242"/>
-
     <TextView
         android:id="@+id/addordername_hint"
         android:text="Select Item to Order"
@@ -114,7 +100,6 @@
         android:layout_below="@+id/orderheader_separator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content" />
-
     <Spinner
         android:id="@+id/addorder_spinner"
         android:layout_below="@+id/orderheader_separator"
@@ -122,7 +107,6 @@
         android:layout_marginTop="6dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
     <EditText
         android:id="@+id/addorder_quantity"
         android:hint="Enter Quantity"
@@ -130,7 +114,6 @@
         android:layout_below="@+id/addordername_hint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
-
     <Button
         android:id="@+id/addorder_button"
         android:text="Add Order"
