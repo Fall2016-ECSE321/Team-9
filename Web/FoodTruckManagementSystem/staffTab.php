@@ -36,27 +36,29 @@
 	position: relative;
 	left: 60px;
 }
-.tab-color{
-  color:  #099595;
+
+.tab-color {
+	color: #099595;
 }
-.align-schedule{
-  display: inline-block; 
-  width: 200px;
+
+.align-schedule {
+	display: inline-block;
+	width: 200px;
 }
 </style>
 </head>
-<body >
-  <div class="container">
-    <h2>
-      <strong style="color: #808080">Food Truck Management System</strong><img
-        style="width: 15%; height: auto;" src="img/logo.png">
-    </h2>
-    <ul class="nav nav-tabs ">
-      <li><a href="index.php"><h4 class="tab-color">Home</h4></a></li>
-      <li><a href="inventoryTab.php"><h4 class="tab-color">Inventory</h4></a></li>
-      <li class="active"><a href="staffTab.php"><h4 class="tab-color">Staff</h4></a></li>
-      <li><a href="reportTab.php"><h4 class="tab-color">Report</h4></a></li>
-    </ul>
+<body>
+	<div class="container">
+		<h2>
+			<strong style="color: #808080">Food Truck Management System</strong><img
+				style="width: 15%; height: auto;" src="img/logo.png">
+		</h2>
+		<ul class="nav nav-tabs ">
+			<li><a href="index.php"><h4 class="tab-color">Home</h4></a></li>
+			<li><a href="inventoryTab.php"><h4 class="tab-color">Inventory</h4></a></li>
+			<li class="active"><a href="staffTab.php"><h4 class="tab-color">Staff</h4></a></li>
+			<li><a href="reportTab.php"><h4 class="tab-color">Report</h4></a></li>
+		</ul>
 		<br>
 
     <?php
@@ -111,9 +113,9 @@
 						<option value="clerk">Inventory Clerk</option>
 					</select>
 				</div>
-				<br>
-				<br>&nbsp&nbsp
-				<button type="submit" name="addStaffMember" class="btn btn-default btn-lg">Add</button>
+				<br> <br>&nbsp&nbsp
+				<button type="submit" name="addStaffMember"
+					class="btn btn-default btn-lg">Add</button>
 			</form>
 		</div>
 		<br>
@@ -150,44 +152,49 @@
         <?php
 								echo "<p><strong><h4>Select Staff Name: </strong><select class='form-control input-lg' name='staffMemberSpinner'>";
 								foreach ( $m->getStaffMembers () as $staff ) {
-									echo "<option>" . ucfirst($staff->getName ()) . "</option>";
+									echo "<option>" . ucfirst ( $staff->getName () ) . "</option>";
 								}
 								echo "</select>";
 								?>
         <button align="right" type="submit" name="removeStaff"
 						class="btn btn-default btn-lg">Remove Staff</button>
 
-          <br><br>
+					<br> <br>
 					<dd>
-            <label style="color:#4E4651; display: inline-block; width: 220px;"><h3 ><strong>Day</strong></h3></label>
-
-						<label style="color:#4E4651; display: inline-block; width: 150px;"><h3 ><strong>Start Time</strong></h3></label>
-
-						<label style="color:#4E4651; display: inline-block; width: 220px;"><h3><strong>End Time</strong></h3></label>
+						<label
+							style="color: #4E4651; display: inline-block; width: 220px;"><h3>
+								<strong>Day</strong>
+							</h3></label> <label
+							style="color: #4E4651; display: inline-block; width: 150px;"><h3>
+								<strong>Start Time</strong>
+							</h3></label> <label
+							style="color: #4E4651; display: inline-block; width: 220px;"><h3>
+								<strong>End Time</strong>
+							</h3></label>
 
 					</dd>
 
-					<label class="align-schedule"><h4>Monday:</h4></label> 
-          <input class="form-control input-lg" type="time" name="start_time1" /> 
-            <input class="form-control input-lg" type="time" name="end_time1" /> <br>
-					<br><label class = "align-schedule"><h4>Tuesday:</h4></label> 
-            <input class="form-control input-lg" type="time" name="start_time2" /> 
-            <input class="form-control input-lg" type="time" name="end_time2" /> <br>
-					<br> <label class = "align-schedule"><h4>Wednesday:</h4></label>  <input class="form-control input-lg"
-						type="time" name="start_time3" /> 
-            <input class="form-control input-lg" type="time" name="end_time3" /> <br>
-					<br> <label class = "align-schedule"><h4>Thursday:</h4></label> <input
+					<label class="align-schedule"><h4>Monday:</h4></label> <input
+						class="form-control input-lg" type="time" name="start_time1" /> <input
+						class="form-control input-lg" type="time" name="end_time1" /> <br>
+					<br> <label class="align-schedule"><h4>Tuesday:</h4></label> <input
+						class="form-control input-lg" type="time" name="start_time2" /> <input
+						class="form-control input-lg" type="time" name="end_time2" /> <br>
+					<br> <label class="align-schedule"><h4>Wednesday:</h4></label> <input
+						class="form-control input-lg" type="time" name="start_time3" /> <input
+						class="form-control input-lg" type="time" name="end_time3" /> <br>
+					<br> <label class="align-schedule"><h4>Thursday:</h4></label> <input
 						class="form-control input-lg" type="time" name="start_time4" /> <input
 						class="form-control input-lg" type="time" name="end_time4" /> <br>
-					<br> <label class = "align-schedule"><h4>Friday:</h4></label> <input
+					<br> <label class="align-schedule"><h4>Friday:</h4></label> <input
 						class="form-control input-lg" type="time" name="start_time5" /> <input
 						class="form-control input-lg" type="time" name="end_time5" /> <br>
-					<br> <label class = "align-schedule"><h4>Saturday:</h4></label> 
-          <input class="form-control input-lg" type="time" name="start_time6" />
-					<input class="form-control input-lg" type="time" name="end_time6" /> <br>
-					<br> <label class = "align-schedule"><h4>Sunday:</h4></label> 
-          <input class="form-control input-lg" type="time" name="start_time7" />
-          <input class="form-control input-lg" type="time" name="end_time7" /> <br>
+					<br> <label class="align-schedule"><h4>Saturday:</h4></label> <input
+						class="form-control input-lg" type="time" name="start_time6" /> <input
+						class="form-control input-lg" type="time" name="end_time6" /> <br>
+					<br> <label class="align-schedule"><h4>Sunday:</h4></label> <input
+						class="form-control input-lg" type="time" name="start_time7" /> <input
+						class="form-control input-lg" type="time" name="end_time7" /> <br>
 					<br>
 					<!-- <input type="button"  class="btn btn-default" onclick="myFunction()" value="Cancel"> -->
 					<button type="submit" name="editStaffSchedule"
