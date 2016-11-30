@@ -6,6 +6,5 @@
     </ca.mcgill.ecse321.foodtruckmanagementsystem.model.Equipment>
   </equipments>
   <supplies id="4"/>
-  <orders id="5"/>
   <staffmembers id="6"/>
 </ca.mcgill.ecse321.foodtruckmanagementsystem.model.Manager>
