@@ -14,7 +14,7 @@ try {
 		$itemQuantityOrder = $_POST ['order_quantity'];
 	}
 	$c->menuItemOrdered ($itemName, $itemQuantityOrder);
-	$_SESSION ["successOrder"] = "Successfully order " . $itemName . " item(s)!";
+	$_SESSION ["successOrder"] = "Successfully ordered " . ucfirst($itemName) . " item(s)!";
 	$_SESSION ["errorOrder"] = "";
 } catch ( Exception $e ) {
 	$_SESSION ["errorOrder"] = $e->getMessage ();

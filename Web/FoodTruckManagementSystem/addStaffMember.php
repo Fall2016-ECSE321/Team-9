@@ -18,7 +18,7 @@ try {
 	}
 	
 	$c->createStaffMember ( $staffName, $staffRole );
-	$_SESSION ["successStaff"] = "Successfully add " . $staffName . " to staff's list!";
+	$_SESSION ["successStaff"] = "Successfully Added " . ucfirst($staffName). " to staff's list!";
 	
 	$_SESSION ["errorStaff"] = "";
 } catch ( Exception $e ) {
