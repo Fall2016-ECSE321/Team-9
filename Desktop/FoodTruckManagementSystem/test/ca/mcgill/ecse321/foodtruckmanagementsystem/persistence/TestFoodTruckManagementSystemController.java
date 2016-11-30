@@ -3,8 +3,6 @@ package ca.mcgill.ecse321.foodtruckmanagementsystem.controller;
 import static org.junit.Assert.*;
 
 import java.io.File;
-import java.text.SimpleDateFormat;
-import java.sql.Date;
 import java.sql.Time;
 
 import org.junit.After;
@@ -18,7 +16,7 @@ import ca.mcgill.ecse321.foodtruckmanagementsystem.model.StaffMember;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Supply;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceXStream;
 
-public class TestEventRegistrationController {
+public class TestFoodTruckManagementSystemController {
 
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {

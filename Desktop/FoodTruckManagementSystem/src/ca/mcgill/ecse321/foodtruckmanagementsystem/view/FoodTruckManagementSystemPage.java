@@ -57,30 +57,29 @@ public class FoodTruckManagementSystemPage extends JFrame {
 	private JLabel lblSupplyMessage, lblEquipmentMessage, lblStaffMemberMessage, lblscheduleMessage, lblOrderMessage, lblMenuItemMessage;
 	private SpinnerNumberModel equipmentModel, supplyModel, menuPriceModel, orderModel;
 	private JComboBox<String> staffMemberList, menuItemList;
-	private JComboBox staffroleComboBox;
+	private JComboBox<String> staffroleComboBox;
 	private HashMap<Integer, StaffMember> staffMembers;
 	private HashMap<Integer, MenuItem> menuItems;
 	private JPanel staffPanel, supplyPanel, equipmentPanel, popularityPanel;
-	private JTextField menuItemName;
+	private JTextField menuItemName;	
+	private ArrayList<JLabel> staffNamesReport;
+	private ArrayList<JLabel> staffRolesReport;
+	private ArrayList<JLabel> staffMemberNumbers;
+	private ArrayList<JLabel> supplyNamesReport;
+	private ArrayList<JLabel> supplyQuantitiesReport;
+	private ArrayList<JLabel> supplyUnitReport;
+	private ArrayList<JLabel> equipmentNamesReport;
+	private ArrayList<JLabel> equipmentQuantitiesReport;
+	private ArrayList<JLabel> equipmentNumbers;
+	private ArrayList<JLabel> popularityNamesReport;
+	private ArrayList<JLabel> popularityQuantitiesReport;
+	private ArrayList<JLabel> popularityNumbers;
+	private ArrayList<JLabel> supplyNumbers;	
+	private JSpinner[] startTimes;
+	private JSpinner[] endTimes;
 	
-	private ArrayList<JLabel> staffNamesReport = new ArrayList<JLabel>();
-	private ArrayList<JLabel> staffRolesReport = new ArrayList<JLabel>();
-	private ArrayList<JLabel> staffMemberNumbers = new ArrayList<JLabel>();
-	private ArrayList<JLabel> supplyNamesReport = new ArrayList<JLabel>();
-	private ArrayList<JLabel> supplyQuantitiesReport = new ArrayList<JLabel>();
-	private ArrayList<JLabel> supplyUnitReport = new ArrayList<JLabel>();
-	private ArrayList<JLabel> equipmentNamesReport = new ArrayList<JLabel>();
-	private ArrayList<JLabel> equipmentQuantitiesReport = new ArrayList<JLabel>();
-	private ArrayList<JLabel> equipmentNumbers = new ArrayList<JLabel>();
-	private ArrayList<JLabel> popularityNamesReport = new ArrayList<JLabel>();
-	private ArrayList<JLabel> popularityQuantitiesReport = new ArrayList<JLabel>();
-	private ArrayList<JLabel> popularityNumbers = new ArrayList<JLabel>();
-
-	private ArrayList<JLabel> supplyNumbers = new ArrayList<JLabel>();
-	private JSpinner[] startTimes = new JSpinner[7];
-	private JSpinner[] endTimes = new JSpinner[7];	
 	private JLabel[] lbldaysOfTheWeek = new JLabel[7];
-	private String[] staffRoles = {"Cashier", "Chef", "Inventory Clerk", "Manager"};
+	private String[] staffRoles = {"Cashier", "Chef", "Manager", "Inventory Clerk"};
 	private String[] daysOfTheWeek = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 	private String sMessage = "";
 	private String eMessage = "";
@@ -106,6 +105,23 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		
+		staffNamesReport = new ArrayList<JLabel>();
+		staffRolesReport = new ArrayList<JLabel>();
+		staffMemberNumbers = new ArrayList<JLabel>();
+		supplyNamesReport = new ArrayList<JLabel>();
+		supplyQuantitiesReport = new ArrayList<JLabel>();
+		supplyUnitReport = new ArrayList<JLabel>();
+		equipmentNamesReport = new ArrayList<JLabel>();
+		equipmentQuantitiesReport = new ArrayList<JLabel>();
+		equipmentNumbers = new ArrayList<JLabel>();
+		popularityNamesReport = new ArrayList<JLabel>();
+		popularityQuantitiesReport = new ArrayList<JLabel>();
+		popularityNumbers = new ArrayList<JLabel>();
+		supplyNumbers = new ArrayList<JLabel>();
+		
+		startTimes = new JSpinner[7];
+		endTimes = new JSpinner[7];
+		
 		JTabbedPane tabbedPane = new JTabbedPane();
 		tabbedPane.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
@@ -118,11 +134,13 @@ public class FoodTruckManagementSystemPage extends JFrame {
 				.addComponent(tabbedPane, Alignment.TRAILING, GroupLayout.DEFAULT_SIZE, 900, Short.MAX_VALUE)
 		);
 		
+		// creates first tab
 		JPanel tab1 = new JPanel();
 		tabbedPane.addTab("Main", null, tab1, null);
 		tab1.setLayout(new BoxLayout(tab1, BoxLayout.X_AXIS));
 		
 		JPanel orderPanel = new JPanel();
+		orderPanel.setBackground(new Color(0xD3D3D3));
 		tab1.add(orderPanel);
 		orderPanel.setLayout(new MigLayout("", "[][][][][][][][][][][][][][][][][][][][][][][][][][][]", "[][][][][][][][][][][][][][][]"));
 		
@@ -130,23 +148,13 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		lblMenuItem.setFont(new Font("Tahoma", Font.PLAIN, 44));
 		orderPanel.add(lblMenuItem, "cell 0 0");
 		
-		lblMenuItemMessage = new JLabel("New label");
+		lblMenuItemMessage = new JLabel("");
 		lblMenuItemMessage.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		orderPanel.add(lblMenuItemMessage, "cell 0 1 27 1,alignx left");
 		
 		JLabel lblItemName = new JLabel("Item Name:");
 		lblItemName.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		orderPanel.add(lblItemName, "cell 1 2");
-		
-		JButton btnAddToMenu = new JButton("Add to Menu List");
-		btnAddToMenu.setFont(new Font("Tahoma", Font.PLAIN, 34));
-		btnAddToMenu.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				createMenuItemActionPerformed(evt);
-			}
-		});		
-		
-		menuPriceModel = new SpinnerNumberModel(0.0, 0.0, 1.0E8, 0.0);
 		
 		menuItemName = new JTextField();
 		menuItemName.setFont(new Font("Tahoma", Font.PLAIN, 34));
@@ -156,19 +164,35 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		JLabel lblPrice = new JLabel("Price:");
 		lblPrice.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		orderPanel.add(lblPrice, "cell 1 4");
+		
+		menuPriceModel = new SpinnerNumberModel(0.0, 0.0, 1.0E8, 0.0);
 		JSpinner menuItemPrice = new JSpinner(menuPriceModel);
 		menuItemPrice.setFont(new Font("Tahoma", Font.PLAIN, 34));
-		orderPanel.add(menuItemPrice, "cell 3 4,grow");
+		orderPanel.add(menuItemPrice, "cell 3 4,grow");			
+		
+		// button to add menu item to list
+		JButton btnAddToMenu = new JButton("Add to Menu List");
+		btnAddToMenu.setBackground(new Color(0x444344));
+		btnAddToMenu.setForeground(new Color(0xFFFFFF));
+		btnAddToMenu.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		btnAddToMenu.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent evt) {
+				createMenuItemActionPerformed(evt);
+			}
+		});		
 		orderPanel.add(btnAddToMenu, "cell 1 6");
 		
+		// button to remove menu item from list
 		JButton btnRemoveItem = new JButton("Remove Item");
+		btnRemoveItem.setBackground(new Color(0x444344));
+		btnRemoveItem.setForeground(new Color(0xFFFFFF));
 		btnRemoveItem.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		btnRemoveItem.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				removeMenuItemActionPerformed(e);
 			}
 		});
-		orderPanel.add(btnRemoveItem, "cell 3 6,alignx left");
+		orderPanel.add(btnRemoveItem, "cell 3 6,alignx left");				
 		
 		JLabel lblAddOrder = new JLabel("Add Order:");
 		lblAddOrder.setFont(new Font("Tahoma", Font.PLAIN, 44));
@@ -182,10 +206,12 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		lblSelectItemTo.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		orderPanel.add(lblSelectItemTo, "cell 1 10");				
 		
+		// list of menu items in a dropdown box
 		menuItemList = new JComboBox<String>(new String[0]);
 		menuItemList.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		menuItemList.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt){
+				@SuppressWarnings("unchecked")
 				JComboBox<String> cb = (JComboBox<String>)evt.getSource();
 				selectedMenuItem = cb.getSelectedIndex();
 			}
@@ -194,23 +220,28 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		
 		JLabel lblQuantity_2 = new JLabel("Quantity:");
 		lblQuantity_2.setFont(new Font("Tahoma", Font.PLAIN, 34));
-		orderPanel.add(lblQuantity_2, "cell 1 12");
+		orderPanel.add(lblQuantity_2, "cell 1 12");		
+
+		orderModel = new SpinnerNumberModel(0, -100000000, 100000000, 1);
+		JSpinner orderQuantity = new JSpinner(orderModel);
+		orderQuantity.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		orderPanel.add(orderQuantity, "cell 3 12,alignx left,growy");
 		
+		// button to order food item
 		JButton btnOrder = new JButton("Order");
+		btnOrder.setBackground(new Color(0x444344));
+		btnOrder.setForeground(new Color(0xFFFFFF));
 		btnOrder.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		btnOrder.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				createOrderActionPerformed(e);
 			}
 		});
+		orderPanel.add(btnOrder, "cell 1 14");				
 		
-		orderModel = new SpinnerNumberModel(0, -100000000, 100000000, 1);
-		JSpinner orderQuantity = new JSpinner(orderModel);
-		orderQuantity.setFont(new Font("Tahoma", Font.PLAIN, 34));
-		orderPanel.add(orderQuantity, "cell 3 12,alignx left,growy");
-		orderPanel.add(btnOrder, "cell 1 14");
-		
+		// creates second tab
 		JPanel tab2 = new JPanel();
+		tab2.setBackground(new Color(0xD3D3D3));
 		tabbedPane.addTab("Inventory", null, tab2, null);
 		MigLayout layout = new MigLayout("", "[][][][grow]", "[][][][][][][][][][][][][][][][][]");
 		tab2.setLayout(layout);
@@ -227,6 +258,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		lblEquipmentName.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab2.add(lblEquipmentName, "cell 0 2 2 1,alignx left");
 		
+		// accepts user input for the name of the equipment
 		equipmentName = new JTextField();
 		equipmentName.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab2.add(equipmentName, "flowx,cell 2 2,grow");
@@ -234,23 +266,30 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		
 		JLabel lblEquipmentQuantity = new JLabel("Equipment Quantity:");
 		lblEquipmentQuantity.setFont(new Font("Tahoma", Font.PLAIN, 34));
-		tab2.add(lblEquipmentQuantity, "cell 0 4");
+		tab2.add(lblEquipmentQuantity, "cell 0 4");	
 		
+		// accepts user input for the quantity of the equipment
+		equipmentModel = new SpinnerNumberModel(0, -100000000, 100000000, 1);
+		JSpinner equipmentQuantity = new JSpinner(equipmentModel);
+		equipmentQuantity.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		tab2.add(equipmentQuantity, "cell 2 4,grow");
 		
+		// button to add equipment item to list
 		JButton btnAddEquipment = new JButton("Add Equipment");
+		btnAddEquipment.setBackground(new Color(0x444344));
+		btnAddEquipment.setForeground(new Color(0xFFFFFF));
 		btnAddEquipment.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		btnAddEquipment.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				addEquipmentActionPerformed(e);
 			}
-		});
-		equipmentModel = new SpinnerNumberModel(0, -100000000, 100000000, 1);
-		JSpinner equipmentQuantity = new JSpinner(equipmentModel);
-		equipmentQuantity.setFont(new Font("Tahoma", Font.PLAIN, 34));
-		tab2.add(equipmentQuantity, "cell 2 4,grow");
+		});		
 		tab2.add(btnAddEquipment, "cell 0 6,alignx right");
 		
+		// button to remove equipment item from list
 		JButton btnRemoveEquipment = new JButton("Remove Equipment");
+		btnRemoveEquipment.setBackground(new Color(0x444344));
+		btnRemoveEquipment.setForeground(new Color(0xFFFFFF));
 		btnRemoveEquipment.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		btnRemoveEquipment.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -271,16 +310,17 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		lblSupplyName.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab2.add(lblSupplyName, "cell 0 10");
 		
+		// accepts user input for name of the supply
 		supplyName = new JTextField();
 		supplyName.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab2.add(supplyName, "cell 2 10,grow");
 		supplyName.setColumns(10);
 		
+		// accepts user input for the quantity of the supply
+		supplyModel = new SpinnerNumberModel(0.0, -1.0E8, 1.0E8, 0.1);
 		JLabel lblSupplyQuantity = new JLabel("Supply Quantity:");
 		lblSupplyQuantity.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab2.add(lblSupplyQuantity, "cell 0 12");
-		
-		supplyModel = new SpinnerNumberModel(0.0, -1.0E8, 1.0E8, 0.1);
 		JSpinner supplyQuantity = new JSpinner(supplyModel);
 		supplyQuantity.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab2.add(supplyQuantity, "cell 2 12,grow");
@@ -289,21 +329,28 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		lblSupplyUnit.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab2.add(lblSupplyUnit, "cell 0 14");
 		
+		// accepts user input for the unit of the supply
+		supplyUnit = new JTextField();
+		supplyUnit.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		tab2.add(supplyUnit, "cell 2 14,grow");
+		supplyUnit.setColumns(10);
+		
+		// button to add supply item to list
 		JButton btnAddSupply = new JButton("Add Supply");
+		btnAddSupply.setBackground(new Color(0x444344));
+		btnAddSupply.setForeground(new Color(0xFFFFFF));
 		btnAddSupply.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		btnAddSupply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				addSupplyActionPerformed(e);
 			}
-		});
-		
-		supplyUnit = new JTextField();
-		supplyUnit.setFont(new Font("Tahoma", Font.PLAIN, 34));
-		tab2.add(supplyUnit, "cell 2 14,grow");
-		supplyUnit.setColumns(10);
+		});		
 		tab2.add(btnAddSupply, "cell 0 16,alignx right");
 		
+		// button to remove supply item from list
 		JButton btnRemoveSupply = new JButton("Remove Supply");
+		btnRemoveSupply.setBackground(new Color(0x444344));
+		btnRemoveSupply.setForeground(new Color(0xFFFFFF));
 		btnRemoveSupply.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		btnRemoveSupply.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -312,7 +359,9 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		});
 		tab2.add(btnRemoveSupply, "cell 2 16");
 		
+		// creates third tab
 		JPanel tab3 = new JPanel();
+		tab3.setBackground(new Color(0xD3D3D3));
 		tabbedPane.addTab("Staff", null, tab3, null);
 		tab3.setLayout(new MigLayout("", "[][][][][][][][grow]", "[][][][][][][][][][][][][][][][][][][][][][][]"));
 		
@@ -328,14 +377,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		lblStaffName.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab3.add(lblStaffName, "flowx,cell 0 2,alignx trailing");
 		
-		JButton btnAddStaff = new JButton("Add");
-		btnAddStaff.setFont(new Font("Tahoma", Font.PLAIN, 34));
-		btnAddStaff.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				addStaffMemberActionPerformed(e);
-			}
-		});
-		
+		// accepts user input for the name of the staff member
 		staffName = new JTextField();
 		staffName.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab3.add(staffName, "cell 1 2,grow");
@@ -345,10 +387,22 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		lblSelectRole.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab3.add(lblSelectRole, "cell 2 2");
 		
-		staffroleComboBox = new JComboBox(staffRoles);
+		// stores staff member roles in a dropdown box
+		staffroleComboBox = new JComboBox<String>(staffRoles);
 		staffroleComboBox.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab3.add(staffroleComboBox, "cell 3 2,grow");
-		tab3.add(btnAddStaff, "cell 5 2,alignx left");
+		
+		// button to add staff member to list
+		JButton btnAddStaff = new JButton("Add");
+		btnAddStaff.setBackground(new Color(0x444344));
+		btnAddStaff.setForeground(new Color(0xFFFFFF));
+		btnAddStaff.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		btnAddStaff.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				addStaffMemberActionPerformed(e);
+			}
+		});
+		tab3.add(btnAddStaff, "cell 5 2,alignx left");		
 		
 		JLabel lblRegisterStaffsWeekly = new JLabel("Register Staff's Weekly Schedule");
 		lblRegisterStaffsWeekly.setFont(new Font("Tahoma", Font.PLAIN, 44));
@@ -362,46 +416,22 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		lblSelectStaffName.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab3.add(lblSelectStaffName, "cell 1 6,alignx trailing");
 		
-		Calendar cal = Calendar.getInstance();
-		cal.set(0, 0, 0, 0, 0, 0);
-		
-		JSpinner.DateEditor[] startTimeEditors = new JSpinner.DateEditor[7];
-		for(int i = 0; i < startTimes.length; i++) {
-			startTimes[i] = new JSpinner(new SpinnerDateModel());
-			startTimeEditors[i] = new JSpinner.DateEditor(startTimes[i], "HH:mm");
-			startTimes[i].setEditor(startTimeEditors[i]);
-			startTimes[i].setFont(new Font("Tahoma", Font.PLAIN, 34));
-			startTimes[i].setValue(cal.getTime());
-			tab3.add(startTimes[i], "cell 2 " + (8+(2*i)) +",alignx left");
-		}
-		
-		JSpinner.DateEditor[] endTimeEditors = new JSpinner.DateEditor[7];
-		for(int i = 0; i < startTimes.length; i++) {
-			endTimes[i] = new JSpinner(new SpinnerDateModel());
-			endTimeEditors[i] = new JSpinner.DateEditor(endTimes[i], "HH:mm");
-			endTimes[i].setEditor(endTimeEditors[i]);
-			endTimes[i].setFont(new Font("Tahoma", Font.PLAIN, 34));
-			endTimes[i].setValue(cal.getTime());
-			tab3.add(endTimes[i], "cell 3 " +(8+(2*i)) + ",aligny center");
-		}
-		
+		// stores the list of staff members in a dropdown box
 		staffMemberList = new JComboBox<String>(new String[0]);
 		staffMemberList.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		staffMemberList.addActionListener(new java.awt.event.ActionListener(){
 			public void actionPerformed(java.awt.event.ActionEvent evt){
+				@SuppressWarnings("unchecked")
 				JComboBox<String> cb = (JComboBox<String>)evt.getSource();
 				selectedStaffMember = cb.getSelectedIndex();
 			}
 		});
 		tab3.add(staffMemberList, "cell 2 6 2 1,growx");
 		
-		for(int i = 0; i < daysOfTheWeek.length; i++) {
-			lbldaysOfTheWeek[i] = new JLabel(daysOfTheWeek[i] + ":");
-			lbldaysOfTheWeek[i].setFont(new Font("Tahoma", Font.PLAIN, 34));
-			tab3.add(lbldaysOfTheWeek[i], "flowx,cell 1 " + (8+(2*i)) + ",alignx left");
-		}
-		
+		// button to remove staff member from list
 		JButton btnRemoveStaff = new JButton("Remove Staff");
+		btnRemoveStaff.setBackground(new Color(0x444344));
+		btnRemoveStaff.setForeground(new Color(0xFFFFFF));
 		btnRemoveStaff.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		btnRemoveStaff.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -418,7 +448,42 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		lblEndTime.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		tab3.add(lblEndTime, "cell 3 7");
 		
+		// creates seven labels for each day of the week
+		for(int i = 0; i < daysOfTheWeek.length; i++) {
+			lbldaysOfTheWeek[i] = new JLabel(daysOfTheWeek[i] + ":");
+			lbldaysOfTheWeek[i].setFont(new Font("Tahoma", Font.PLAIN, 34));
+			tab3.add(lbldaysOfTheWeek[i], "flowx,cell 1 " + (8+(2*i)) + ",alignx left");
+		}
+		
+		Calendar cal = Calendar.getInstance();
+		cal.set(0, 0, 0, 0, 0, 0);	
+		
+		JSpinner.DateEditor[] startTimeEditors = new JSpinner.DateEditor[7];
+		// creates JSpinner for every day's startTime
+		for(int i = 0; i < startTimes.length; i++) {
+			startTimes[i] = new JSpinner(new SpinnerDateModel());
+			startTimeEditors[i] = new JSpinner.DateEditor(startTimes[i], "HH:mm");
+			startTimes[i].setEditor(startTimeEditors[i]);
+			startTimes[i].setFont(new Font("Tahoma", Font.PLAIN, 34));
+			startTimes[i].setValue(cal.getTime());
+			tab3.add(startTimes[i], "cell 2 " + (8+(2*i)) +",alignx left");
+		}
+		
+		JSpinner.DateEditor[] endTimeEditors = new JSpinner.DateEditor[7];
+		// creates JSpinner for every day's endTime
+		for(int i = 0; i < startTimes.length; i++) {
+			endTimes[i] = new JSpinner(new SpinnerDateModel());
+			endTimeEditors[i] = new JSpinner.DateEditor(endTimes[i], "HH:mm");
+			endTimes[i].setEditor(endTimeEditors[i]);
+			endTimes[i].setFont(new Font("Tahoma", Font.PLAIN, 34));
+			endTimes[i].setValue(cal.getTime());
+			tab3.add(endTimes[i], "cell 3 " +(8+(2*i)) + ",aligny center");
+		}		
+		
+		// button to save staff member's schedule to list
 		JButton btnSaveSchedule = new JButton("Save");
+		btnSaveSchedule.setBackground(new Color(0x444344));
+		btnSaveSchedule.setForeground(new Color(0xFFFFFF));
 		btnSaveSchedule.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		btnSaveSchedule.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent evt) {
@@ -427,6 +492,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		});
 		tab3.add(btnSaveSchedule, "cell 1 22");
 		
+		// creates fourth tab
 		JPanel tab4 = new JPanel();
 		tabbedPane.addTab("Report", null, tab4, null);
 		tab4.setLayout(new FormLayout(new ColumnSpec[] {
@@ -444,6 +510,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		staffPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		tab4.add(staffPane, "1, 1, 2, 2, fill, fill");
 		
+		// creates a panel for staff member report
 		staffPanel = new JPanel();
 		staffPanel.setBackground(new Color(0xBCB7C1));
 		staffPane.setViewportView(staffPanel);
@@ -469,6 +536,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		popularityPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		tab4.add(popularityPane, "3, 1, 2, 2, fill, fill");
 		
+		// creates a panel for the popularity report
 		popularityPanel = new JPanel();
 		popularityPanel.setBackground(new Color(0xE0FFFF));
 		popularityPane.setViewportView(popularityPanel);
@@ -494,6 +562,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		supplyPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		tab4.add(supplyPane, "1, 3, 2, 2, fill, fill");
 		
+		// creates a panel for the supply report
 		supplyPanel = new JPanel();
 		supplyPanel.setBackground(new Color(0xD3D3D3));
 		supplyPane.setViewportView(supplyPanel);
@@ -523,6 +592,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		equipmentPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 		tab4.add(equipmentPane, "3, 3, 2, 2, fill, fill");
 		
+		// creates a panel for the equipment report
 		equipmentPanel = new JPanel();
 		equipmentPanel.setBackground(new Color(0xFFF0F5));
 		equipmentPane.setViewportView(equipmentPanel);
@@ -532,9 +602,9 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		lblEquipmentList.setFont(new Font("Tahoma", Font.PLAIN, 34));
 		equipmentPanel.add(lblEquipmentList, "cell 0 0");
 		
-		JLabel lblNewLabel = new JLabel("#");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 34));
-		equipmentPanel.add(lblNewLabel, "cell 0 2,alignx right");
+		JLabel lblequipmentNumber = new JLabel("#");
+		lblequipmentNumber.setFont(new Font("Tahoma", Font.PLAIN, 34));
+		equipmentPanel.add(lblequipmentNumber, "cell 0 2,alignx right");
 		
 		JLabel lblName_2 = new JLabel("Name:");
 		lblName_2.setFont(new Font("Tahoma", Font.PLAIN, 34));
@@ -547,14 +617,17 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		contentPane.setLayout(gl_contentPane);
 	}
 	
+	// refreshes the data that is displayed
 	public void refreshData() {
+		// refreshes the error/confirmation messages
+		lblMenuItemMessage.setText(menuItemMessage);
+		lblOrderMessage.setText(orderMessage);
 		lblEquipmentMessage.setText(eMessage);
 		lblSupplyMessage.setText(sMessage);
 		lblStaffMemberMessage.setText(smMessage);
-		lblscheduleMessage.setText(schedMessage);
-		lblMenuItemMessage.setText(menuItemMessage);
-		lblOrderMessage.setText(orderMessage);
+		lblscheduleMessage.setText(schedMessage);		
 		Manager m = Manager.getInstance();
+		// refreshes the staff member dropdown box
 		if(smMessage.contains("successfully") || smMessage.contains("")) {
 			staffMembers = new HashMap<Integer, StaffMember>();
 			staffMemberList.removeAllItems();
@@ -570,7 +643,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 			selectedStaffMember = -1;
 			staffMemberList.setSelectedIndex(selectedStaffMember);
 		}
-		
+		// refreshes the menu item dropdown box
 		if(menuItemMessage.contains("successfully") || menuItemMessage.contains("")) {
 			menuItems = new HashMap<Integer, MenuItem>();
 			menuItemList.removeAllItems();
@@ -586,33 +659,41 @@ public class FoodTruckManagementSystemPage extends JFrame {
 			selectedMenuItem = -1;
 			menuItemList.setSelectedIndex(selectedMenuItem);
 		}
+		// loads the various reports
 		loadStaffMemberReport();
 		loadSupplyReport();
 		loadEquipmentReport();
 		loadPopularityReport();
+		
 		pack();
 	}
 	
+	// resets the equipment input fields
 	private void resetEquipmentData() {
 		equipmentName.setText("");
 		equipmentModel.setValue(0);
 	}
 	
+	// resets the supply input fields
 	private void resetSupplyData() {
 		supplyName.setText("");
 		supplyUnit.setText("");
 		supplyModel.setValue(0.0);
 	}
 	
+	// resets the staff member input field
 	private void resetStaffMemberData() {
 		staffName.setText("");
+		staffroleComboBox.setSelectedIndex(0);
 	}
 	
+	// resets the menu item input field
 	private void resetMenuItemData() {
 		menuItemName.setText("");
 		menuPriceModel.setValue(0.0);
 	}
 	
+	// refresh staff member schedule input fields
 	private void resetScheduleData() {
 		Calendar cal = Calendar.getInstance();
 		cal.set(0,0,0,0,0,0);
@@ -622,11 +703,13 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		}
 	}
 	
+	// refresh order input fields
 	private void resetOrderData() {
 		menuItemList.setSelectedIndex(-1);
 		orderModel.setValue(0);
 	}
 	
+	// load report for staff members
 	private void loadStaffMemberReport() {
 		Manager m = Manager.getInstance();
 		
@@ -665,6 +748,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		}
 	}
 	
+	// load report for supply items
 	private void loadSupplyReport() {
 		Manager m = Manager.getInstance();
 		
@@ -709,6 +793,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		}
 	}
 	
+	// load report for equipment items
 	private void loadEquipmentReport() {
 		Manager m = Manager.getInstance();
 		
@@ -747,6 +832,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		}		
 	}
 	
+	// load report for popularity of menu items
 	private void loadPopularityReport() {
 		Manager m = Manager.getInstance();		
 		for(int i = 0; i < popularityNamesReport.size(); i++) {
@@ -791,6 +877,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		}	
 	}
 	
+	// add equipment item when btnAddEquipment is pressed
 	private void addEquipmentActionPerformed(java.awt.event.ActionEvent evt) {
 		ItemController c = new ItemController();
 		eMessage = "";
@@ -807,7 +894,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		if(eMessage.contains("Equipment quantity"))
 			equipmentModel.setValue(0);
 		if(eMessage.equals("")) {
-			lblEquipmentMessage.setForeground(Color.GREEN);
+			lblEquipmentMessage.setForeground(new Color(0x228B22));
 			eMessage = "Equipment item successfully added!";
 			resetEquipmentData();
 		}
@@ -815,6 +902,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		refreshData();
 	}
 	
+	// remove equipment item when btnRemoveEquipment is pressed
 	private void removeEquipmentActionPerformed(java.awt.event.ActionEvent evt) {
 		ItemController c = new ItemController();
 		eMessage = "";
@@ -831,7 +919,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		if(eMessage.contains("Equipment quantity") || eMessage.contains("remove more than"))
 			equipmentModel.setValue(0.0);	
 		if(eMessage.equals("")) {
-			lblEquipmentMessage.setForeground(Color.GREEN);
+			lblEquipmentMessage.setForeground(new Color(0x228B22));
 			eMessage = "Equipment item successfully removed!";
 			resetEquipmentData();
 		}
@@ -839,6 +927,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		refreshData();
 	}
 	
+	// add supply item when btnAddSupply is pressed
 	private void addSupplyActionPerformed(java.awt.event.ActionEvent evt) {
 		ItemController c = new ItemController();
 		sMessage = "";
@@ -857,7 +946,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		if(sMessage.contains("Supply unit"))
 			supplyUnit.setText("");		
 		if(sMessage.equals("")) {
-			lblSupplyMessage.setForeground(Color.GREEN);
+			lblSupplyMessage.setForeground(new Color(0x228B22));
 			sMessage = "Supply item successfully added!";
 			resetSupplyData();
 		}
@@ -865,6 +954,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		refreshData();
 	}
 	
+	// remove supply item when btnRemoveSupply is pressed
 	private void removeSupplyActionPerformed(java.awt.event.ActionEvent evt) {
 		ItemController c = new ItemController();
 		sMessage = "";
@@ -881,7 +971,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		if(sMessage.contains("Supply quantity") || sMessage.contains("remove more than"))
 			supplyModel.setValue(0.0);	
 		if(sMessage.equals("")) {
-			lblSupplyMessage.setForeground(Color.GREEN);
+			lblSupplyMessage.setForeground(new Color(0x228B22));
 			sMessage = "Supply item successfully removed!";
 			resetSupplyData();
 		}
@@ -889,6 +979,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		refreshData();
 	}
 	
+	// add staff member when btnAddStaff is pressed
 	private void addStaffMemberActionPerformed(java.awt.event.ActionEvent evt) {
 		ItemController c = new ItemController();
 		smMessage = "";
@@ -906,7 +997,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 			staffroleComboBox.setSelectedIndex(-1);
 		
 		if(smMessage.equals("")) {
-			lblStaffMemberMessage.setForeground(Color.GREEN);
+			lblStaffMemberMessage.setForeground(new Color(0x228B22));
 			smMessage = "Staff Member was successfully added!";
 			resetStaffMemberData();
 		}
@@ -914,6 +1005,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		refreshData();
 	}
 	
+	// save staff member schedule when btnSaveSchedule is pressed
 	private void saveScheduleActionPerformed(java.awt.event.ActionEvent evt) {
 		StaffMember staffMember = new StaffMember("","");
 		ItemController c = new ItemController();
@@ -942,7 +1034,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		}
 		
 		if(schedMessage.equals("")) {
-			lblscheduleMessage.setForeground(Color.GREEN);
+			lblscheduleMessage.setForeground(new Color(0x228B22));
 			schedMessage = "Staff Member Schdule was successfully updated!";
 			resetScheduleData();
 		}
@@ -950,6 +1042,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		refreshData();
 	}
 	
+	// delete staff member when btnRemoveStaff is pressed
 	private void deleteStaffMemberActionPerformed(java.awt.event.ActionEvent evt) {
 		ItemController c = new ItemController();
 		StaffMember staffMember = new StaffMember("","");
@@ -971,12 +1064,13 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		}
 		if(schedMessage.equals("")) {
 			schedMessage = "Staff Member successfully removed!";
-			lblscheduleMessage.setForeground(Color.GREEN);
+			lblscheduleMessage.setForeground(new Color(0x228B22));
 		}
 		
 		refreshData();		
 	}
 	
+	// create menu item when btnAddToMenu is pressed
 	private void createMenuItemActionPerformed(java.awt.event.ActionEvent evt) {
 		ItemController c = new ItemController();
 		menuItemMessage = "";
@@ -991,7 +1085,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		if(menuItemMessage.contains("name")) 
 			menuItemName.setText("");				
 		if(menuItemMessage.equals("")) {
-			lblMenuItemMessage.setForeground(Color.GREEN);
+			lblMenuItemMessage.setForeground(new Color(0x228B22));
 			menuItemMessage = "Menu Item was successfully added!";
 			resetMenuItemData();
 		}
@@ -999,6 +1093,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		refreshData();		
 	}
 	
+	// remove menu item when btnRemoveItem is pressed 
 	private void removeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {
 		ItemController c = new ItemController();
 		menuItemMessage = "";
@@ -1013,7 +1108,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		if(menuItemMessage.contains("name")) 
 			menuItemName.setText("");
 		if(menuItemMessage.equals("")) {
-			lblMenuItemMessage.setForeground(Color.GREEN);
+			lblMenuItemMessage.setForeground(new Color(0x228B22));
 			menuItemMessage = "Menu Item was successfully removed!";
 			resetMenuItemData();
 		}
@@ -1021,6 +1116,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		refreshData();
 	}
 	
+	// create order when btnOrder is pressed
 	private void createOrderActionPerformed(java.awt.event.ActionEvent evt) {
 		ItemController c = new ItemController();
 		MenuItem mi = new MenuItem("", 0.0, 0);
@@ -1043,7 +1139,7 @@ public class FoodTruckManagementSystemPage extends JFrame {
 		if(orderMessage.contains("quantity"))
 			orderModel.setValue(0);		
 		if(orderMessage.equals("")) {
-			lblOrderMessage.setForeground(Color.GREEN);
+			lblOrderMessage.setForeground(new Color(0x228B22));
 			orderMessage = "Order was successfully placed!";
 			resetOrderData();
 		}
