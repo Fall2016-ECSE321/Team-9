@@ -18,10 +18,10 @@ try {
 	
 	if (isset ( $_POST ['addSupply'] )) {
 		$c->createSupply ( $supplyName, $supplyQuantity, $supplyUnit );
-		$_SESSION ["successSupply"] = "Successfully Added " . ucfirst($supplyName) . " item(s)!";
+		$_SESSION ["successSupply"] = "Successfully Added " . ucfirst ( $supplyName ) . " item(s)!";
 	} elseif (isset ( $_POST ['removeSupply'] )) {
 		$c->removeSupply ( $supplyName, $supplyQuantity );
-		$_SESSION ["successSupply"] = "Successfully Removed " . ucfirst($supplyName) . " item(s)!";
+		$_SESSION ["successSupply"] = "Successfully Removed " . ucfirst ( $supplyName ) . " item(s)!";
 	}
 	$_SESSION ["errorSupply"] = "";
 } catch ( Exception $e ) {
@@ -29,7 +29,6 @@ try {
 	$_SESSION ["successSupply"] = "";
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>

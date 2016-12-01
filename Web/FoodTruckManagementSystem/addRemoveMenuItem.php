@@ -18,10 +18,10 @@ try {
 	
 	if (isset ( $_POST ['addMenuItem'] )) {
 		$c->createMenuItem ( $itemName, $itemPrice );
-		$_SESSION ["successItem"] = "Successfully Added " . ucfirst($itemName) . " item from Menu List!";
+		$_SESSION ["successItem"] = "Successfully Added " . ucfirst ( $itemName ) . " item from Menu List!";
 	} elseif (isset ( $_POST ['removeMenuItem'] )) {
 		$c->removeMenuItem ( $itemName );
-		$_SESSION ["successItem"] = "Successfully Removed " . ucfirst($itemName) . " item from Menu List!";
+		$_SESSION ["successItem"] = "Successfully Removed " . ucfirst ( $itemName ) . " item from Menu List!";
 	}
 	$_SESSION ["errorItem"] = "";
 } catch ( Exception $e ) {
@@ -30,10 +30,7 @@ try {
 }
 if (isset ( $err_equipment )) {
 }
-
 ?>
-
-
 <!DOCTYPE html>
 <html>
 <head>

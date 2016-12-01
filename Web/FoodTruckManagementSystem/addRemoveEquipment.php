@@ -15,10 +15,10 @@ try {
 	
 	if (isset ( $_POST ['addEquipment'] )) {
 		$c->createEquipment ( $equipmentName, $equipmentQuantity );
-		$_SESSION ["successEquipment"] = "Successfully Added " . ucfirst($equipmentName) . " item(s)!";
+		$_SESSION ["successEquipment"] = "Successfully Added " . ucfirst ( $equipmentName ) . " item(s)!";
 	} elseif (isset ( $_POST ['removeEquipment'] )) {
 		$c->removeEquipment ( $equipmentName, $equipmentQuantity );
-		$_SESSION ["successEquipment"] = "Successfully Removed " . ucfirst($equipmentName) . " item(s)!";
+		$_SESSION ["successEquipment"] = "Successfully Removed " . ucfirst ( $equipmentName ) . " item(s)!";
 	}
 	$_SESSION ["errorEquipment"] = "";
 } catch ( Exception $e ) {
@@ -27,10 +27,7 @@ try {
 }
 if (isset ( $err_equipment )) {
 }
-
 ?>
-
-
 <!DOCTYPE html>
 <html>
 <head>

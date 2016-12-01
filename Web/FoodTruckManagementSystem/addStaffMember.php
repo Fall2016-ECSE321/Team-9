@@ -5,9 +5,6 @@ session_start ();
 
 $c = new Controller ();
 
-$val = $_POST ["staff_name"];
-$val1 = $_POST ["staff_role"];
-
 try {
 	
 	if (isset ( $_POST ['staff_name'] )) { // name
@@ -18,7 +15,7 @@ try {
 	}
 	
 	$c->createStaffMember ( $staffName, $staffRole );
-	$_SESSION ["successStaff"] = "Successfully Added " . ucfirst($staffName). " to staff's list!";
+	$_SESSION ["successStaff"] = "Successfully Added " . ucfirst ( $staffName ) . " to staff's list!";
 	
 	$_SESSION ["errorStaff"] = "";
 } catch ( Exception $e ) {
@@ -27,7 +24,6 @@ try {
 }
 
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>

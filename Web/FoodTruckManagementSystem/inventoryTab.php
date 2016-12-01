@@ -14,8 +14,6 @@ session_start ();
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
 <title>Food Truck Management System</title>
-
-
 <style>
 .btn-default {
 	background: #444344;
@@ -40,6 +38,7 @@ session_start ();
 }
 </style>
 </head>
+
 <body>
 	<div class="container">
 		<h2>
@@ -66,10 +65,8 @@ session_start ();
 		<h3 style="color: #778899">
 			<strong>Equipment Item</strong>
 		</h3>
-		<!-- #c0c0c0 -->
 		<div style="background-color: #BCB7C1; color: black; padding: 20px;"">
-			<!-- <h4> <strong>Equipment Item</strong></h4> -->
-
+			<!-- 		Form for edit the Equipment -->
 			<form class="form-inline" action="addRemoveEquipment.php"
 				method="post">
 
@@ -108,14 +105,13 @@ session_start ();
 					class="btn btn-default btn-lg">Remove</button>
 			</form>
 		</div>
-
 		<br> <br>
 
 		<h3 style="color: #778899">
 			<strong>Supply Item</strong>
 		</h3>
 		<div style="background-color: #BCB7C1; color: black; padding: 20px;"">
-
+			<!-- 			Form to edit Suppy  -->
 			<form class="form-inline" action="addRemoveSupply.php" method="post">
 				<span class="error input-lg">
 					<?php
@@ -160,8 +156,5 @@ session_start ();
 			</form>
 		</div>
 	</div>
-
-
-
 </body>
 </html>
