@@ -25,8 +25,9 @@ There are three plateforms that will support the FTMS: Desktop/Laptop, Mobile an
 #### For Desktop Platform
 There are two way to run the application:
 ###### 1. Running the Jar file
-###### STEP 1 - Go to Desktop directory and open the project `FoodTruckManagmentSystem` folder to Eclipse 
-###### STEP 2 - Click on FTMS.jar
+###### STEP 1 - Go to Desktop directory 
+###### STEP 2 - Rune the file FTMS.jar
+** Upon storing data, the FTMS will generate a data.xml file to track your saved data
 
 ###### 2. Running the code from Eclipse
 ###### STEP 1 - Go to Desktop directory and open the project `FoodTruckManagmentSystem` folder to Eclipse 
