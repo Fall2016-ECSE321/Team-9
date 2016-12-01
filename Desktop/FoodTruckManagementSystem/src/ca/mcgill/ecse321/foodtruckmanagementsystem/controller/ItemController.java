@@ -7,18 +7,16 @@ import ca.mcgill.ecse321.foodtruckmanagementsystem.model.StaffMember;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.model.Supply;
 import ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.PersistenceXStream;
 
-import java.sql.Date;
 import java.sql.Time;
-import java.text.DateFormat;
 import java.text.DecimalFormat;
-import java.text.SimpleDateFormat;
 import java.util.*;
 
 public class ItemController {
 
 	public ItemController () {
 	}
-		
+	
+	// creates new equipment item or updates existing equipment item's quantity
 	public void createEquipment(String name, int quantity) throws InvalidInputException {
 		String error = "";	
 		if((name == null || name.trim().length() == 0))
@@ -29,7 +27,7 @@ public class ItemController {
 			error = error + "Equipment quantity cannot be negative!";
 		
 		error = error.trim();
-		if(error.length() > 0)
+		if(error.length() > 0) // throws InvalidInputException if necessary
 			throw new InvalidInputException(error);		
 		
 		name = name.toLowerCase();	
@@ -38,7 +36,7 @@ public class ItemController {
 		
 		Manager m = Manager.getInstance();
 	
-		for(Equipment equipment : m.getEquipments()) {
+		for(Equipment equipment : m.getEquipments()) { // if the equipment item exists update the quantity
 			if(name.equals(equipment.getName())) {
 				isUpdated = true;
 				equipment.setQuantity(equipment.getQuantity() + quantity);
@@ -47,11 +45,12 @@ public class ItemController {
 		}
 		
 		if(!isUpdated)
-			m.addEquipment(new Equipment(name, quantity));
+			m.addEquipment(new Equipment(name, quantity)); // creates new equipment item if it was not previously in the xml file	
 			
-		PersistenceXStream.saveToXMLwithXStream(m);
+		PersistenceXStream.saveToXMLwithXStream(m); // saves manager to xml file
 	}
 	
+	// remove equipment or update quantity of pre-existing equipment item
 	public void removeEquipment(String name, int quantity) throws InvalidInputException {
 		String error = "";
 		if((name == null || name.trim().length() == 0))
@@ -62,7 +61,7 @@ public class ItemController {
 			error = error + "Equipment quantity cannot be negative!";
 		
 		error = error.trim();
-		if(error.length() > 0)
+		if(error.length() > 0) // throws InvalidInputException if necessary
 			throw new InvalidInputException(error);
 				
 		name = name.toLowerCase();
@@ -71,7 +70,7 @@ public class ItemController {
 		
 		Manager m = Manager.getInstance();
 			
-		for(Equipment equipment : m.getEquipments()) {
+		for(Equipment equipment : m.getEquipments()) { // if the equipment item exists update the quantity
 			if(name.equals(equipment.getName())) {
 				findName = true;
 				if(equipment.getQuantity() - quantity > 0) {
@@ -88,12 +87,13 @@ public class ItemController {
 			}
 		}
 			
-		if(!findName)
+		if(!findName) // InvalidInputException is thrown if the equipment item is not in the manager
 			throw new InvalidInputException("Equipment name does not exist!");
 			
-		PersistenceXStream.saveToXMLwithXStream(m);	
+		PersistenceXStream.saveToXMLwithXStream(m);	// saves manager to xml file
 	}
 	
+	// creates new supply item or updates quantity of pre-existing supply item
 	public void createSupply(String name, double quantity, String unit) throws InvalidInputException {
 		String error = "";
 		if((name == null || name.trim().length() == 0)) 
@@ -106,7 +106,7 @@ public class ItemController {
 			error = error + "Supply unit cannot be empty!";
 		
 		error = error.trim();
-		if(error.length() > 0)
+		if(error.length() > 0) // throws InvalidInputException if necessary
 			throw new InvalidInputException(error);
 		
 		name = name.toLowerCase();
@@ -116,7 +116,7 @@ public class ItemController {
 			
 		Manager m = Manager.getInstance();
 	
-		for(Supply supply : m.getSupplies()) {
+		for(Supply supply : m.getSupplies()) { // if the supply item exists update the quantity
 			if(name.equals(supply.getName())) {
 				if(unit.equals(supply.getUnit())) {
 					isUpdated = true;
@@ -129,11 +129,12 @@ public class ItemController {
 		}
 		
 		if(!isUpdated)
-			m.addSupply(new Supply(name, quantity, unit));				
+			m.addSupply(new Supply(name, quantity, unit)); // creates new supply item if it was not previously in the xml file	
 			
-		PersistenceXStream.saveToXMLwithXStream(m);
+		PersistenceXStream.saveToXMLwithXStream(m); // save manager to xml file
 	}
 	
+	// removes supply item or updates quantity of pre-existing supply item
 	public void removeSupply(String name, double quantity) throws InvalidInputException{
 		String error ="";
 		if ((name == null || name.trim().length() == 0))
@@ -144,7 +145,7 @@ public class ItemController {
 			error = error + "Supply quantity cannot be negative! ";
 		
 		error = error.trim();
-		if(error.length() > 0)
+		if(error.length() > 0) // throws InvalidInputException if necessary
 			throw new InvalidInputException(error);
 		
 		name = name.toLowerCase();
@@ -153,7 +154,7 @@ public class ItemController {
 		
 		Manager m = Manager.getInstance();
 			
-		for(Supply supply : m.getSupplies()) {
+		for(Supply supply : m.getSupplies()) { // if the supply item exists update the quantity
 			if(name.equals(supply.getName())) {
 				findName = true;
 				if(supply.getQuantity() - quantity > 0) {
@@ -171,12 +172,13 @@ public class ItemController {
 			}		
 		}
 		
-		if(!findName)
+		if(!findName) // InvalidInputException is thrown if the supply item is not in the manager
 			throw new InvalidInputException("Supply name does not exist!");
 
-		PersistenceXStream.saveToXMLwithXStream(m);	
+		PersistenceXStream.saveToXMLwithXStream(m); // save manager to xml file
 	}
 	
+	// creates new staff member or updates the role of a pre-existing staff member
 	public void createStaffMember(String name, String role) throws InvalidInputException {
 		String error = "";
 		if((name == null || name.trim().length() == 0))
@@ -185,7 +187,7 @@ public class ItemController {
 			error = error + "Staff member role cannot be empty! ";
 		
 		error = error.trim();
-		if(error.length() > 0)
+		if(error.length() > 0) // throws InvalidInputException if necessary
 			throw new InvalidInputException(error);
 		
 		name = name.toLowerCase();
@@ -195,7 +197,7 @@ public class ItemController {
 			
 		Manager m = Manager.getInstance();
 	
-		for(StaffMember staffmember : m.getStaffmembers()) {
+		for(StaffMember staffmember : m.getStaffmembers()) { // if the staff member exists with the same role throw an InvalidInputException
 			if(name.equals(staffmember.getName())) {
 				if(role.equals(staffmember.getRole())) {
 					throw new InvalidInputException(error + "Staff member already exists!") ;
@@ -206,26 +208,27 @@ public class ItemController {
 			}
 		}		
 		
-		if(!isUpdated)		
-			m.addStaffmember(new StaffMember(name, role));			
+		if(!isUpdated)
+			m.addStaffmember(new StaffMember(name, role)); // creates new staff member if it was not previously in the xml file				
 			
-		PersistenceXStream.saveToXMLwithXStream(m);
+		PersistenceXStream.saveToXMLwithXStream(m); // save manager to xml file
 	}
 	
+	// removes pre-existing staff member
 	public void removeStaffMember(String name) throws InvalidInputException {
 		String error = "";
 		if ((name == null || name.trim().length() == 0))
 			error = error + "Staff member name cannot be empty! ";
 		
 		error = error.trim();
-		if(error.length() > 0)
+		if(error.length() > 0) // throws InvalidInputException if necessary
 			throw new InvalidInputException(error);
 				
 		name = name.toLowerCase();
 		boolean findName = false;
 		Manager m = Manager.getInstance();
 			
-		for(StaffMember staffmember : m.getStaffmembers()) {
+		for(StaffMember staffmember : m.getStaffmembers()) { // removes pre-existing staff member
 			if(name.equals(staffmember.getName())) {
 				findName = true;
 				m.removeStaffmember(staffmember);
@@ -233,12 +236,13 @@ public class ItemController {
 			}
 		}
 		
-		if(!findName)
+		if(!findName) // InvalidInputException is thrown if the staff member is not in the manager
 			throw new InvalidInputException("Staff member does not exist!");
 			
-		PersistenceXStream.saveToXMLwithXStream(m);	
+		PersistenceXStream.saveToXMLwithXStream(m); // save manager to xml file	
 	}	
 
+	// adds staff schedule to a pre-existing staff member
 	public void addTimeStaffMember(String name, Time[] startTime, Time[] endTime) throws InvalidInputException {
 		String error = "";
 		StaffMember sm = new StaffMember("", "");
@@ -256,7 +260,6 @@ public class ItemController {
 		if(name == null || name.trim().length() == 0)
 			error = error + "Staff member name cannot be empty! ";
 		
-		DateFormat df = new SimpleDateFormat("HH:mm");
 		for(int i = 0; i < startTime.length; i++) {
 			if(startTime[i] == null)
 				startTimeNullCounter++;
@@ -283,7 +286,7 @@ public class ItemController {
 				error = error + "End time cannot be empty! ";
 		}
 		
-		if(error.length() > 0)
+		if(error.length() > 0) // throws InvalidInputException if necessary
 			throw new InvalidInputException(error);
 		
 		name = name.toLowerCase();
@@ -308,9 +311,10 @@ public class ItemController {
 			}
 		}
 		
-		PersistenceXStream.saveToXMLwithXStream(m);
+		PersistenceXStream.saveToXMLwithXStream(m); // save manager to xml file
 	}
 	
+	// creates new menu item or updates price of pre-existing menu item
 	public void createMenuItem(String menuItemName, double menuItemPrice) throws InvalidInputException {
 		String error = "";
 		
@@ -322,7 +326,7 @@ public class ItemController {
 			error = error + "Menu Item price cannot be negative!";
 		
 		error = error.trim();
-		if(error.length() > 0)
+		if(error.length() > 0) //throws InvalidInputException if necessary
 			throw new InvalidInputException(error);
 		
 		menuItemName = menuItemName.toLowerCase();	
@@ -331,7 +335,7 @@ public class ItemController {
 		
 		Manager m = Manager.getInstance();
 	
-		for(MenuItem menuItem : m.getMenus()) {
+		for(MenuItem menuItem : m.getMenus()) { // updates price or throws InvalidInputException if the menu item already exists at that price
 			if(menuItemName.equals(menuItem.getName())) {
 				if(menuItemPrice == menuItem.getPrice()) {
 					error = "Menu Item already exists at price: $" + new DecimalFormat("#.##").format(menuItemPrice);
@@ -345,12 +349,13 @@ public class ItemController {
 			}
 		}
 		
-		if(!isUpdated)
+		if(!isUpdated) // creates new menu item if the menu item doesn't already exist
 			m.addMenus(new MenuItem(menuItemName, menuItemPrice, 0));			
 			
-		PersistenceXStream.saveToXMLwithXStream(m);
+		PersistenceXStream.saveToXMLwithXStream(m); // save manager to xml file
 	}
 	
+	// removes menu item from the xml file if the menu item already exists 
 	public void removeMenuItem(String menuItemName) throws InvalidInputException {
 		String error = "";
 		
@@ -358,14 +363,14 @@ public class ItemController {
 			error = "Menu item name cannot be empty! ";
 		
 		error = error.trim();
-		if(error.length() > 0)
+		if(error.length() > 0) // throws InvalidInputException necessary
 			throw new InvalidInputException(error);
 		
 		menuItemName = menuItemName.toLowerCase();			
 		boolean isUpdated = false;			
 		Manager m = Manager.getInstance();
 		
-		for(MenuItem menuItem : m.getMenus()) {
+		for(MenuItem menuItem : m.getMenus()) { // removes menu item
 			if(menuItemName.equals(menuItem.getName())) {
 				m.removeMenus(menuItem);
 				isUpdated = true;
@@ -373,12 +378,13 @@ public class ItemController {
 			}
 		}	
 		
-		if(!isUpdated)
+		if(!isUpdated) // throws InvalidInputException if the menu item does not exist
 			throw new InvalidInputException("Menu Item name does not exist!");		
 			
-		PersistenceXStream.saveToXMLwithXStream(m);		
+		PersistenceXStream.saveToXMLwithXStream(m); // save manager to xml file
 	}
 	
+	// creates new order item from pre-existing menu item and updates the popularity counter for that item
 	public void menuItemOrdered(String orderName, int orderQuantity) throws InvalidInputException {
 		String error = "";
 		
@@ -390,7 +396,7 @@ public class ItemController {
 			error = error + "Order quantity cannot be negative!";
 		
 		error = error.trim();
-		if(error.length() > 0)
+		if(error.length() > 0) // throws an InvalidInputException if there is one
 			throw new InvalidInputException(error);
 		
 		orderName = orderName.toLowerCase();
@@ -399,7 +405,7 @@ public class ItemController {
 		
 		Manager m = Manager.getInstance();
 		
-		for(MenuItem menuItem : m.getMenus()) {
+		for(MenuItem menuItem : m.getMenus()) { // updates the popularity counter
 			if(orderName.equals(menuItem.getName())) {
 				menuItem.setPopularityCounter(menuItem.getPopularityCounter() + orderQuantity);
 				isUpdated = true;
@@ -407,9 +413,9 @@ public class ItemController {
 			}
 		}	
 		
-		if(!isUpdated)
+		if(!isUpdated) // throws InvalidInputException if the menu item does not exist
 			throw new InvalidInputException("Order name does not exist!");		
 			
-		PersistenceXStream.saveToXMLwithXStream(m);		
+		PersistenceXStream.saveToXMLwithXStream(m); // save manager to xml file
 	}	
 }
