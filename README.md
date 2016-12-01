@@ -1,4 +1,4 @@
-# Project Title
+# Food Truck management System
 
 The project is about Food Truck Management System(FTMS) to track order, supply and equipment for buisiness. 
 
