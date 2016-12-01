@@ -67,8 +67,8 @@ tbody {
 	position: absolute;
 }
 </style>
-
 </head>
+
 <body>
 	<div class="container">
 		<h2>
@@ -83,23 +83,25 @@ tbody {
 		</ul>
 		<br> <br>
 
-    <?php
-				require_once 'persistence/PersistenceFoodTruckManagementSystem.php';
-				require_once 'model/StaffMember.php';
-				require_once 'model/Manager.php';
-				require_once 'model/MenuItem.php';
-				require_once 'model/Supply.php';
-				require_once 'model/Equipment.php';
-				
-				session_start ();
-				
-				$pm = new PersistenceFoodTruckManagementSystem ();
-				$m = $pm->loadDataFromStore ();
-				
-				?>
+   				 <?php
+								// In order for report to access all the data file
+								require_once 'persistence/PersistenceFoodTruckManagementSystem.php';
+								require_once 'model/StaffMember.php';
+								require_once 'model/Manager.php';
+								require_once 'model/MenuItem.php';
+								require_once 'model/Supply.php';
+								require_once 'model/Equipment.php';
+								
+								session_start ();
+								
+								$pm = new PersistenceFoodTruckManagementSystem ();
+								$m = $pm->loadDataFromStore ();
+								
+								?>
     <br>
 		<div class="form-group">
 			<div class="row">
+				<!-- 			Table to track Employee report -->
 				<div class="col-lg-5 " style="background-color: #BCB7C1;">
 					<h2 style="text-align: center;">Staff List</h2>
 					<br>
@@ -112,21 +114,22 @@ tbody {
 							</tr>
 						</thead>
 						<tbody>
-        <?php
-								$i = 1;
-								foreach ( $m->getStaffMembers () as $staff ) {
-									echo "<tr> <th scope='row' >" . $i;
-									echo "</th>";
-									echo "<td>" . ucfirst ( $staff->getName () ) . "</td>";
-									echo "<td>" . ucfirst ( $staff->getRole () ) . "</td>";
-									echo "</tr>";
-									$i = $i + 1;
-								}
-								?>
-        </tbody>
+        				<?php
+												$i = 1;
+												foreach ( $m->getStaffMembers () as $staff ) {
+													echo "<tr> <th scope='row' >" . $i;
+													echo "</th>";
+													echo "<td>" . ucfirst ( $staff->getName () ) . "</td>";
+													echo "<td>" . ucfirst ( $staff->getRole () ) . "</td>";
+													echo "</tr>";
+													$i = $i + 1;
+												}
+												?>
+       				 </tbody>
 					</table>
 				</div>
 				<div class="col-lg-2"></div>
+				<!-- 				Table to track Popularity Report -->
 				<div class="col-lg-5" style="background-color: lightcyan;">
 					<h2 style="text-align: center;">Popularity List</h2>
 					<br>
@@ -139,23 +142,23 @@ tbody {
 							</tr>
 						</thead>
 						<tbody>
-          <?php
-										$rank = array ();
-										$i = 1;
-										foreach ( $m->getMenus () as $menu ) {
-											$rank [$menu->getName ()] = $menu->getPopularityCounter ();
-										}
-										arsort ( $rank );
-										foreach ( $rank as $itemName => $itemQuantity ) {
-											echo "<tr> <th scope='row' >" . $i;
-											echo "</th>";
-											echo "<td>" . ucfirst ( $itemName ) . "</td>";
-											echo "<td>" . $itemQuantity . "</td>";
-											echo "</tr>";
-											$i = $i + 1;
-										}
-										?>
-            </tbody>
+          				<?php
+														$rank = array ();
+														$i = 1;
+														foreach ( $m->getMenus () as $menu ) {
+															$rank [$menu->getName ()] = $menu->getPopularityCounter ();
+														}
+														arsort ( $rank );
+														foreach ( $rank as $itemName => $itemQuantity ) {
+															echo "<tr> <th scope='row' >" . $i;
+															echo "</th>";
+															echo "<td>" . ucfirst ( $itemName ) . "</td>";
+															echo "<td>" . $itemQuantity . "</td>";
+															echo "</tr>";
+															$i = $i + 1;
+														}
+														?>
+            			</tbody>
 					</table>
 				</div>
 			</div>
@@ -163,6 +166,7 @@ tbody {
 		<br> <br> <br> <br>
 		<div class="form-group">
 			<div class="row">
+				<!-- 			Table for Supply Report -->
 				<div class="col-lg-5" style="background-color: lightgray;">
 					<h2 style="text-align: center;">Supply List</h2>
 					<br>
@@ -176,23 +180,23 @@ tbody {
 							</tr>
 						</thead>
 						<tbody>
-              <?php
-														$i = 1;
-														foreach ( $m->getSupplies () as $supply ) {
-															echo "<tr> <th scope='row' >" . $i;
-															echo "</th>";
-															echo "<td>" . ucfirst ( $supply->getName () ) . "</td>";
-															echo "<td>" . $supply->getQuantity () . "</td>";
-															echo "<td>" . ucfirst ( $supply->getUnit () ) . "</td>";
-															echo "</tr>";
-															$i = $i + 1;
-														}
-														?>
-            </tbody>
+              				<?php
+																		$i = 1;
+																		foreach ( $m->getSupplies () as $supply ) {
+																			echo "<tr> <th scope='row' >" . $i;
+																			echo "</th>";
+																			echo "<td>" . ucfirst ( $supply->getName () ) . "</td>";
+																			echo "<td>" . $supply->getQuantity () . "</td>";
+																			echo "<td>" . ucfirst ( $supply->getUnit () ) . "</td>";
+																			echo "</tr>";
+																			$i = $i + 1;
+																		}
+																		?>
+            			</tbody>
 					</table>
 				</div>
-
 				<div class="col-lg-2"></div>
+				<!-- 				Table Equipment Report -->
 				<div class="col-lg-5" style="background-color: lavenderblush;">
 					<h2 style="text-align: center;">Equipment List</h2>
 					<br>
@@ -205,7 +209,7 @@ tbody {
 							</tr>
 						</thead>
 						<tbody>
-           <?php
+           				<?php
 											$i = 1;
 											foreach ( $m->getEquipments () as $equipment ) {
 												echo "<tr> <th scope='row' >" . $i;
@@ -216,23 +220,11 @@ tbody {
 												$i = $i + 1;
 											}
 											?>
-        </tbody>
+        				</tbody>
 					</table>
 				</div>
 			</div>
-
 		</div>
-
-
 	</div>
-
-  <?php
-		
-		require_once 'persistence/PersistenceFoodTruckManagementSystem.php';
-		
-		?>
-
-    
-
 </body>
 </html>
