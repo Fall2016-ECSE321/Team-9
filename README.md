@@ -46,8 +46,8 @@ There are two way to run the application:
 
 #### For Mobile Platform
 
-###### STEP 1 - Go to Mobile directory and open `FoodTruckManagmentSystem` folder to Android Studio
-###### STEP 2 - Navigate to the app/src/main/ca/mcgill/ecse321/foodtruckmanagementsystem folder
+###### STEP 1 - Go to `Mobile` directory and open `FoodTruckManagmentSystem` folder to Android Studio
+###### STEP 2 - Navigate to the `app/src/main/ca/mcgill/ecse321/foodtruckmanagementsystem` folder
 ###### STEP 3 - Run `MainActivity.java` to open Android Mobile simulator 
 
 ## Authors
