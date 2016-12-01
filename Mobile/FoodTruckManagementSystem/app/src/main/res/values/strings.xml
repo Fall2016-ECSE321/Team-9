@@ -5,5 +5,5 @@
     <string name="staffmembertable_header"><u><b>Staff Member List</b></u></string>
     <string name="supplytable_header"><u><b>Supply List</b></u></string>
     <string name="equipmenttable_header"><u><b>Equipment List</b></u></string>
-    <string name="popularitytable_header"><u><b>Order List</b></u></string>
+    <string name="popularitytable_header"><u><b>Popularity List</b></u></string>
 </resources>
