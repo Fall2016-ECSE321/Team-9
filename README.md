@@ -12,7 +12,7 @@ These instructions will get you a copy of the project up and running on your loc
 #### Android Studio
 #### XAMPP
 #### Google Chrome or Safari
-#### A least JRE 1.7 
+#### At least JRE 1.7 
 #### PHP 5.6
 
 ### Installation 
@@ -20,12 +20,13 @@ These instructions will get you a copy of the project up and running on your loc
 Clone the project into your local directory. If you use commandline, you can run `git clone git@github.com:Fall2016-ECSE321/Team-9.git`
 
 ### Running the software 
-There are three plateform that will support the FTMS: Desktop/Laptop, Mobile and Web Browser. Therefore, below will guide you through on how to running the app on different platform.
+There are three plateforms that will support the FTMS: Desktop/Laptop, Mobile and Web Browser. Therefore, below will guide you through on how to running the app on different platform.
 
 #### For Desktop Platform
-There are two way to run the run the application:
+There are two way to run the application:
 ###### 1. Running the Jar file
-####### Click on the Jar file to run 
+###### STEP 1 - Go to Desktop directory and open the project `FoodTruckManagmentSystem` folder to Eclipse 
+###### STEP 2 - Click on FTMS.jar
 
 ###### 2. Running the code from Eclipse
 ###### STEP 1 - Go to Desktop directory and open the project `FoodTruckManagmentSystem` folder to Eclipse 
