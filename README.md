@@ -26,7 +26,7 @@ There are three plateforms that will support the FTMS: Desktop/Laptop, Mobile an
 There are two way to run the application:
 ###### 1. Running the Jar file
 ###### STEP 1 - Go to Desktop directory 
-###### STEP 2 - Rune the file FTMS.jar
+###### STEP 2 - Run the file `FTMS.jar`
 ** Upon storing data, the FTMS will generate a data.xml file to track your saved data
 
 ###### 2. Running the code from Eclipse
