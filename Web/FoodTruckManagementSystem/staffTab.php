@@ -78,8 +78,8 @@
 			<strong>Add New Staff</strong>
 		</h3>
 		<div style="background-color: #BCB7C1; color: black; padding: 20px;"">
-			<!-- <h4> <strong>Equipment Item</strong></h4> -->
-
+			
+<!-- 			Form to add employee -->
 			<form class="form-inline" action="addStaffMember.php" method="post">
 
 				<span class="error input-lg">
@@ -124,8 +124,8 @@
 		</h3>
 		<div
 			style="max-height: 450px; overflow-y: scroll; background-color: #BCB7C1; color: black; padding: 20px;"">
-			<!-- <h4> <strong>Equipment Item</strong></h4> -->
-
+			
+<!-- 			Form to remove Employee and add employee weekly schedule -->
 			<form class="form-inline" action="addSchedule.php" method="post">
 
 				<span class="error input-lg">
@@ -196,14 +196,11 @@
 						class="form-control input-lg" type="time" name="start_time7" /> <input
 						class="form-control input-lg" type="time" name="end_time7" /> <br>
 					<br>
-					<!-- <input type="button"  class="btn btn-default" onclick="myFunction()" value="Cancel"> -->
 					<button type="submit" name="editStaffSchedule"
 						class="btn btn-default btn-lg">Save</button>
 				</div>
 			</form>
-
 		</div>
-
 	</div>
 
 </body>
