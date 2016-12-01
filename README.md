@@ -7,12 +7,12 @@ The project is about Food Truck Management System(FTMS) to track order, supply a
 These instructions will get you a copy of the project up and running on your local machine for development and testing purposes. 
 
 
-### Prerequisites
+### Prerequisites:
 #### Eclipse
 #### Android Studio
 #### XAMPP
 #### Google Chrome or Safari
-#### A least JRE 1.7 
+#### At least JRE 1.7 
 #### PHP 5.6
 
 ### Installation 
