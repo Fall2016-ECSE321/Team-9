@@ -1,13 +1,13 @@
 <manager id="1">
-	<equipments id="2" />
-	<supplies id="3" />
-	<staffmembers id="4">
-		<staffmember id="5">
-			<name>john</name>
-			<role>cashier</role>
-			<startTimes id="6" />
-			<endTimes id="7" />
-		</staffmember>
-	</staffmembers>
-	<menus id="8" />
+  <equipments id="2"/>
+  <supplies id="3"/>
+  <staffmembers id="4">
+    <staffmember id="5">
+      <name>john</name>
+      <role>cashier</role>
+      <startTimes id="6"/>
+      <endTimes id="7"/>
+    </staffmember>
+  </staffmembers>
+  <menus id="8"/>
 </manager>
