@@ -1,5 +1,4 @@
 language: java
+before_script: cd Desktop/FoodTruckManagementSystem 
+sudo: required
 script: ant compile
-jdk:
- -  oraclejdk8
- -  oraclejdk7 
