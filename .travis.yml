@@ -1,4 +1,4 @@
 language: java
-before_script: cd Desktop/
+before_script: cd Desktop/FoodTruckManagmentSystem
 sudo: required
-
+script: ant compile
