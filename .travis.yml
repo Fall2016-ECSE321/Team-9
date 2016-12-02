@@ -1,5 +1,4 @@
 language: java
-before_script: cd Desktop
+before_script: cd Desktop/
 sudo: required
-install: ant deps
 
