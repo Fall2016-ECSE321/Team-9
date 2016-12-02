@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- WARNING: Eclipse auto-generated file.
-              Any modifications will be overwritten.
-              To include a user specific buildfile here, simply create one in the same
-              directory with the processing instruction <?eclipse.ant.import?>
-              as the first entry and export the buildfile again. --><project basedir="." default="build" name="FoodTruckManagementSystem">
+	<project basedir="." default="compile" name="FoodTruckManagementSystem">
     <property environment="env"/>
     <property name="ECLIPSE_HOME" value="../../../../../Documents/eclipse/"/>
-    <property name="debuglevel" value="source,lines,vars"/>
     <property name="target" value="1.7"/>
     <property name="source" value="1.7"/>
     <path id="JUnit 4.libraryclasspath">
@@ -35,32 +30,52 @@
             </fileset>
         </copy>
     </target>
+  	<!-- 2. Compile Step -->
+  		<target name="compile">
+  			<mkdir dir="bin"/>
+  			<javac srcdir="src" destdir="bin" includeantruntime="false"/>
+  		</target>
+  		
+  		<!-- 3. Link Step -->
+  		<target name ="makejar" description="Create a jar for FoodTruckManagementSystem(FTMLS)">
+  			<mkdir dir="bin/jar"/>
+  			<jar destfile="bin/jar/FTMS.jar" basedir="bin">
+  				<manifest>
+  					<attribute name="Main-Class" value="FoodTruckManagementSystem"/>
+  				</manifest>
+  			</jar>
+  		</target>
+  		<!-- 4. Test Step -->
+  		<target name="TestFoodTruckManagementSystemController">
+	        <mkdir dir="junitReport"/>
+	        <junit fork="yes" printsummary="withOutAndErr">
+	            <formatter type="xml"/>
+	            <test name="ca.mcgill.ecse321.foodtruckmanagementsystem.controller.TestFoodTruckManagementSystemController.java" todir="junitReport"/>
+	        	<classpath refid="FoodTruckManagementSystem.classpath"/>
+	        </junit>
+  		</target>
+      	<target name="TestFoodTruckManagementSystemPersistence">
+	        <junit fork="yes" printsummary="withOutAndErr">
+	            <formatter type="xml"/>
+	            <test name="ca.mcgill.ecse321.foodtruckmanagementsystem.persistence.TestPersistence.java" todir="junitReport"/>
+	        	<classpath refid="FoodTruckManagementSystem.classpath"/>
+	        </junit>
+		</target>
+
+  	    <target name="junitReport">
+  	        <junitreport todir="junitReport">
+  	            <fileset dir="junitReport">
+  	                <include name="TEST-*.xml"/>
+  	            </fileset>
+  	            <report format="frames" todir="junitReport"/>
+  	        </junitreport>
+  	    </target>
+              		
     <target name="clean">
         <delete dir="bin"/>
     </target>
-    <target depends="clean" name="cleanall"/>
-    <target depends="build-subprojects,build-project" name="build"/>
-    <target name="build-subprojects"/>
-    <target depends="init" name="build-project">
-        <echo message="${ant.project.name}: ${ant.file}"/>
-        <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
-            <src path="src"/>
-            <src path="test"/>
-            <classpath refid="FoodTruckManagementSystem.classpath"/>
-        </javac>
-    </target>
-    <target description="Build all projects which reference this project. Useful to propagate changes." name="build-refprojects"/>
-    <target description="copy Eclipse compiler jars to ant lib directory" name="init-eclipse-compiler">
-        <copy todir="${ant.library.dir}">
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </copy>
-        <unzip dest="${ant.library.dir}">
-            <patternset includes="jdtCompilerAdapter.jar"/>
-            <fileset dir="${ECLIPSE_HOME}/plugins" includes="org.eclipse.jdt.core_*.jar"/>
-        </unzip>
-    </target>
-    <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
-        <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
-        <antcall target="build"/>
-    </target>
+
+  
+    <target name="run" depends="TestFoodTruckManagementSystemController,TestFoodTruckManagementSystemPersistence, junitReport"/>
+
 </project>
