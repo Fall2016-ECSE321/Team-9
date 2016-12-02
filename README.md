@@ -36,7 +36,7 @@ There are three ways to run the application:
 ###### STEP 4 - To check if data is written in the `data.xml` file, you can open it in same project folder 
 
 ###### 3. Running the build.xml to compile the project with TravisCI
-###### Important before running the build.xml with ant -- Make sure to Edit the build.xml file for path to Junit lib `line4`, You can it with the below commandlines:
+###### ***Important before running the build.xml with ant -- Make sure to Edit the build.xml file for path to Junit lib in the  `line4`, if using commandline, here is the instructions:
 ####### Edit the build.xml : `nano build.xml`
 ####### Goto line 4 to change the value: Instead of `value="../../../../../Documents/eclipse/"` please input local path to eclipse.
 ####### Save the build.xml click: `ctrl + x` keys, then `y` key and then `enter`key.
