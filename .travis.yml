@@ -1,5 +1,5 @@
 language: java
-before_script: cd Desktop/FoodTruckManagementSystem
+before_script: cd Desktop
 sudo: required
-script: ant compile
+install: ant deps
 
