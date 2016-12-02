@@ -5,36 +5,32 @@
               directory with the processing instruction <?eclipse.ant.import?>
               as the first entry and export the buildfile again. --><project basedir="." default="build" name="FoodTruckManagementSystem">
     <property environment="env"/>
-    <property name="ECLIPSE_HOME" value="D:/Programming/Eclipse/eclipse/"/>
-    <property name="junit.output.dir" value="junit"/>
+    <property name="ECLIPSE_HOME" value="../../../../../Documents/eclipse/"/>
     <property name="debuglevel" value="source,lines,vars"/>
-    <property name="target" value="1.8"/>
-    <property name="source" value="1.8"/>
+    <property name="target" value="1.7"/>
+    <property name="source" value="1.7"/>
     <path id="JUnit 4.libraryclasspath">
         <pathelement location="${ECLIPSE_HOME}plugins/org.junit_4.11.0.v201303080030/junit.jar"/>
         <pathelement location="${ECLIPSE_HOME}plugins/org.hamcrest.core_1.3.0.v201303031735.jar"/>
     </path>
     <path id="FoodTruckManagementSystem.classpath">
         <pathelement location="bin"/>
-        <pathelement location="FoodTruckManagementSystem/lib/xmlpull-1.1.3.1.jar"/>
-        <pathelement location="FoodTruckManagementSystem/lib/xpp3_min-1.1.4c.jar"/>
-        <pathelement location="FoodTruckManagementSystem/lib/xstream-1.4.7.jar"/>
         <path refid="JUnit 4.libraryclasspath"/>
+        <pathelement location="lib/xmlpull-1.1.3.1.jar"/>
+        <pathelement location="lib/xpp3_min-1.1.4c.jar"/>
+        <pathelement location="lib/xstream-1.4.7.jar"/>
+        <pathelement location="lib/forms-1.3.0.jar"/>
+        <pathelement location="lib/miglayout15-swing.jar"/>
     </path>
     <target name="init">
         <mkdir dir="bin"/>
         <copy includeemptydirs="false" todir="bin">
-            <fileset dir="FoodTruckManagementSystem/src">
+            <fileset dir="src">
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
         <copy includeemptydirs="false" todir="bin">
-            <fileset dir="FoodTruckManagementSystem/lib">
-                <exclude name="**/*.java"/>
-            </fileset>
-        </copy>
-        <copy includeemptydirs="false" todir="bin">
-            <fileset dir="FoodTruckManagementSystem/test">
+            <fileset dir="test">
                 <exclude name="**/*.java"/>
             </fileset>
         </copy>
@@ -48,9 +44,8 @@
     <target depends="init" name="build-project">
         <echo message="${ant.project.name}: ${ant.file}"/>
         <javac debug="true" debuglevel="${debuglevel}" destdir="bin" includeantruntime="false" source="${source}" target="${target}">
-            <src path="FoodTruckManagementSystem/src"/>
-            <src path="FoodTruckManagementSystem/lib"/>
-            <src path="FoodTruckManagementSystem/test"/>
+            <src path="src"/>
+            <src path="test"/>
             <classpath refid="FoodTruckManagementSystem.classpath"/>
         </javac>
     </target>
@@ -67,26 +62,5 @@
     <target description="compile project with Eclipse compiler" name="build-eclipse-compiler">
         <property name="build.compiler" value="org.eclipse.jdt.core.JDTCompilerAdapter"/>
         <antcall target="build"/>
-    </target>
-    <target name="FoodTruckManagementSystem">
-        <java classname="ca.mcgill.ecse321.foodtruckmanagementsystem.application.FoodTruckManagementSystem" failonerror="true" fork="yes">
-            <classpath refid="FoodTruckManagementSystem.classpath"/>
-        </java>
-    </target>
-    <target name="TestEventRegistrationController (1)">
-        <mkdir dir="${junit.output.dir}"/>
-        <junit fork="yes" printsummary="withOutAndErr">
-            <formatter type="xml"/>
-            <test name="ca.mcgill.ecse321.foodtruckmanagementsystem.controller.TestEventRegistrationController" todir="${junit.output.dir}"/>
-            <classpath refid="FoodTruckManagementSystem.classpath"/>
-        </junit>
-    </target>
-    <target name="junitreport">
-        <junitreport todir="${junit.output.dir}">
-            <fileset dir="${junit.output.dir}">
-                <include name="TEST-*.xml"/>
-            </fileset>
-            <report format="frames" todir="${junit.output.dir}"/>
-        </junitreport>
     </target>
 </project>
