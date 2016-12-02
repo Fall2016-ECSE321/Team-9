@@ -25,21 +25,21 @@ There are three plateforms that will support the FTMS: Desktop/Laptop, Mobile an
 #### For Desktop Platform
 There are three ways to run the application:
 ###### 1. Running the Jar file
-####### STEP 1 - Go to `Desktop` directory 
-####### STEP 2 - Run the file `FTMS.jar`
+###### STEP 1 - Go to `Desktop` directory 
+###### STEP 2 - Run the file `FTMS.jar`
 ** Upon storing data, the FTMS will generate a data.xml file to track your saved data
 
 ###### 2. Running the code from Eclipse
-####### STEP 1 - Go to `Desktop` directory and open the project `FoodTruckManagmentSystem` folder to Eclipse 
-####### STEP 2 - Navigate to the `src/ca/mcgill/ecse321/foodtruckmanagementsystem/application` folder
-####### STEP 3 - Run `FoodTruckManagementSystemPage.java` as a Java application for the Desktop Gui to open
-####### STEP 4 - To check if data is written in the `data.xml` file, you can open it in same project folder 
+###### STEP 1 - Go to `Desktop` directory and open the project `FoodTruckManagmentSystem` folder to Eclipse 
+###### STEP 2 - Navigate to the `src/ca/mcgill/ecse321/foodtruckmanagementsystem/application` folder
+###### STEP 3 - Run `FoodTruckManagementSystemPage.java` as a Java application for the Desktop Gui to open
+###### STEP 4 - To check if data is written in the `data.xml` file, you can open it in same project folder 
 
 ###### 3. Running the build.xml to compile the project with TravisCI
-####### Important before running the build.xml with ant -- Make sure to Edit the build.xml file for path to Junit lib `line4`, You can it with the below commandlines:
-######## Edit the build.xml : `nano build.xml`
-######## Goto line 4 to change the value: Instead of `value="../../../../../Documents/eclipse/"` please input local path to eclipse.
-######## Save the build.xml click: `ctrl + x` keys, then `y` key and then `enter`key.
+###### Important before running the build.xml with ant -- Make sure to Edit the build.xml file for path to Junit lib `line4`, You can it with the below commandlines:
+####### Edit the build.xml : `nano build.xml`
+####### Goto line 4 to change the value: Instead of `value="../../../../../Documents/eclipse/"` please input local path to eclipse.
+####### Save the build.xml click: `ctrl + x` keys, then `y` key and then `enter`key.
 
 
 #### For Web Platform
