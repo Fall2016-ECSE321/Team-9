@@ -1,4 +1,5 @@
 language: java
 before_script: cd Desktop
+sudo: required
 script: ant compile
 
