@@ -59,10 +59,10 @@ There are three ways to run the application:
 ## Authors
 
 Below are the list of contributor that participated in this project.
-#### Sok Heng Lim (https://github.com/Soqueen)
-#### Brennan Laforge (https://github.com/b300631)
-#### Evan Bruchet (https://github.com/EBruchet)
-#### Malkolm Alburquenque (https://github.com/malkolmalburquenque)
+#### [Sok Heng Lim] (https://github.com/Soqueen)
+#### [Brennan Laforge] (https://github.com/b300631)
+#### [Evan Bruchet] (https://github.com/EBruchet)
+#### [Malkolm Alburquenque] (https://github.com/malkolmalburquenque)
 
 
 
